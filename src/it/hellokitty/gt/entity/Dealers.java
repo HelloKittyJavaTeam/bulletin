@@ -41,7 +41,7 @@ public class Dealers implements Serializable {
 	private List<Bulletin> bulletins;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="COUNTRY_ID", referencedColumnName="id")
+	@JoinColumn(name="COUNTRY_CODE", referencedColumnName="ID")
 	private GeoCountries country;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
@@ -55,9 +55,6 @@ public class Dealers implements Serializable {
 	private String city;
 
 	private String complement;
-
-	@Column(name="COUNTRY_CODE")
-	private String countryCode;
 
 	@Column(name="DATE_INS")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -222,14 +219,6 @@ public class Dealers implements Serializable {
 
 	public void setComplement(String complement) {
 		this.complement = complement;
-	}
-
-	public String getCountryCode() {
-		return this.countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
 	}
 
 	public Date getDateIns() {
