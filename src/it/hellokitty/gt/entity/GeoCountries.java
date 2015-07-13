@@ -81,7 +81,11 @@ public class GeoCountries implements Serializable {
 	@Column(name="ACTIVE")
 	private String active;
 	
+	@Column(name="ID_ISO3166")
+	private String idIso3166;
 
+	@Column(name="ID_ISO3166_3")
+	private String idIso31663;
 	
 	public GeoCountries(){}
 
@@ -219,5 +223,21 @@ public class GeoCountries implements Serializable {
 		} else {
 			this.active = "N";
 		}
+	}
+
+	public String getIdIso3166() {
+		return idIso3166;
+	}
+
+	public void setIdIso3166(String idIso3166) {
+		this.idIso3166 = idIso3166;
+	}
+
+	public String getIdIso31663() {
+		return idIso31663;
+	}
+
+	public void setIdIso31663(String idIso31663) {
+		this.idIso31663 = idIso31663;
 	}
 }

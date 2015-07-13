@@ -3,7 +3,9 @@ package it.hellokitty.gt.entity;
 import it.hellokitty.gt.entity.BaseObject;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -49,6 +51,8 @@ public class Bulletin extends BaseObject implements Serializable{
 	public static final String FIND_BY_TAG_ADMIN ="Bulletin.FIND_BY_TAG_ADMIN";
 	public static final String FIND_BY_TAG_LIKE ="Bulletin.FIND_BY_TAG_LIKE";
 	public static final String FIND_BY_TAG_LIKE_ADMIN ="Bulletin.FIND_BY_TAG_LIKE_ADMIN";
+	
+	Map<String, String> languageMap = new HashMap<String, String>();
 	
 	@Id 
 	@GeneratedValue(generator = "SEQ_BULLETIN_ID", strategy = GenerationType.SEQUENCE)
@@ -310,6 +314,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setItTitle(String itTitle) {
+		languageMap.put("itTitle", itTitle);
 		this.itTitle = itTitle;
 	}
 
@@ -318,6 +323,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setItDescription(String itDescription) {
+		languageMap.put("itDescription", itDescription);
 		this.itDescription = itDescription;
 	}
 
@@ -326,6 +332,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setItContent(String itContent) {
+		languageMap.put("itContent", itContent);
 		this.itContent = itContent;
 	}
 
@@ -334,6 +341,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setEnTitle(String enTitle) {
+		languageMap.put("enTitle", enTitle);
 		this.enTitle = enTitle;
 	}
 
@@ -342,6 +350,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setEnDescription(String enDescription) {
+		languageMap.put("enDescription", enDescription);
 		this.enDescription = enDescription;
 	}
 
@@ -350,6 +359,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setEnContent(String enContent) {
+		languageMap.put("enContent", enContent);
 		this.enContent = enContent;
 	}
 
@@ -358,6 +368,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setFrTitle(String frTitle) {
+		languageMap.put("frTitle", frTitle);
 		this.frTitle = frTitle;
 	}
 
@@ -366,6 +377,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setFrDescription(String frDescription) {
+		languageMap.put("frDescription", frDescription);
 		this.frDescription = frDescription;
 	}
 
@@ -374,6 +386,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setFrContent(String frContent) {
+		languageMap.put("frContent", frContent);
 		this.frContent = frContent;
 	}
 
@@ -382,6 +395,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setEsTitle(String esTitle) {
+		languageMap.put("esTitle", esTitle);
 		this.esTitle = esTitle;
 	}
 
@@ -390,6 +404,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setEsDescription(String esDescription) {
+		languageMap.put("esDescription", esDescription);
 		this.esDescription = esDescription;
 	}
 
@@ -398,6 +413,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setEsContent(String esContent) {
+		languageMap.put("esContent", esContent);
 		this.esContent = esContent;
 	}
 
@@ -406,6 +422,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setJpTitle(String jpTitle) {
+		languageMap.put("jpTitle", jpTitle);
 		this.jpTitle = jpTitle;
 	}
 
@@ -414,6 +431,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setJpDescription(String jpDescription) {
+		languageMap.put("jpDescription", jpDescription);
 		this.jpDescription = jpDescription;
 	}
 
@@ -422,6 +440,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setJpContent(String jpContent) {
+		languageMap.put("jpContent", jpContent);
 		this.jpContent = jpContent;
 	}
 
@@ -430,6 +449,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setZhTitle(String zhTitle) {
+		languageMap.put("zhTitle", zhTitle);
 		this.zhTitle = zhTitle;
 	}
 
@@ -438,6 +458,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setZhDescription(String zhDescription) {
+		languageMap.put("zhDescription", zhDescription);
 		this.zhDescription = zhDescription;
 	}
 
@@ -446,6 +467,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setZhContent(String zhContent) {
+		languageMap.put("zhContent", zhContent);
 		this.zhContent = zhContent;
 	}
 
@@ -454,6 +476,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setDeTitle(String deTitle) {
+		languageMap.put("deTitle", deTitle);
 		this.deTitle = deTitle;
 	}
 
@@ -462,6 +485,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setDeDescription(String deDescription) {
+		languageMap.put("deDescription", deDescription);
 		this.deDescription = deDescription;
 	}
 
@@ -470,6 +494,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	}
 
 	public void setDeContent(String deContent) {
+		languageMap.put("deContent", deContent);
 		this.deContent = deContent;
 	}
 
@@ -479,5 +504,17 @@ public class Bulletin extends BaseObject implements Serializable{
 
 	public void setBulletinUsers(List<BulletinUser> bulletinUsers) {
 		this.bulletinUsers = bulletinUsers;
+	}
+	
+	public String getTitle(String lang){
+		return languageMap.get(lang+"Title");
+	}
+	
+	public String getContent(String lang){
+		return languageMap.get(lang+"Content");
+	}
+	
+	public String getDescription(String lang){
+		return languageMap.get(lang+"Description");
 	}
 }
