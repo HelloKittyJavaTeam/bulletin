@@ -24,6 +24,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.eclipse.persistence.annotations.Index;
 
@@ -52,6 +53,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	public static final String FIND_BY_TAG_LIKE ="Bulletin.FIND_BY_TAG_LIKE";
 	public static final String FIND_BY_TAG_LIKE_ADMIN ="Bulletin.FIND_BY_TAG_LIKE_ADMIN";
 	
+	@Transient
 	Map<String, String> languageMap = new HashMap<String, String>();
 	
 	@Id 

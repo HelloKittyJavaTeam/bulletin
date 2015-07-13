@@ -50,8 +50,16 @@ public class VehicleFamily implements Serializable {
 	private String userMod;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="FAMILY_CODE", referencedColumnName="ID")
-	private List<VehicleGroups> vehicleGroup;
+	@JoinColumn(name="DCS_MODEL", referencedColumnName="ID")
+	private List<VehicleGroups> vehicleGroups;
+
+	public List<VehicleGroups> getVehicleGroups() {
+		return vehicleGroups;
+	}
+
+	public void setVehicleGroups(List<VehicleGroups> vehicleGroups) {
+		this.vehicleGroups = vehicleGroups;
+	}
 
 	public VehicleFamily() {
 	}
