@@ -1,14 +1,13 @@
 package it.hellokitty.gt.service.impl;
 
-import it.ferrari.gt.service.impl.ServiceImpl;
 import it.hellokitty.gt.entity.Bulletin;
 import it.hellokitty.gt.repository.BulletinRepository;
 import it.hellokitty.gt.repository.impl.BulletinRepositoryImpl;
 import it.hellokitty.gt.service.BulletinService;
+import it.hellokitty.gt.service.impl.ServiceImpl;
 
 public class BulletinServiceImpl extends ServiceImpl<Bulletin> implements BulletinService {
 	BulletinRepository bulletinRepository = new BulletinRepositoryImpl();
-	
 //	@Override
 //	public Bulletin fetchById(Long id) throws IllegalArgumentException, Exception {
 //		if(id == null){

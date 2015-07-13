@@ -1,11 +1,13 @@
 package it.hellokitty.gt.service.impl;
 
 import it.hellokitty.gt.entity.AttachmentHistory;
+import it.hellokitty.gt.entity.BaseObject;
 import it.hellokitty.gt.repository.AttachmentHistoryRepository;
 import it.hellokitty.gt.repository.impl.AttachmentHistoryRepositoryImpl;
 import it.hellokitty.gt.repository.utils.ColumnDirection;
 import it.hellokitty.gt.service.AttachmentHistoryService;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class AttachmentHistoryServiceImpl implements AttachmentHistoryService {
@@ -50,7 +52,7 @@ public class AttachmentHistoryServiceImpl implements AttachmentHistoryService {
 	}
 
 	@Override
-	public List<AttachmentHistory> fetchAll(String user, Integer start, Integer limit, List<ColumnDirection> cdList) throws IllegalArgumentException, Exception {
+	public List<AttachmentHistory> fetchAll(Integer arg0, Integer arg1, LinkedHashMap<String, String> arg2, String arg3) throws IllegalArgumentException, Exception {
 		if(user == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be null.");
 		}
@@ -83,7 +85,7 @@ public class AttachmentHistoryServiceImpl implements AttachmentHistoryService {
 	}
 
 	@Override
-	public void insert(AttachmentHistory elem, String user) throws IllegalArgumentException, Exception {
+	public void insert(BaseObject elem, String user) throws IllegalArgumentException, Exception {
 		if(elem == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
 		}
@@ -100,7 +102,7 @@ public class AttachmentHistoryServiceImpl implements AttachmentHistoryService {
 	}
 
 	@Override
-	public void delete(AttachmentHistory elem, String user) throws IllegalArgumentException, Exception {
+	public void delete(BaseObject elem, String user) throws IllegalArgumentException, Exception {
 		if(elem == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
 		}
@@ -117,25 +119,7 @@ public class AttachmentHistoryServiceImpl implements AttachmentHistoryService {
 	}
 
 	@Override
-	public AttachmentHistory update(AttachmentHistory elem, String user) throws IllegalArgumentException, Exception {
-		if(elem == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
-		}
-		
-		if(user == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be null.");
-		}
-		
-		if(user.equals("")){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be empty.");
-			
-		}
-		
-		return attachmentHistoryRepository.update(elem, user);
-	}
-
-	@Override
-	public AttachmentHistory merge(AttachmentHistory elem, String user) throws IllegalArgumentException, Exception {
+	public AttachmentHistory merge(BaseObject elem, String user) throws IllegalArgumentException, Exception {
 		if(elem == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
 		}

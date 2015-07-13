@@ -2,7 +2,7 @@ package it.hellokitty.gt.entity;
 
 import java.io.Serializable;
 
-import it.ferrari.gt.entity.BaseObject;
+import it.hellokitty.gt.entity.BaseObject;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;

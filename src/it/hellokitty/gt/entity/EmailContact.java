@@ -1,6 +1,6 @@
 package it.hellokitty.gt.entity;
 
-import it.ferrari.gt.entity.BaseObject;
+import it.hellokitty.gt.entity.BaseObject;
 
 import java.io.Serializable;
 import java.util.List;
