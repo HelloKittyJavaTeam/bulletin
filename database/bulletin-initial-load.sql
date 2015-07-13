@@ -24,6 +24,7 @@ DESCRIPTION_ZH,
 ID,
 USER_INS,
 USER_MOD from intdms.geo_areas;
+commit;
 
 insert into sa_modiscs.geo_regions(ACTIVE,
 DATE_INS,
@@ -53,6 +54,7 @@ ID,
 ID_AREA,
 USER_INS,
 USER_MOD from intdms.geo_regions;
+commit;
 
 insert into sa_modiscs.geo_countries(ACTIVE,
 DATE_INS,
@@ -86,6 +88,7 @@ ID_ISO3166_3,
 ID_REGION,
 USER_INS,
 USER_MOD from intdms.geo_countries;
+commit;
 
 insert into sa_modiscs.dealers(ACTIVE,
 ADDRESS,
@@ -179,6 +182,7 @@ USER_MOD,
 VILLAGE,
 WEBSITE,
 ZIPCODE from intdms.dealers;
+commit;
 
 insert into sa_modiscs.vehicle_family(ACTIVE,
 DATE_INS,
@@ -194,6 +198,7 @@ DESCRIPTION,
 ID,
 USER_INS,
 USER_MOD from intdms.vehicle_family;
+commit;
 
 insert into sa_modiscs.vehicle_groups(ACTIVE,
 DATE_INS,
@@ -226,6 +231,7 @@ SUSPENDED,
 USER_INS,
 USER_MOD from intdms.vehicle_groups
 where intdms.vehicle_groups.dcs_model in (select id from sa_modiscs.vehicle_family);
+commit;
 
 insert into sa_modiscs.vehicle_master(ACTIVE,
 DATE_INS,
@@ -246,6 +252,7 @@ USER_INS,
 USER_MOD,
 VEHICLE_GROUP_ID from intdms.vehicle_master
 where intdms.vehicle_master.VEHICLE_GROUP_ID in (select id from sa_modiscs.vehicle_groups);
+commit;
 
 Insert into sa_modiscs.AD_USERS (ID,USERNAME,PASSWORD,FIRST_NAME,LAST_NAME,PHONE,COST_CENTER,COMPANY,LANGUAGE,EMAIL,FAX,DEALER_CODE,FE_ROLE,FE_GROUP,STATUS,DATE_LAST_UPDATE,SOURCE,DATE_INS,USER_INS,DATE_MOD,USER_MOD,ACTIVE) values ('5','deamea15','kdoehw',null,null,'ewt',null,null,'Italiano','service@ferrari.de','353','999999','10166200','62','Attivo',null,'DCS',to_timestamp('24-GIU-15 12:16:49,000000000','DD-MON-RR HH24:MI:SSXFF'),'USR_ESB',to_timestamp('24-GIU-15 12:56:08,000000000','DD-MON-RR HH24:MI:SSXFF'),'USR_ESB','Y');
 Insert into sa_modiscs.AD_USERS (ID,USERNAME,PASSWORD,FIRST_NAME,LAST_NAME,PHONE,COST_CENTER,COMPANY,LANGUAGE,EMAIL,FAX,DEALER_CODE,FE_ROLE,FE_GROUP,STATUS,DATE_LAST_UPDATE,SOURCE,DATE_INS,USER_INS,DATE_MOD,USER_MOD,ACTIVE) values ('7','itadmin5','2ZEUdE1g','Pierlorenzo','Pedrazzi','3333',null,null,'Inglese','pierlorenzo.pedrazzi@ferrari.com','3334','999999','10019100','91','Attivo',null,'DCS',to_timestamp('24-GIU-15 12:21:09,000000000','DD-MON-RR HH24:MI:SSXFF'),'USR_ESB',to_timestamp('24-GIU-15 12:56:08,000000000','DD-MON-RR HH24:MI:SSXFF'),'USR_ESB','Y');
@@ -266,3 +273,4 @@ Insert into sa_modiscs.AD_USERS (ID,USERNAME,PASSWORD,FIRST_NAME,LAST_NAME,PHONE
 Insert into sa_modiscs.AD_USERS (ID,USERNAME,PASSWORD,FIRST_NAME,LAST_NAME,PHONE,COST_CENTER,COMPANY,LANGUAGE,EMAIL,FAX,DEALER_CODE,FE_ROLE,FE_GROUP,STATUS,DATE_LAST_UPDATE,SOURCE,DATE_INS,USER_INS,DATE_MOD,USER_MOD,ACTIVE) values ('22','titscub01','eqT832',null,null,null,null,null,null,null,null,null,null,null,'Attivo',null,'DCS',to_timestamp('24-GIU-15 12:21:10,000000000','DD-MON-RR HH24:MI:SSXFF'),'USR_ESB',to_timestamp('24-GIU-15 12:56:08,000000000','DD-MON-RR HH24:MI:SSXFF'),'USR_ESB','Y');
 Insert into sa_modiscs.AD_USERS (ID,USERNAME,PASSWORD,FIRST_NAME,LAST_NAME,PHONE,COST_CENTER,COMPANY,LANGUAGE,EMAIL,FAX,DEALER_CODE,FE_ROLE,FE_GROUP,STATUS,DATE_LAST_UPDATE,SOURCE,DATE_INS,USER_INS,DATE_MOD,USER_MOD,ACTIVE) values ('23','titfepv13','x7Hx3h',null,null,null,null,null,null,null,null,null,null,null,'Attivo',null,'DCS',to_timestamp('24-GIU-15 12:21:10,000000000','DD-MON-RR HH24:MI:SSXFF'),'USR_ESB',to_timestamp('24-GIU-15 12:56:08,000000000','DD-MON-RR HH24:MI:SSXFF'),'USR_ESB','Y');
 Insert into sa_modiscs.AD_USERS (ID,USERNAME,PASSWORD,FIRST_NAME,LAST_NAME,PHONE,COST_CENTER,COMPANY,LANGUAGE,EMAIL,FAX,DEALER_CODE,FE_ROLE,FE_GROUP,STATUS,DATE_LAST_UPDATE,SOURCE,DATE_INS,USER_INS,DATE_MOD,USER_MOD,ACTIVE) values ('24','tadrsg01','Pu1tB0',null,null,null,null,null,null,null,null,null,null,null,'Attivo',null,'DCS',to_timestamp('24-GIU-15 12:21:10,000000000','DD-MON-RR HH24:MI:SSXFF'),'USR_ESB',to_timestamp('24-GIU-15 12:56:08,000000000','DD-MON-RR HH24:MI:SSXFF'),'USR_ESB','Y');
+commit;

@@ -41,9 +41,17 @@ public class Dealers implements Serializable {
 	private List<Bulletin> bulletins;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="COUNTRY_CODE", referencedColumnName="ID")
+	@JoinColumn(name="COUNTRY_CODE", referencedColumnName="ID_ISO3166")
 	private GeoCountries country;
 	
+	public GeoCountries getCountry() {
+		return country;
+	}
+
+	public void setCountry(GeoCountries country) {
+		this.country = country;
+	}
+
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="DEALER_CODE", referencedColumnName="ID_ISO3166")
 	private List<AdUsers> AdUsers;

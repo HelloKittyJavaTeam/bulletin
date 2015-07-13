@@ -31,7 +31,7 @@
     		<property name="javax.persistence.jdbc.driver" 	 value="oracle.jdbc.OracleDriver" />
     		<property name="javax.persistence.jdbc.user" 	 value="Bulletin" />
     		<property name="javax.persistence.jdbc.password" value="bulletin" />
-    		<property name="eclipselink.ddl-generation" 	 value="create-or-extend-tables"/>
+    		<!-- <property name="eclipselink.ddl-generation" 	 value="create-or-extend-tables"/>  -->
     		<property name="eclipselink.logging.file" 		 value="output.log"/>
     		<property name="eclipselink.logging.level.sql" 	value="FINE"/>
     		<property name="eclipselink.logging.parameters" value="true"/>
