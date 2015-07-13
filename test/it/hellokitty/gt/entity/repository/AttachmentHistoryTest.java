@@ -10,6 +10,8 @@ import it.hellokitty.gt.repository.impl.AttachmentHistoryRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,6 +21,7 @@ import javax.persistence.Persistence;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 
 public class AttachmentHistoryTest {
 	private AttachmentHistoryRepositoryImpl attachmentHistoryRep = new AttachmentHistoryRepositoryImpl();
@@ -32,9 +35,11 @@ public class AttachmentHistoryTest {
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
 			attachmentHistoryAdd = new AttachmentHistory();
-			attachmentHistoryAdd.setUserCreated("testADD"+i);
-			attachmentHistoryAdd.setActive(true);
 			attachmentHistoryAdd.setId(99999l+i);
+			attachmentHistoryAdd.setUserCreated("testADD"+i);
+			attachmentHistoryAdd.setCreateDate(new Date());
+			attachmentHistoryAdd.setnDownload(989898l);;
+			attachmentHistoryAdd.setActive(true);
 			em.persist(attachmentHistoryAdd);
 		}
 		transaction.commit();
@@ -45,6 +50,8 @@ public class AttachmentHistoryTest {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
+			attachmentHistoryAdd = new AttachmentHistory();
+			attachmentHistoryAdd.setId(99999l+i);
 			em.remove(em.find(AttachmentHistory.class, 99999l+i));
 		}
 		transaction.commit();
@@ -56,28 +63,60 @@ public class AttachmentHistoryTest {
 	@Test
 	public void attachmentHistoryFetchById(){
 		try {
-			AttachmentHistory emailContact = attachmentHistoryRep.fetchById(99999l);
-			assertNotNull("No AttachmentHistory returned from fetchById", emailContact);
-			emailContact = attachmentHistoryRep.fetchById(987654321l);
-			assertNull(emailContact);
+			AttachmentHistory bull = attachmentHistoryRep.fetchById(99999l);
+			assertNotNull("No AttachmentHistory returned from fetchById", bull);
+			assertTrue("attachmentHistoryFetchById method failed on retrieve content value. "
+					+ "Actual value: "+bull.getnDownload()+" "
+					+ "Expected value: NAMETEST 0", bull.getnDownload() == 989898);
+			bull= attachmentHistoryRep.fetchById(987654321l);
+			assertNull(bull);
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail("Caught Exception in attachmentHistoryFetchById method. "+e.toString());
 		}
 	}
 	
+	/*
+	 * 	FETCH ALL TEST
+	 */
 	@Test
 	public void attachmentHistoryFetchAll(){
-//		ColumnDirection cd = new ColumnDirection("id", "asc");
-//		List<ColumnDirection> cdList = new ArrayList<ColumnDirection>();
-//		cdList.add(cd);
-//		try {
-//			List<AttachmentHistory> attachmentHistorys = attachmentHistoryRep.fetchAll(0, 20, cdList);
-//			assertTrue("attachmentHistoryFetchAll returned a empty list.", attachmentHistorys.size() != 0);
-//			assertTrue("attachmentHistoryFetchAll didn't return all the elements.", attachmentHistorys.size() >= 20);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			fail("Caught Exception in attachmentHistoryFetchAll method.");
-//		}
+		try {
+			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
+			cdMap.put("id", "asc");
+			List<AttachmentHistory> bullList = attachmentHistoryRep.fetchAll(0, 20, cdMap);
+			assertTrue("attachmentHistoryFetchAll returned a empty list.", bullList.size() > 0);
+			assertTrue("attachmentHistoryFetchAll didn't return all the elements.", bullList.size() >= 20);
+			for(int index = 0; index < bullList.size()-1; index++){
+				if(bullList.get(index).getId() > bullList.get(index+1).getId()){
+					fail("attachmentHistoryFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
+				}
+			}
+		} catch (Exception e) {
+			fail("Caught Exception in attachmentHistoryFetchById method. "+e.toString());
+		}
+		
+		try {
+			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
+			cdMap.put("id", "desc");
+			List<AttachmentHistory> bullList = attachmentHistoryRep.fetchAll(0, 20, cdMap);
+			for(int index = 0; index < bullList.size()-1; index++){
+				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
+					fail("attachmentHistoryFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
+				}
+			}
+		} catch (Exception e) {
+			fail("Caught Exception in attachmentHistoryFetchById method. "+e.toString());
+		}
+		
+		try {
+			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
+			cdMap.put("id", "desc");
+			List<AttachmentHistory> bullList = attachmentHistoryRep.fetchAll(0, 17, cdMap);
+			assertTrue("attachmentHistoryFetchAll didn't return all the elements.", bullList.size() == 17);
+		} catch (Exception e) {
+			fail("Caught Exception in attachmentHistoryFetchById method. "+e.toString());
+		}
 	}
 	
 	/*
@@ -85,14 +124,14 @@ public class AttachmentHistoryTest {
 	 */
 	@Test
 	public void attachmentHistoryInsert(){
-		AttachmentHistory attachmentHistoryAdd = new AttachmentHistory();
-		attachmentHistoryAdd.setId(98989898l);
-		
+		AttachmentHistory bullToAdd = new AttachmentHistory();
+		bullToAdd.setId(98989898l);
+
 		try{
-			attachmentHistoryRep.insert(attachmentHistoryAdd, "testADD");
+			attachmentHistoryRep.insert(bullToAdd, "testADD");
 			assertNotNull(em.find(AttachmentHistory.class, 98989898l));
 		} catch (Exception e){
-			fail("emailContactInsert method failed. Unexpected Exception catched. "+e.getMessage());
+			fail("attachmentHistoryInsert method failed. Unexpected Exception catched. "+e.getMessage());
 		}
 		
 		em.remove(em.find(AttachmentHistory.class, 98989898l));
@@ -103,64 +142,34 @@ public class AttachmentHistoryTest {
 	 */
 	@Test
 	public void attachmentHistoryMerge(){
-		AttachmentHistory attachmentHistoryToMerge = new AttachmentHistory();
-		attachmentHistoryToMerge = em.find(AttachmentHistory.class, 99999l);
-		attachmentHistoryToMerge.setUserUpdate("TESTUSERMERGE");
-		
-//		try{
-//			attachmentHistoryRep.merge(attachmentHistoryToMerge, "TESTUSERMERGE");
-//			attachmentHistoryToMerge = em.find(AttachmentHistory.class, 99999l);
-//			assertTrue("attachmentHistoryMerge method failed. UserUpdate value not updated."
-//					+ "Current value: "+attachmentHistoryToMerge.getUserUpdate()+" "
-//					+ "Expected value: TESTUSERMERGE.", attachmentHistoryToMerge.getUserUpdate().equals("TESTUSERMERGE"));
-//		} catch (Exception e){
-//			fail("attachmentHistoryMerge method failed. Unexpected Exception catched. "+e.toString());
-//		}
+		AttachmentHistory bullToMerge = new AttachmentHistory();
+		bullToMerge = em.find(AttachmentHistory.class, 99999l);
+		bullToMerge.setnDownload(989898l);
 		
 		try{
-			attachmentHistoryToMerge = new AttachmentHistory();
-			attachmentHistoryToMerge.setId(9898989898l);
-			attachmentHistoryToMerge.setUserCreated("test");
-			attachmentHistoryToMerge.setUserUpdate("TESTNAMEMERGE");
-			attachmentHistoryRep.merge(attachmentHistoryToMerge, "testMERGE");
+			attachmentHistoryRep.merge(bullToMerge, "testMERGE");
+			bullToMerge = em.find(AttachmentHistory.class, 99999l);
+			assertTrue("attachmentHistoryMErge method failed. ItContent value wrong or not updated. "
+					+ "Current value: "+bullToMerge.getnDownload()+" "
+					+ "Expected value: CONTENUTO TEST ITA.",bullToMerge.getnDownload()==989898);
+			assertTrue("attachmentHistoryMerge method failed. UserUpdate value not updated."
+					+ "Current value: "+bullToMerge.getUserUpdate()+" "
+					+ "Expected value: testMERGE.", bullToMerge.getUserUpdate().equals("testMERGE"));
+		} catch (Exception e){
+			fail("attachmentHistoryMerge method failed. Unexpected Exception catched. "+e.toString());
+		}
+		
+		try{
+			bullToMerge = new AttachmentHistory();
+			bullToMerge.setId(9898989898l);
+			bullToMerge.setUserCreated("test");
+			bullToMerge.setnDownload(989898l);
+			attachmentHistoryRep.merge(bullToMerge, "testMERGE");
 			assertNotNull("attachmentHistoryMerge method fail. No element added.", em.find(AttachmentHistory.class, 9898989898l));
 		} catch (Exception e){
-			fail("attachmentHistoryMerge method fail during merge on inexistent attachmentHistory. Unexpected exception catched. "+e.toString());
+			fail("attachmentHistoryMErge method fail during merge on inexistent attachmentHistory. Unexpected exception catched. "+e.toString());
 		}
 		em.remove(em.find(AttachmentHistory.class, 9898989898l));
-	}
-	
-	/*
-	 *  UPDATE TEST
-	 */
-	@Test
-	public void attachmentHistoryUpdate(){
-		AttachmentHistory attachmentHistoryToUpdate = new AttachmentHistory();
-		attachmentHistoryToUpdate = em.find(AttachmentHistory.class, 99999l);
-		attachmentHistoryToUpdate.setUserUpdate("TESTNAMEMERGE");
-		
-//		try{
-//			attachmentHistoryRep.update(attachmentHistoryToUpdate, "testUPDATE");
-//			attachmentHistoryToUpdate = em.find(AttachmentHistory.class, 99999l);
-//			assertTrue("emailContactUpdate method failed. UserUpdate value not updated."
-//					+ "Current value: "+attachmentHistoryToUpdate.getUserUpdate()+" "
-//					+ "Expected value: testUPDATE.", attachmentHistoryToUpdate.getUserUpdate().equals("testUPDATE"));
-//		} catch (Exception e){
-//			fail("emailContactUpdate method failed. Unexpected Exception catched. "+e.toString());
-//		}
-		
-//		try{
-//			attachmentHistoryToUpdate = new AttachmentHistory();
-//			attachmentHistoryToUpdate.setId(9898989898l);
-//			attachmentHistoryToUpdate.setUserCreated("test");
-//			attachmentHistoryToUpdate.setUserUpdate("NAME TEST ITA");
-//			attachmentHistoryRep.update(attachmentHistoryToUpdate, "testUPDATE");
-//			fail("attachmentHistoryUpdate method failed. No IllegalArgumentException thrown.");
-//		} catch (IllegalArgumentException e){
-//			assertTrue(true); // Just for visibility :)
-//		} catch (Exception e){
-//			fail("emailContactUpdate method fail during merge on inexistent emailContact. Unexpected exception catched. "+e.toString());
-//		}
 	}
 	
 	/*
@@ -168,35 +177,15 @@ public class AttachmentHistoryTest {
 	 */
 	@Test
 	public void attachmentHistoryDelete(){
-		AttachmentHistory attachmentHistoryToDelete = new AttachmentHistory();
-		attachmentHistoryToDelete = em.find(AttachmentHistory.class, 99999l);
+		AttachmentHistory bullToDelete = new AttachmentHistory();
+		bullToDelete = em.find(AttachmentHistory.class, 99999l);
 		
 		try {
-			attachmentHistoryRep.delete(attachmentHistoryToDelete, "testDELETE");
-			attachmentHistoryToDelete = em.find(AttachmentHistory.class, 99999l);
-			assertFalse("attachmentHistoryDelete method failed. EmailContact not disactivated.", attachmentHistoryToDelete.isActive());
+			attachmentHistoryRep.delete(bullToDelete, "testDELETE");
+			bullToDelete = em.find(AttachmentHistory.class, 99999l);
+			assertFalse("attachmentHistoryDelete method failed. AttachmentHistory not disactivated.", bullToDelete.isActive());
 		} catch (Exception e){
 			fail("attachmentHistoryDelete method failed with user=\"\". Unexpected Exception catched. "+e.getMessage());
-		}
-		
-		attachmentHistoryToDelete = new AttachmentHistory();
-		attachmentHistoryToDelete.setId(987987987l);
-		attachmentHistoryToDelete.setUserCreated("testUSER");
-		attachmentHistoryToDelete.setCreateDate(new Date());
-		attachmentHistoryToDelete.setActive(false);
-		EntityTransaction transaction = em.getTransaction();
-		
-		transaction.begin();
-		em.persist(attachmentHistoryToDelete);
-		transaction.commit();
-		
-		try{
-			attachmentHistoryRep.delete(attachmentHistoryToDelete, "admin");
-			em = Persistence.createEntityManagerFactory("PERSISTENCE_UNIT_NAME").createEntityManager();
-			assertNull("attachmentHistoryDelete method failed. EmailContact with id 987987987 not deleted. ID: "+attachmentHistoryToDelete.getId(), em.find(AttachmentHistory.class, 987987987l));
-
-		} catch (Exception e){
-			fail("attachmentHistoryDelete method failed during delete from admin. Unexpected exception catched. "+e.toString());
 		}
 	}
 	
@@ -205,20 +194,55 @@ public class AttachmentHistoryTest {
 	 */
 	@Test
 	public void attachmentHistoryCount(){
-//		Long result;
-//		
-//		try{
-//			result = attachmentHistoryRep.count("testADD0");
-//			assertTrue("attachmentHistoryCount method failed. Number of AttachmentHistory expected: 1 Actual:"+result, result==1);
-//		} catch (Exception e){
-//			fail("attachmentHistoryCount method failed. Unexpected exception catched. "+e.toString());
-//		}
-//		
-//		try{
-//			result = attachmentHistoryRep.count("unknowUser");
-//			assertTrue("attachmentHistoryCount method with user parameter = 'unknowUser' failed. Number of AttachmentHistory expected: 0 Actual:"+result, result==0);
-//		} catch (Exception e){
-//			fail("attachmentHistoryCount method with user parameter = 'unknowUser' failed. Unexpected exception catched. "+e.toString());
-//		}
+		Long result;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("userCreated", "testADD0");
+		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		
+		try{
+			result = attachmentHistoryRep.count(map, emptyMap, emptyMap, emptyMap);
+			assertTrue("attachmentHistoryCount method failed. Number of AttachmentHistory expected: 1 Actual:"+result, result==1);
+		} catch (Exception e){
+			fail("attachmentHistoryCount method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("userCreated", "testADDUNKNOW");
+		
+		try{
+			result = attachmentHistoryRep.count(map, emptyMap, emptyMap, emptyMap);
+			assertTrue("attachmentHistoryCount method failed. Number of AttachmentHistory expected: 0 Actual:"+result, result==0);
+		} catch (Exception e){
+			fail("attachmentHistoryCount method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("userCreated", "testADD");
+		
+		try{
+			result = attachmentHistoryRep.count(emptyMap, map, emptyMap, emptyMap);
+			assertTrue("attachmentHistoryCount method with user parameter = 'unknowUser' failed. Number of AttachmentHistory expected: 20 Actual:"+result, result == 20);
+		} catch (Exception e){
+			fail("attachmentHistoryCount method with user parameter = 'unknowUser' failed. Unexpected exception catched. "+e.toString());
+		}
+	}
+	
+	/*
+	 *  SEARCH TEST
+	 */
+	@Test
+	public void attachmentHistorySearch(){
+		List<AttachmentHistory> attachmentHistoryList = new ArrayList<AttachmentHistory>();
+		
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+		map.put("id", "asc");
+		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		
+		try{
+			attachmentHistoryList = attachmentHistoryRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
+			assertTrue("attachmentHistorySearch method failed. Expected List of AttachmentHistory size: 1 Actual: "+attachmentHistoryList.size(),attachmentHistoryList.size() >= 1);
+		} catch (Exception e){
+			fail("attachmentHistorySearch method failed. Unexpected exception catched. "+e.toString());
+		}
 	}
 }

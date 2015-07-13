@@ -26,12 +26,12 @@ import org.junit.Test;
 
 
 public class BulletinTest {
-	private BulletinRepositoryImpl bullRep = new BulletinRepositoryImpl();
+	private BulletinRepositoryImpl bulletinRep = new BulletinRepositoryImpl();
 	private static EntityManager em = Persistence.createEntityManagerFactory("BULLETIN_PU").createEntityManager();
-	private static Bulletin bullAdd;
-	private static BulletinUser bullUserAdd;
+	private static Bulletin bulletinAdd;
+	private static BulletinUser bulletinUserAdd;
 	private static Tag tagAdd;
-	private static List<BulletinUser> bullUserAddList = new ArrayList<BulletinUser>();
+	private static List<BulletinUser> bulletinUserAddList = new ArrayList<BulletinUser>();
 	private static List<Tag> tagAddList = new ArrayList<Tag>();
 
 	@Before
@@ -40,24 +40,24 @@ public class BulletinTest {
 		
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
-			bullAdd = new Bulletin();
+			bulletinAdd = new Bulletin();
 			tagAdd  = new Tag("testTAG"+i);
-			bullUserAdd = new BulletinUser();
-			bullUserAdd.setUserCreated("testADD");
-			bullUserAdd.setUserName("user"+i);
-			bullUserAddList = new ArrayList<BulletinUser>();
-			bullUserAddList.add(bullUserAdd);
+			bulletinUserAdd = new BulletinUser();
+			bulletinUserAdd.setUserCreated("testADD");
+			bulletinUserAdd.setUserName("user"+i);
+			bulletinUserAddList = new ArrayList<BulletinUser>();
+			bulletinUserAddList.add(bulletinUserAdd);
 			tagAdd.setUserCreated("testUSER"+i);
 			tagAddList = new ArrayList<Tag>();
 			tagAddList.add(tagAdd);
-			bullAdd.setId(99999l+i);
-			bullAdd.setUserCreated("testADD"+i);
-			bullAdd.setCreateDate(new Date());
-			bullAdd.setItContent("CONTENUTOTEST "+i);
-			bullAdd.setActive(true);
-			bullAdd.setTags(tagAddList);
-			bullAdd.setBulletinUsers(bullUserAddList);
-			em.persist(bullAdd);
+			bulletinAdd.setId(99999l+i);
+			bulletinAdd.setUserCreated("testADD"+i);
+			bulletinAdd.setCreateDate(new Date());
+			bulletinAdd.setItContent("CONTENUTOTEST "+i);
+			bulletinAdd.setActive(true);
+			bulletinAdd.setTags(tagAddList);
+			bulletinAdd.setBulletinUsers(bulletinUserAddList);
+			em.persist(bulletinAdd);
 		}
 		transaction.commit();
 	}
@@ -67,10 +67,10 @@ public class BulletinTest {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
-			bullAdd = new Bulletin();
-			bullAdd.setId(99999l+i);
-			bullAdd.setUserCreated("testADD"+i);
-			bullAdd.setItContent("CONTENUTOTEST "+i);
+			bulletinAdd = new Bulletin();
+			bulletinAdd.setId(99999l+i);
+			bulletinAdd.setUserCreated("testADD"+i);
+			bulletinAdd.setItContent("CONTENUTOTEST "+i);
 			em.remove(em.find(Bulletin.class, 99999l+i));
 
 		}
@@ -83,12 +83,13 @@ public class BulletinTest {
 	@Test
 	public void bulletinFetchById(){
 		try {
-			Bulletin bull = bullRep.fetchById(99999l);
+			Bulletin bull = bulletinRep.fetchById(99999l);
 			assertNotNull("No Bulletin returned from fetchById", bull);
 			assertTrue("bulletinFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getItContent()+" "
 					+ "Expected value: CONTENUTOTEST 0", bull.getItContent().equals("CONTENUTOTEST 0"));
-			bull= bullRep.fetchById(987654321l);
+			
+			bull= bulletinRep.fetchById(987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,16 +97,45 @@ public class BulletinTest {
 		}
 	}
 	
+	/*
+	 * 	FETCH ALL TEST
+	 */
 	@Test
 	public void bulletinFetchAll(){
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<Bulletin> bullList = bullRep.fetchAll(0, 20, cdMap);
+			List<Bulletin> bullList = bulletinRep.fetchAll(0, 20, cdMap);
 			assertTrue("bulletinFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("bulletinFetchAll didn't return all the elements.", bullList.size() >= 20);
+			for(int index = 0; index < bullList.size()-1; index++){
+				if(bullList.get(index).getId() > bullList.get(index+1).getId()){
+					fail("bulletinFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
+				}
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail("Caught Exception in bulletinFetchById method. "+e.toString());
+		}
+		
+		try {
+			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
+			cdMap.put("id", "desc");
+			List<Bulletin> bullList = bulletinRep.fetchAll(0, 20, cdMap);
+			for(int index = 0; index < bullList.size()-1; index++){
+				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
+					fail("bulletinFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
+				}
+			}
+		} catch (Exception e) {
+			fail("Caught Exception in bulletinFetchById method. "+e.toString());
+		}
+		
+		try {
+			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
+			cdMap.put("id", "desc");
+			List<Bulletin> bullList = bulletinRep.fetchAll(0, 17, cdMap);
+			assertTrue("bulletinFetchAll didn't return all the elements.", bullList.size() == 17);
+		} catch (Exception e) {
 			fail("Caught Exception in bulletinFetchById method. "+e.toString());
 		}
 	}
@@ -119,7 +149,7 @@ public class BulletinTest {
 		bullToAdd.setId(98989898l);
 
 		try{
-			bullRep.insert(bullToAdd, "testADD");
+			bulletinRep.insert(bullToAdd, "testADD");
 			assertNotNull(em.find(Bulletin.class, 98989898l));
 		} catch (Exception e){
 			fail("bulletinInsert method failed. Unexpected Exception catched. "+e.getMessage());
@@ -138,7 +168,7 @@ public class BulletinTest {
 		bullToMerge.setItContent("CONTENUTO TEST ITA");
 		
 		try{
-			bullRep.merge(bullToMerge, "testMERGE");
+			bulletinRep.merge(bullToMerge, "testMERGE");
 			bullToMerge = em.find(Bulletin.class, 99999l);
 			assertTrue("bulletinMErge method failed. ItContent value wrong or not updated. "
 					+ "Current value: "+bullToMerge.getItTitle()+" "
@@ -155,7 +185,7 @@ public class BulletinTest {
 			bullToMerge.setId(9898989898l);
 			bullToMerge.setUserCreated("test");
 			bullToMerge.setItContent("CONTENUTO TEST ITA");
-			bullRep.merge(bullToMerge, "testMERGE");
+			bulletinRep.merge(bullToMerge, "testMERGE");
 			assertNotNull("bulletinMerge method fail. No element added.", em.find(Bulletin.class, 9898989898l));
 		} catch (Exception e){
 			fail("bulletinMErge method fail during merge on inexistent bulletin. Unexpected exception catched. "+e.toString());
@@ -172,92 +202,13 @@ public class BulletinTest {
 		bullToDelete = em.find(Bulletin.class, 99999l);
 		
 		try {
-			bullRep.delete(bullToDelete, "testDELETE");
+			bulletinRep.delete(bullToDelete, "testDELETE");
 			bullToDelete = em.find(Bulletin.class, 99999l);
 			assertFalse("bulletinDelete method failed. Bulletin not disactivated.", bullToDelete.isActive());
 		} catch (Exception e){
 			fail("bulletinDelete method failed with user=\"\". Unexpected Exception catched. "+e.getMessage());
 		}
 	}
-
-//	/*
-//	 *  FETCH BY TAG TEST
-//	 */
-//	@Test
-//	public void bulletinFetchByTag(){
-//		List<Bulletin> bulletinList = new ArrayList<Bulletin>();
-//		
-//		try{
-//			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
-//			cdMap.put("id", "asc");
-//			bulletinList = bullRep.fetchByTag("testTAG0", "user0", 0, 20, cdMap);
-//			assertTrue("bulletinFetchByTag method failed. Expected list size:1 actual size:"+bulletinList.size(),bulletinList.size()==1);
-//			assertTrue(bulletinList.get(0).getTags().get(0).getWord().equals("testTAG0"));
-//		} catch(Exception e){
-//			fail("bulletinFetchByTag method fail. Unexpected exception catched. "+e.toString());
-//		}
-//	}
-//	
-//	/*
-//	 * FETCH BY TAG LIKE TEST
-//	 */
-//	@Test
-//	public void bulletinFetchByTagLike(){
-//		List<Bulletin> bulletinList = new ArrayList<Bulletin>();
-//		
-//		ColumnDirection cd = new ColumnDirection("id", "asc");
-//		List<ColumnDirection> cdList = new ArrayList<ColumnDirection>();
-//		cdList.add(cd);
-//		
-//		try{
-//			bulletinList = bullRep.fetchByTagLike("testTAG0", "admin", 0, 20, cdList);
-//			assertTrue("bulletinFetchByTag method failed. Expected list size:1 actual size:"+bulletinList.size(),bulletinList.size()==1);
-//			assertTrue(bulletinList.get(0).getTags().get(0).getWord().equals("testTAG0"));
-//		} catch(Exception e){
-//			fail("bulletinFetchByTag method fail. Unexpected exception catched. "+e.toString());
-//		}
-//		
-//		try{
-//			bulletinList = bullRep.fetchByTagLike("testTAG", "admin", 0, 20, cdList);
-//			assertTrue("bulletinFetchByTag method failed. Expected list size:20 actual size:"+bulletinList.size(),bulletinList.size()==20);
-//		} catch(Exception e){
-//			fail("bulletinFetchByTag method fail. Unexpected exception catched. "+e.toString());
-//		}
-//		
-//		try{
-//			bulletinList = bullRep.fetchByTagLike("testTAG", "user0", 0, 20, cdList);
-//			assertTrue("bulletinFetchByTag method failed. Expected list size:1 actual size:"+bulletinList.size(),bulletinList.size()==1);
-//		} catch(Exception e){
-//			fail("bulletinFetchByTag method fail. Unexpected exception catched. "+e.toString());
-//		}
-//	}
-//	
-//	/*
-//	 *  FETCH BY USER TEST
-//	 */
-//	@Test
-//	public void bulletinFetchByUser(){
-//		List<Bulletin> bulletinList = new ArrayList<Bulletin>();
-//		
-//		ColumnDirection cd = new ColumnDirection("id", "asc");
-//		List<ColumnDirection> cdList = new ArrayList<ColumnDirection>();
-//		cdList.add(cd);
-//		
-//		try{
-//			bulletinList = bullRep.fetchByUser("user0", 0, 20, cdList);
-//			assertTrue("bulletinFetchByUser method failed. Expected list size:1 actual size:"+bulletinList.size(),bulletinList.size()==1);
-//			assertTrue(bulletinList.get(0).getTags().get(0).getWord().equals("testTAG0"));
-//		} catch(Exception e){
-//			fail("bulletinFetchByUser method failed. Unexpected exception catched. "+e.toString());
-//		}
-//		
-//		try{
-//			bulletinList = bullRep.fetchByUser("unknowUser", 0, 20, cdList);
-//			assertTrue("bulletinFetchByUser method failed. Expected list size:1 actual size:"+bulletinList.size(),bulletinList.size()==0);
-//		} catch(Exception e){
-//			fail("bulletinFetchByUser method failed. Unexpected exception catched. "+e.toString());
-//		}
-//	}
 	
 	/*
 	 *  COUNT TEST
@@ -270,7 +221,7 @@ public class BulletinTest {
 		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
 		
 		try{
-			result = bullRep.count(map, emptyMap, emptyMap, emptyMap);
+			result = bulletinRep.count(map, emptyMap, emptyMap, emptyMap);
 			assertTrue("bulletinCount method failed. Number of Bulletin expected: 1 Actual:"+result, result==1);
 		} catch (Exception e){
 			fail("bulletinCount method failed. Unexpected exception catched. "+e.toString());
@@ -280,7 +231,7 @@ public class BulletinTest {
 		map.put("userCreated", "testADDUNKNOW");
 		
 		try{
-			result = bullRep.count(map, emptyMap, emptyMap, emptyMap);
+			result = bulletinRep.count(map, emptyMap, emptyMap, emptyMap);
 			assertTrue("bulletinCount method failed. Number of Bulletin expected: 0 Actual:"+result, result==0);
 		} catch (Exception e){
 			fail("bulletinCount method failed. Unexpected exception catched. "+e.toString());
@@ -290,7 +241,7 @@ public class BulletinTest {
 		map.put("userCreated", "testADD");
 		
 		try{
-			result = bullRep.count(emptyMap, map, emptyMap, emptyMap);
+			result = bulletinRep.count(emptyMap, map, emptyMap, emptyMap);
 			assertTrue("bulletinCount method with user parameter = 'unknowUser' failed. Number of Bulletin expected: 20 Actual:"+result, result == 20);
 		} catch (Exception e){
 			fail("bulletinCount method with user parameter = 'unknowUser' failed. Unexpected exception catched. "+e.toString());
@@ -309,17 +260,10 @@ public class BulletinTest {
 		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
 		
 		try{
-			bulletinList = bullRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
+			bulletinList = bulletinRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
 			assertTrue("bulletinSearch method failed. Expected List of Bulletin size: 1 Actual: "+bulletinList.size(),bulletinList.size() >= 1);
 		} catch (Exception e){
 			fail("bulletinSearch method failed. Unexpected exception catched. "+e.toString());
 		}
-		
-//		try{
-//			bulletinList = bullRep.search("CONTENUTOTEST", "admin", "it", 0, 30, cdList);
-//			assertTrue("bulletinSearch method failed. Expected List of Bulletin size: 20 Actual: "+bulletinList.size(),bulletinList.size() >= 20);
-//		} catch (Exception e){
-//			fail("bulletinSearch method failed. Unexpected exception catched. "+e.toString());
-//		}
 	}
 }

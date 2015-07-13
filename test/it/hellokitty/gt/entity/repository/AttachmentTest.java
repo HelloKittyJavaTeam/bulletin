@@ -7,10 +7,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import it.hellokitty.gt.entity.Attachment;
 import it.hellokitty.gt.repository.impl.AttachmentRepositoryImpl;
-//import it.hellokitty.gt.repository.utils.ColumnDirection;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,6 +21,7 @@ import javax.persistence.Persistence;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 
 public class AttachmentTest {
 	private AttachmentRepositoryImpl attachmentRep = new AttachmentRepositoryImpl();
@@ -33,10 +35,11 @@ public class AttachmentTest {
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
 			attachmentAdd = new Attachment();
-			attachmentAdd.setUserCreated("testADD"+i);
-			attachmentAdd.setActive(true);
 			attachmentAdd.setId(99999l+i);
-			attachmentAdd.setFileName("testFILE"+i);
+			attachmentAdd.setUserCreated("testADD"+i);
+			attachmentAdd.setCreateDate(new Date());
+			attachmentAdd.setFileName("NAMETEST "+i);
+			attachmentAdd.setActive(true);
 			em.persist(attachmentAdd);
 		}
 		transaction.commit();
@@ -47,6 +50,8 @@ public class AttachmentTest {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
+			attachmentAdd = new Attachment();
+			attachmentAdd.setId(99999l+i);
 			em.remove(em.find(Attachment.class, 99999l+i));
 		}
 		transaction.commit();
@@ -58,31 +63,60 @@ public class AttachmentTest {
 	@Test
 	public void attachmentFetchById(){
 		try {
-			Attachment attachment = attachmentRep.fetchById(99999l);
-			assertNotNull("No Attachment returned from fetchById", attachment);
+			Attachment bull = attachmentRep.fetchById(99999l);
+			assertNotNull("No Attachment returned from fetchById", bull);
 			assertTrue("attachmentFetchById method failed on retrieve content value. "
-					+ "Actual value: "+attachment.getFileName()+" "
-					+ "Expected value: testFILE0", attachment.getFileName().equals("testFILE0"));
-			attachment = attachmentRep.fetchById(987654321l);
-			assertNull(attachment);
+					+ "Actual value: "+bull.getFileName()+" "
+					+ "Expected value: NAMETEST 0", bull.getFileName().equals("NAMETEST 0"));
+			bull= attachmentRep.fetchById(987654321l);
+			assertNull(bull);
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail("Caught Exception in attachmentFetchById method. "+e.toString());
 		}
 	}
 	
+	/*
+	 * 	FETCH ALL TEST
+	 */
 	@Test
 	public void attachmentFetchAll(){
-//		ColumnDirection cd = new ColumnDirection("id", "asc");
-//		List<ColumnDirection> cdList = new ArrayList<ColumnDirection>();
-//		cdList.add(cd);
-//		try {
-//			List<Attachment> attachments = attachmentRep.fetchAll(0, 20, cdList);
-//			assertTrue("attachmentFetchAll returned a empty list.", attachments.size() > 0);
-//			assertTrue("attachmentFetchAll didn't return all the elements.", attachments.size() >= 20);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			fail("Caught Exception in attachmentFetchAll method.");
-//		}
+		try {
+			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
+			cdMap.put("id", "asc");
+			List<Attachment> bullList = attachmentRep.fetchAll(0, 20, cdMap);
+			assertTrue("attachmentFetchAll returned a empty list.", bullList.size() > 0);
+			assertTrue("attachmentFetchAll didn't return all the elements.", bullList.size() >= 20);
+			for(int index = 0; index < bullList.size()-1; index++){
+				if(bullList.get(index).getId() > bullList.get(index+1).getId()){
+					fail("attachmentFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
+				}
+			}
+		} catch (Exception e) {
+			fail("Caught Exception in attachmentFetchById method. "+e.toString());
+		}
+		
+		try {
+			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
+			cdMap.put("id", "desc");
+			List<Attachment> bullList = attachmentRep.fetchAll(0, 20, cdMap);
+			for(int index = 0; index < bullList.size()-1; index++){
+				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
+					fail("attachmentFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
+				}
+			}
+		} catch (Exception e) {
+			fail("Caught Exception in attachmentFetchById method. "+e.toString());
+		}
+		
+		try {
+			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
+			cdMap.put("id", "desc");
+			List<Attachment> bullList = attachmentRep.fetchAll(0, 17, cdMap);
+			assertTrue("attachmentFetchAll didn't return all the elements.", bullList.size() == 17);
+		} catch (Exception e) {
+			fail("Caught Exception in attachmentFetchById method. "+e.toString());
+		}
 	}
 	
 	/*
@@ -90,11 +124,11 @@ public class AttachmentTest {
 	 */
 	@Test
 	public void attachmentInsert(){
-		Attachment attachmentAdd = new Attachment();
-		attachmentAdd.setId(98989898l);
-		
+		Attachment bullToAdd = new Attachment();
+		bullToAdd.setId(98989898l);
+
 		try{
-			attachmentRep.insert(attachmentAdd, "testADD");
+			attachmentRep.insert(bullToAdd, "testADD");
 			assertNotNull(em.find(Attachment.class, 98989898l));
 		} catch (Exception e){
 			fail("attachmentInsert method failed. Unexpected Exception catched. "+e.getMessage());
@@ -108,70 +142,34 @@ public class AttachmentTest {
 	 */
 	@Test
 	public void attachmentMerge(){
-		Attachment attachmentToMerge = new Attachment();
-		attachmentToMerge = em.find(Attachment.class, 99999l);
-		attachmentToMerge.setFileName("TESTNAMEMERGE");
+		Attachment bullToMerge = new Attachment();
+		bullToMerge = em.find(Attachment.class, 99999l);
+		bullToMerge.setFileName("NAME TEST");
 		
 		try{
-			attachmentRep.merge(attachmentToMerge, "testMERGE");
-			attachmentToMerge = em.find(Attachment.class, 99999l);
-			assertTrue("attachmentMerge method failed. ItContent value wrong or not updated. "
-					+ "Current value: "+attachmentToMerge.getFileName()+" "
-					+ "Expected value: TESTNAMEMERGE.",attachmentToMerge.getFileName().equals("TESTNAMEMERGE"));
+			attachmentRep.merge(bullToMerge, "testMERGE");
+			bullToMerge = em.find(Attachment.class, 99999l);
+			assertTrue("attachmentMErge method failed. ItContent value wrong or not updated. "
+					+ "Current value: "+bullToMerge.getFileName()+" "
+					+ "Expected value: CONTENUTO TEST ITA.",bullToMerge.getFileName().equals("NAME TEST"));
 			assertTrue("attachmentMerge method failed. UserUpdate value not updated."
-					+ "Current value: "+attachmentToMerge.getUserUpdate()+" "
-					+ "Expected value: testMERGE.", attachmentToMerge.getUserUpdate().equals("testMERGE"));
+					+ "Current value: "+bullToMerge.getUserUpdate()+" "
+					+ "Expected value: testMERGE.", bullToMerge.getUserUpdate().equals("testMERGE"));
 		} catch (Exception e){
 			fail("attachmentMerge method failed. Unexpected Exception catched. "+e.toString());
 		}
 		
 		try{
-			attachmentToMerge = new Attachment();
-			attachmentToMerge.setId(9898989898l);
-			attachmentToMerge.setUserCreated("test");
-			attachmentToMerge.setFileName("TESTNAMEMERGE");
-			attachmentRep.merge(attachmentToMerge, "testMERGE");
+			bullToMerge = new Attachment();
+			bullToMerge.setId(9898989898l);
+			bullToMerge.setUserCreated("test");
+			bullToMerge.setFileName("NAME TEST");
+			attachmentRep.merge(bullToMerge, "testMERGE");
 			assertNotNull("attachmentMerge method fail. No element added.", em.find(Attachment.class, 9898989898l));
 		} catch (Exception e){
-			fail("attachmentMerge method fail during merge on inexistent attachment. Unexpected exception catched. "+e.toString());
+			fail("attachmentMErge method fail during merge on inexistent attachment. Unexpected exception catched. "+e.toString());
 		}
 		em.remove(em.find(Attachment.class, 9898989898l));
-	}
-	
-	/*
-	 *  UPDATE TEST
-	 */
-	@Test
-	public void attachmentUpdate(){
-		Attachment attachmentToUpdate = new Attachment();
-		attachmentToUpdate = em.find(Attachment.class, 99999l);
-		attachmentToUpdate.setFileName("TESTNAMEMERGE");
-		
-//		try{
-//			attachmentRep.update(attachmentToUpdate, "testUPDATE");
-//			attachmentToUpdate = em.find(Attachment.class, 99999l);
-//			assertTrue("attachmentUpdate method failed. ItContent value wrong or not updated. "
-//					+ "Current value: "+attachmentToUpdate.getFileName()+" "
-//					+ "Expected value: TESTNAMEMERGE.",attachmentToUpdate.getFileName().equals("TESTNAMEMERGE"));
-//			assertTrue("attachmentUpdate method failed. UserUpdate value not updated."
-//					+ "Current value: "+attachmentToUpdate.getUserUpdate()+" "
-//					+ "Expected value: testUPDATE.", attachmentToUpdate.getUserUpdate().equals("testUPDATE"));
-//		} catch (Exception e){
-//			fail("attachmentUpdate method failed. Unexpected Exception catched. "+e.toString());
-//		}
-		
-//		try{
-//			attachmentToUpdate = new Attachment();
-//			attachmentToUpdate.setId(9898989898l);
-//			attachmentToUpdate.setUserCreated("test");
-//			attachmentToUpdate.setFileName("NAME TEST ITA");
-//			attachmentRep.update(attachmentToUpdate, "testUPDATE");
-//			fail("attachmentUpdate method failed. IllegalArgumentException not thrown.");
-//		} catch (IllegalArgumentException e){
-//			assertTrue(true); // Just for visibility :)
-//		} catch (Exception e){
-//			fail("attachmentUpdate method fail during merge on inexistent attachment. Unexpected exception catched. "+e.toString());
-//		}
 	}
 	
 	/*
@@ -179,35 +177,15 @@ public class AttachmentTest {
 	 */
 	@Test
 	public void attachmentDelete(){
-		Attachment attachmentToDelete = new Attachment();
-		attachmentToDelete = em.find(Attachment.class, 99999l);
+		Attachment bullToDelete = new Attachment();
+		bullToDelete = em.find(Attachment.class, 99999l);
 		
 		try {
-			attachmentRep.delete(attachmentToDelete, "testDELETE");
-			attachmentToDelete = em.find(Attachment.class, 99999l);
-			assertFalse("attachmentDelete method failed. EmailContact not disactivated.", attachmentToDelete.isActive());
+			attachmentRep.delete(bullToDelete, "testDELETE");
+			bullToDelete = em.find(Attachment.class, 99999l);
+			assertFalse("attachmentDelete method failed. Attachment not disactivated.", bullToDelete.isActive());
 		} catch (Exception e){
 			fail("attachmentDelete method failed with user=\"\". Unexpected Exception catched. "+e.getMessage());
-		}
-		
-		attachmentToDelete = new Attachment();
-		attachmentToDelete.setId(987987987l);
-		attachmentToDelete.setUserCreated("testUSER");
-		attachmentToDelete.setCreateDate(new Date());
-		attachmentToDelete.setActive(false);
-		EntityTransaction transaction = em.getTransaction();
-		
-		transaction.begin();
-		em.persist(attachmentToDelete);
-		transaction.commit();
-		
-		try{
-			attachmentRep.delete(attachmentToDelete, "admin");
-			em = Persistence.createEntityManagerFactory("PERSISTENCE_UNIT_NAME").createEntityManager();
-			assertNull("attachmentDelete method failed. EmailContact with id 987987987 not deleted. ID: "+attachmentToDelete.getId(), em.find(Attachment.class, 987987987l));
-
-		} catch (Exception e){
-			fail("attachmentDelete method failed during delete from admin. Unexpected exception catched. "+e.toString());
 		}
 	}
 	
@@ -216,20 +194,55 @@ public class AttachmentTest {
 	 */
 	@Test
 	public void attachmentCount(){
-//		Long result;
-//		
-//		try{
-//			result = attachmentRep.count("testADD0");
-//			assertTrue("attachmentCount method failed. Number of Attachment expected: 1 Actual:"+result, result==1);
-//		} catch (Exception e){
-//			fail("attachmentCount method failed. Unexpected exception catched. "+e.toString());
-//		}
-//		
-//		try{
-//			result = attachmentRep.count("unknowUser");
-//			assertTrue("attachmentCount method with user parameter = 'unknowUser' failed. Number of Attachment expected: 0 Actual:"+result, result==0);
-//		} catch (Exception e){
-//			fail("attachmentCount method with user parameter = 'unknowUser' failed. Unexpected exception catched. "+e.toString());
-//		}
+		Long result;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("userCreated", "testADD0");
+		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		
+		try{
+			result = attachmentRep.count(map, emptyMap, emptyMap, emptyMap);
+			assertTrue("attachmentCount method failed. Number of Attachment expected: 1 Actual:"+result, result==1);
+		} catch (Exception e){
+			fail("attachmentCount method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("userCreated", "testADDUNKNOW");
+		
+		try{
+			result = attachmentRep.count(map, emptyMap, emptyMap, emptyMap);
+			assertTrue("attachmentCount method failed. Number of Attachment expected: 0 Actual:"+result, result==0);
+		} catch (Exception e){
+			fail("attachmentCount method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("userCreated", "testADD");
+		
+		try{
+			result = attachmentRep.count(emptyMap, map, emptyMap, emptyMap);
+			assertTrue("attachmentCount method with user parameter = 'unknowUser' failed. Number of Attachment expected: 20 Actual:"+result, result == 20);
+		} catch (Exception e){
+			fail("attachmentCount method with user parameter = 'unknowUser' failed. Unexpected exception catched. "+e.toString());
+		}
+	}
+	
+	/*
+	 *  SEARCH TEST
+	 */
+	@Test
+	public void attachmentSearch(){
+		List<Attachment> attachmentList = new ArrayList<Attachment>();
+		
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+		map.put("id", "asc");
+		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		
+		try{
+			attachmentList = attachmentRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
+			assertTrue("attachmentSearch method failed. Expected List of Attachment size: 1 Actual: "+attachmentList.size(),attachmentList.size() >= 1);
+		} catch (Exception e){
+			fail("attachmentSearch method failed. Unexpected exception catched. "+e.toString());
+		}
 	}
 }
