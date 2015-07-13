@@ -27,7 +27,7 @@ public class GeoCountries implements Serializable {
 	@Id 
 	@Basic(optional = false)
 	@Column(name="ID")
-	private Long id;
+	private String id;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="BULLETIN_COUNTRY",
@@ -85,11 +85,11 @@ public class GeoCountries implements Serializable {
 	
 	public GeoCountries(){}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
