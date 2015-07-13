@@ -41,7 +41,7 @@ public class GeoRegions implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_AREA", referencedColumnName="ID")
-	private GeoAreas geoArea;
+	private GeoAreas area;
 
 	@Column(name="DESCRIPTION_IT")
 	private String descriptionIT;
@@ -107,12 +107,12 @@ public class GeoRegions implements Serializable {
 		this.countries = countries;
 	}
 
-	public GeoAreas getGeoArea() {
-		return geoArea;
+	public GeoAreas getArea() {
+		return area;
 	}
 
-	public void setGeoArea(GeoAreas geoArea) {
-		this.geoArea = geoArea;
+	public void setArea(GeoAreas geoArea) {
+		this.area = geoArea;
 	}
 
 	public String getDescriptionIT() {
