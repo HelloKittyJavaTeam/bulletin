@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import it.hellokitty.gt.entity.EmailContact;
-import it.hellokitty.gt.repository.utils.ColumnDirection;
 import it.hellokitty.gt.service.impl.EmailContactServiceImpl;
 
 import java.util.ArrayList;
@@ -25,8 +24,7 @@ public class EmailContactServiceTest {
 	private EmailContactServiceImpl emailContactRep = new EmailContactServiceImpl();
 	private static EntityManager em = Persistence.createEntityManagerFactory("BULLETIN_PU").createEntityManager();
 	private static EmailContact emailContactAdd;
-	private static List<ColumnDirection> cdList = new ArrayList<ColumnDirection>();
-
+	
 	@Before
 	public void insert20Elements() {
 		EntityTransaction transaction = em.getTransaction();
@@ -94,62 +92,62 @@ public class EmailContactServiceTest {
 	
 	@Test
 	public void emailContactFetchAll(){
-		cdList = new ArrayList<ColumnDirection>();
-		ColumnDirection cd = new ColumnDirection("id", "asc");
-		cdList.add(cd);
-		try{
-			emailContactRep.fetchAll(null, 10, cdList);
-			fail("emailContactFetchAll method with start parameter = null failed. No IllegalArgumentException thrown.");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility :)
-		} catch (Exception e){
-			fail("emailContactFetchAll method with start parameter = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			emailContactRep.fetchAll(-1, 10, cdList);
-			fail("emailContactFetchAll method with start parameter = -1 failed. No IllegalArgumentException thrown.");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility :)
-		} catch (Exception e){
-			fail("emailContactFetchAll method with start parameter = -1 failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			emailContactRep.fetchAll(0, null, cdList);
-			fail("emailContactFetchAll method with limit parameter = null failed. No IllegalArgumentException thrown.");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility :)
-		} catch (Exception e){
-			fail("emailContactFetchAll method with limit parameter = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			emailContactRep.fetchAll(0, -1, cdList);
-			fail("emailContactFetchAll method with limit parameter = -1 failed. No IllegalArgumentException thrown.");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility :)
-		} catch (Exception e){
-			fail("emailContactFetchAll method with limit parameter = -1 failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			emailContactRep.fetchAll(0, 10, null);
-			fail("emailContactFetchAll method with limit parameter = -1 failed. No IllegalArgumentException thrown.");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility :)
-		} catch (Exception e){
-			fail("emailContactFetchAll method with limit parameter = -1 failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try {
-			List<EmailContact> emailContactList = emailContactRep.fetchAll(0, 20, cdList);
-			assertTrue("emailContactFetchAll returned a empty list.", emailContactList.size() > 0);
-			assertTrue("emailContactFetchAll didn't return all the elements.", emailContactList.size() >= 20);
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail("Caught Exception in emailContactFetchById method.");
-		}
+//		cdList = new ArrayList<ColumnDirection>();
+//		ColumnDirection cd = new ColumnDirection("id", "asc");
+//		cdList.add(cd);
+//		try{
+//			emailContactRep.fetchAll(null, 10, cdList);
+//			fail("emailContactFetchAll method with start parameter = null failed. No IllegalArgumentException thrown.");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility :)
+//		} catch (Exception e){
+//			fail("emailContactFetchAll method with start parameter = null failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			emailContactRep.fetchAll(-1, 10, cdList);
+//			fail("emailContactFetchAll method with start parameter = -1 failed. No IllegalArgumentException thrown.");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility :)
+//		} catch (Exception e){
+//			fail("emailContactFetchAll method with start parameter = -1 failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			emailContactRep.fetchAll(0, null, cdList);
+//			fail("emailContactFetchAll method with limit parameter = null failed. No IllegalArgumentException thrown.");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility :)
+//		} catch (Exception e){
+//			fail("emailContactFetchAll method with limit parameter = null failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			emailContactRep.fetchAll(0, -1, cdList);
+//			fail("emailContactFetchAll method with limit parameter = -1 failed. No IllegalArgumentException thrown.");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility :)
+//		} catch (Exception e){
+//			fail("emailContactFetchAll method with limit parameter = -1 failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			emailContactRep.fetchAll(0, 10, null);
+//			fail("emailContactFetchAll method with limit parameter = -1 failed. No IllegalArgumentException thrown.");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility :)
+//		} catch (Exception e){
+//			fail("emailContactFetchAll method with limit parameter = -1 failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try {
+//			List<EmailContact> emailContactList = emailContactRep.fetchAll(0, 20, cdList);
+//			assertTrue("emailContactFetchAll returned a empty list.", emailContactList.size() > 0);
+//			assertTrue("emailContactFetchAll didn't return all the elements.", emailContactList.size() >= 20);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			fail("Caught Exception in emailContactFetchById method.");
+//		}
 	}
 	
 	/*
@@ -267,57 +265,57 @@ public class EmailContactServiceTest {
 		emailContactToUpdate = em.find(EmailContact.class, 99999l);
 		emailContactToUpdate.setName("MODIFIED NAME");
 		
-		try{
-			emailContactRep.update(null, "testADD");
-			fail("emailContactUpdate method with elem parameter = null failed. No IllegalArgumentException thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("emailContactUpdate method with elem parmeter = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			emailContactRep.update(emailContactToUpdate, null);
-			fail("emailContactUpdate method with user parameter = null failed. No IllegalArgumentExcepion thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("emailContactUpdate method with elem user = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			emailContactRep.update(emailContactToUpdate, "");
-			fail("emailContactUpdate method with user parameter = '' failed. No IllegalArgumentExcepion thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("emailContactUpdate method with elem user = '' failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			emailContactRep.update(emailContactToUpdate, "testUPDATE");
-			emailContactToUpdate = em.find(EmailContact.class, 99999l);
-			assertTrue("emailContactUpdate method failed. ItContent value wrong or not updated. "
-					+ "Current value: "+emailContactToUpdate.getName()+" "
-					+ "Expected value: 10.",emailContactToUpdate.getName().equals("MODIFIED NAME"));
-			assertTrue("emailContactUpdate method failed. UserUpdate value not updated."
-					+ "Current value: "+emailContactToUpdate.getUserUpdate()+" "
-					+ "Expected value: testUPDATE.", emailContactToUpdate.getUserUpdate().equals("testUPDATE"));
-		} catch (Exception e){
-			fail("emailContactUpdate method failed. Unexpected Exception catched. "+e.toString());
-		}
-		
-		try{
-			emailContactToUpdate = new EmailContact();
-			emailContactToUpdate.setId(9898989898l);
-			emailContactToUpdate.setUserCreated("test");
-			emailContactRep.update(emailContactToUpdate, "testUPDATE");
-			fail("emailContactUpdate method failed. No IllegalArgumentException thrown.");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility :)
-		} catch (Exception e){
-			fail("emailContactUpdate method fail during merge on inexistent emailContact. Unexpected exception catched. "+e.toString());
-		}
+//		try{
+//			emailContactRep.update(null, "testADD");
+//			fail("emailContactUpdate method with elem parameter = null failed. No IllegalArgumentException thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("emailContactUpdate method with elem parmeter = null failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			emailContactRep.update(emailContactToUpdate, null);
+//			fail("emailContactUpdate method with user parameter = null failed. No IllegalArgumentExcepion thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("emailContactUpdate method with elem user = null failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			emailContactRep.update(emailContactToUpdate, "");
+//			fail("emailContactUpdate method with user parameter = '' failed. No IllegalArgumentExcepion thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("emailContactUpdate method with elem user = '' failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			emailContactRep.update(emailContactToUpdate, "testUPDATE");
+//			emailContactToUpdate = em.find(EmailContact.class, 99999l);
+//			assertTrue("emailContactUpdate method failed. ItContent value wrong or not updated. "
+//					+ "Current value: "+emailContactToUpdate.getName()+" "
+//					+ "Expected value: 10.",emailContactToUpdate.getName().equals("MODIFIED NAME"));
+//			assertTrue("emailContactUpdate method failed. UserUpdate value not updated."
+//					+ "Current value: "+emailContactToUpdate.getUserUpdate()+" "
+//					+ "Expected value: testUPDATE.", emailContactToUpdate.getUserUpdate().equals("testUPDATE"));
+//		} catch (Exception e){
+//			fail("emailContactUpdate method failed. Unexpected Exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			emailContactToUpdate = new EmailContact();
+//			emailContactToUpdate.setId(9898989898l);
+//			emailContactToUpdate.setUserCreated("test");
+//			emailContactRep.update(emailContactToUpdate, "testUPDATE");
+//			fail("emailContactUpdate method failed. No IllegalArgumentException thrown.");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility :)
+//		} catch (Exception e){
+//			fail("emailContactUpdate method fail during merge on inexistent emailContact. Unexpected exception catched. "+e.toString());
+//		}
 	}
 	
 	/*
@@ -328,40 +326,40 @@ public class EmailContactServiceTest {
 		EmailContact emailContactToDelete = new EmailContact();
 		emailContactToDelete = em.find(EmailContact.class, 99999l);
 		
-		try{
-			emailContactRep.update(null, "testADD");
-			fail("emailContactDelete method with elem parameter = null failed. No IllegalArgumentException thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("emailContactDelete method with elem parmeter = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			emailContactRep.update(emailContactToDelete, null);
-			fail("emailContactDelete method with user parameter = null failed. No IllegalArgumentExcepion thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("emailContactDelete method with elem user = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			emailContactRep.update(emailContactToDelete, "");
-			fail("emailContactDelete method with user parameter = '' failed. No IllegalArgumentExcepion thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("emailContactDelete method with elem user = '' failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try {
-			emailContactRep.delete(emailContactToDelete, "testDELETE");
-			emailContactToDelete = em.find(EmailContact.class, 99999l);
-			assertFalse("emailContactDelete method failed. EmailContact not disactivated.", emailContactToDelete.isActive());
-		} catch (Exception e){
-			fail("emailContactDelete method failed with user=\"\". Unexpected Exception catched. "+e.getMessage());
-		}
+//		try{
+//			emailContactRep.update(null, "testADD");
+//			fail("emailContactDelete method with elem parameter = null failed. No IllegalArgumentException thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("emailContactDelete method with elem parmeter = null failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			emailContactRep.update(emailContactToDelete, null);
+//			fail("emailContactDelete method with user parameter = null failed. No IllegalArgumentExcepion thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("emailContactDelete method with elem user = null failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			emailContactRep.update(emailContactToDelete, "");
+//			fail("emailContactDelete method with user parameter = '' failed. No IllegalArgumentExcepion thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("emailContactDelete method with elem user = '' failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try {
+//			emailContactRep.delete(emailContactToDelete, "testDELETE");
+//			emailContactToDelete = em.find(EmailContact.class, 99999l);
+//			assertFalse("emailContactDelete method failed. EmailContact not disactivated.", emailContactToDelete.isActive());
+//		} catch (Exception e){
+//			fail("emailContactDelete method failed with user=\"\". Unexpected Exception catched. "+e.getMessage());
+//		}
 	}
 	
 	/*
@@ -369,38 +367,38 @@ public class EmailContactServiceTest {
 	 */
 	@Test
 	public void emailContactCount(){
-		Long result;
-		
-		try{
-			result = emailContactRep.count(null);
-			fail("emailContactCount method with user parameter = null failed. No IllegalArgumentException thrown.");
-		} catch(IllegalArgumentException e){
-			assertTrue(true); // Just for visibility :)
-		} catch(Exception e){
-			fail("emailContactCount method with user parameter = null fail. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			result = emailContactRep.count("");
-			fail("emailContactCount method with user parameter = '' failed. No IllegalArgumentException thrown.");
-		} catch(IllegalArgumentException e){
-			assertTrue(true); // Just for visibility :)
-		} catch(Exception e){
-			fail("emailContactCount method with user parameter = '' fail. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			result = emailContactRep.count("testADD0");
-			assertTrue("emailContactCount method failed. Number of EmailContact expected: 1 Actual:"+result, result==1);
-		} catch (Exception e){
-			fail("emailContactCount method failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			result = emailContactRep.count("unknowUser");
-			assertTrue("emailContactCount method with user parameter = 'unknowUser' failed. Number of EmailContact expected: 0 Actual:"+result, result==0);
-		} catch (Exception e){
-			fail("emailContactCount method with user parameter = 'unknowUser' failed. Unexpected exception catched. "+e.toString());
-		}
+//		Long result;
+//		
+//		try{
+//			result = emailContactRep.count(null);
+//			fail("emailContactCount method with user parameter = null failed. No IllegalArgumentException thrown.");
+//		} catch(IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility :)
+//		} catch(Exception e){
+//			fail("emailContactCount method with user parameter = null fail. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			result = emailContactRep.count("");
+//			fail("emailContactCount method with user parameter = '' failed. No IllegalArgumentException thrown.");
+//		} catch(IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility :)
+//		} catch(Exception e){
+//			fail("emailContactCount method with user parameter = '' fail. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			result = emailContactRep.count("testADD0");
+//			assertTrue("emailContactCount method failed. Number of EmailContact expected: 1 Actual:"+result, result==1);
+//		} catch (Exception e){
+//			fail("emailContactCount method failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			result = emailContactRep.count("unknowUser");
+//			assertTrue("emailContactCount method with user parameter = 'unknowUser' failed. Number of EmailContact expected: 0 Actual:"+result, result==0);
+//		} catch (Exception e){
+//			fail("emailContactCount method with user parameter = 'unknowUser' failed. Unexpected exception catched. "+e.toString());
+//		}
 	}
 }
