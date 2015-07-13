@@ -23,9 +23,9 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name="VEHICLE_GROUP")
-@NamedQuery(name="VehicleGroupsIn.findAll", query="SELECT x FROM VehicleGroup x")
-public class VehicleGroup implements Serializable {
+@Table(name="VEHICLE_GROUPS")
+@NamedQuery(name="VehicleGroupsIn.findAll", query="SELECT x FROM VehicleGroups x")
+public class VehicleGroups implements Serializable {
 	private static final long serialVersionUID = 3599752950805908921L;
 
 	@Id
@@ -77,7 +77,7 @@ public class VehicleGroup implements Serializable {
 	@Column(name="USER_MOD")
 	private String userMod;
 
-	public VehicleGroup() {
+	public VehicleGroups() {
 	}
 
 	public boolean isActive() {

@@ -52,7 +52,7 @@ public class VehicleMaster implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="VEHICLE_GROUP_ID", referencedColumnName="ID")
-	private VehicleGroup vehicleGroup;
+	private VehicleGroups vehicleGroup;
 
 	public VehicleMaster() {
 	}
@@ -73,11 +73,11 @@ public class VehicleMaster implements Serializable {
 		}
 	}
 
-	public VehicleGroup getVehicleGroup() {
+	public VehicleGroups getVehicleGroup() {
 		return vehicleGroup;
 	}
 
-	public void setVehicleGroup(VehicleGroup vehicleGroup) {
+	public void setVehicleGroup(VehicleGroups vehicleGroup) {
 		this.vehicleGroup = vehicleGroup;
 	}
 

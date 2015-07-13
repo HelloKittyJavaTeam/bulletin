@@ -51,7 +51,7 @@ public class VehicleFamily implements Serializable {
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="FAMILY_CODE", referencedColumnName="ID")
-	private List<VehicleGroup> vehicleGroup;
+	private List<VehicleGroups> vehicleGroup;
 
 	public VehicleFamily() {
 	}

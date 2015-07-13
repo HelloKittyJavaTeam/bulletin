@@ -218,10 +218,9 @@ public class BulletinTest {
 		Long result;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("userCreated", "testADD0");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
 		
 		try{
-			result = bulletinRep.count(map, emptyMap, emptyMap, emptyMap);
+			result = bulletinRep.count(map, null, null, null);
 			assertTrue("bulletinCount method failed. Number of Bulletin expected: 1 Actual:"+result, result==1);
 		} catch (Exception e){
 			fail("bulletinCount method failed. Unexpected exception catched. "+e.toString());
@@ -231,7 +230,7 @@ public class BulletinTest {
 		map.put("userCreated", "testADDUNKNOW");
 		
 		try{
-			result = bulletinRep.count(map, emptyMap, emptyMap, emptyMap);
+			result = bulletinRep.count(map, null, null, null);
 			assertTrue("bulletinCount method failed. Number of Bulletin expected: 0 Actual:"+result, result==0);
 		} catch (Exception e){
 			fail("bulletinCount method failed. Unexpected exception catched. "+e.toString());
@@ -241,7 +240,7 @@ public class BulletinTest {
 		map.put("userCreated", "testADD");
 		
 		try{
-			result = bulletinRep.count(emptyMap, map, emptyMap, emptyMap);
+			result = bulletinRep.count(null, map, null, null);
 			assertTrue("bulletinCount method with user parameter = 'unknowUser' failed. Number of Bulletin expected: 20 Actual:"+result, result == 20);
 		} catch (Exception e){
 			fail("bulletinCount method with user parameter = 'unknowUser' failed. Unexpected exception catched. "+e.toString());

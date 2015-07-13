@@ -1,16 +1,16 @@
 package it.hellokitty.gt.service.impl;
 
-import it.hellokitty.gt.entity.VehicleGroup;
-import it.hellokitty.gt.repository.VehicleGroupRepository;
-import it.hellokitty.gt.repository.impl.VehicleGroupRepositoryImpl;
-import it.hellokitty.gt.service.VehicleGroupService;
+import it.hellokitty.gt.entity.VehicleGroups;
+import it.hellokitty.gt.repository.VehicleGroupsRepository;
+import it.hellokitty.gt.repository.impl.VehicleGroupsRepositoryImpl;
+import it.hellokitty.gt.service.VehicleGroupsService;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class VehicleGroupServiceImpl implements VehicleGroupService{
-	VehicleGroupRepository vehicleGroupRepository = new VehicleGroupRepositoryImpl();
+public class VehicleGroupsServiceImpl implements VehicleGroupsService{
+	VehicleGroupsRepository vehicleGroupRepository = new VehicleGroupsRepositoryImpl();
 	
 	@Override
 	public Long count() throws Exception {
@@ -39,17 +39,17 @@ public class VehicleGroupServiceImpl implements VehicleGroupService{
 	}
 
 	@Override
-	public List<VehicleGroup> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> orderColumn) throws IllegalArgumentException, Exception {
+	public List<VehicleGroups> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> orderColumn) throws IllegalArgumentException, Exception {
 		return vehicleGroupRepository.fetchAll(start, limit, orderColumn);
 	}
 
 	@Override
-	public VehicleGroup fetchById(Object id) throws Exception {
+	public VehicleGroups fetchById(Object id) throws Exception {
 		return vehicleGroupRepository.fetchById(id);
 	}
 
 	@Override
-	public List<VehicleGroup> search(Integer arg0, Integer arg1,
+	public List<VehicleGroups> search(Integer arg0, Integer arg1,
 			LinkedHashMap<String, String> arg2, HashMap<String, Object> arg3,
 			HashMap<String, Object> arg4, HashMap<String, Object> arg5,
 			HashMap<String, Object> arg6) {
