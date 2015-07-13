@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import it.hellokitty.gt.entity.AttachmentHistory;
 import it.hellokitty.gt.repository.impl.AttachmentHistoryRepositoryImpl;
-import it.hellokitty.gt.repository.utils.ColumnDirection;
 
 import java.util.ArrayList;
 import java.util.Date;

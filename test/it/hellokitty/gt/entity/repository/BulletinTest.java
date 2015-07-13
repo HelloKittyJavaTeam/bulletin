@@ -163,42 +163,6 @@ public class BulletinTest {
 		em.remove(em.find(Bulletin.class, 9898989898l));
 	}
 	
-//	/*
-//	 *  UPDATE TEST
-//	 */
-//	@Test
-//	public void bulletinUpdate(){
-//		Bulletin bullToUpdate = new Bulletin();
-//		bullToUpdate = em.find(Bulletin.class, 99999l);
-//		bullToUpdate.setItContent("CONTENUTO MODIFICATO TEST ITA");
-//		
-//		try{
-//			bullRep.update(bullToUpdate, "testUPDATE");
-//			bullToUpdate = em.find(Bulletin.class, 99999l);
-//			assertTrue("bulletinUpdate method failed. ItContent value wrong or not updated. "
-//					+ "Current value: "+bullToUpdate.getItTitle()+" "
-//					+ "Expected value: CONTENUTO MODIFICATO TEST ITA.",bullToUpdate.getItContent().equals("CONTENUTO MODIFICATO TEST ITA"));
-//			assertTrue("bulletinUpdate method failed. UserUpdate value not updated."
-//					+ "Current value: "+bullToUpdate.getUserUpdate()+" "
-//					+ "Expected value: testUPDATE.", bullToUpdate.getUserUpdate().equals("testUPDATE"));
-//		} catch (Exception e){
-//			fail("bulletinUpdate method failed. Unexpected Exception catched. "+e.toString());
-//		}
-//		
-//		try{
-//			bullToUpdate = new Bulletin();
-//			bullToUpdate.setId(9898989898l);
-//			bullToUpdate.setUserCreated("test");
-//			bullToUpdate.setItContent("CONTENUTO TEST ITA");
-//			bullRep.update(bullToUpdate, "testUPDATE");
-//			fail("bulletinUpdate method failed. No IllegalArgumentException thrown.");
-//		} catch (IllegalArgumentException e){
-//			assertTrue(true); // Just for visibility :)
-//		} catch (Exception e){
-//			fail("bulletinUpdate method fail during merge on inexistent bulletin. Unexpected exception catched. "+e.toString());
-//		}
-//	}
-	
 	/*
 	 *  DELETE TEST
 	 */

@@ -1,99 +1,58 @@
 package it.hellokitty.gt.service.impl;
 
-import java.util.List;
-
 import it.hellokitty.gt.entity.VehicleGroup;
 import it.hellokitty.gt.repository.VehicleGroupRepository;
 import it.hellokitty.gt.repository.impl.VehicleGroupRepositoryImpl;
-import it.hellokitty.gt.repository.utils.ColumnDirection;
 import it.hellokitty.gt.service.VehicleGroupService;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 public class VehicleGroupServiceImpl implements VehicleGroupService{
 	VehicleGroupRepository vehicleGroupRepository = new VehicleGroupRepositoryImpl();
 	
 	@Override
-	public VehicleGroup fetchById(Long id) throws IllegalArgumentException, Exception {
-		if(id == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - id parameter can't be null.");
+	public Long count() throws Exception {
+		return vehicleGroupRepository.count();
+	}
+
+	@Override
+	public Long count(HashMap<String, Object> paramEquals, HashMap<String,Object> paramLike, HashMap<String,Object> paramGE, HashMap<String,Object> paramLE) throws IllegalArgumentException, Exception {
+		if(paramEquals == null){
+			throw new IllegalArgumentException(this.getClass().getPackage() + " - "+ this.getClass()+" - paramEquals parameter cannot be null.");
 		}
 		
-		if(id < 0){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - id parameter can't be < 0.");
+		if(paramLike == null){
+			throw new IllegalArgumentException(this.getClass().getPackage() + " - "+ this.getClass()+" - paramLike parameter cannot be null.");
 		}
 		
+		if(paramGE == null){
+			throw new IllegalArgumentException(this.getClass().getPackage() + " - "+ this.getClass()+" - paramGE parameter cannot be null.");
+		}
+		
+		if(paramLE == null){
+			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+ this.getClass()+" - paramLE parameter cannot be null.");
+		}
+		
+		return vehicleGroupRepository.count(paramEquals, paramLike, paramGE, paramLE);
+	}
+
+	@Override
+	public List<VehicleGroup> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> orderColumn) throws IllegalArgumentException, Exception {
+		return vehicleGroupRepository.fetchAll(start, limit, orderColumn);
+	}
+
+	@Override
+	public VehicleGroup fetchById(Object id) throws Exception {
 		return vehicleGroupRepository.fetchById(id);
 	}
 
 	@Override
-	public List<VehicleGroup> fetchAll(Integer start, Integer limit, List<ColumnDirection> cdList) throws Exception {
-		if(start == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - start parameter can't be null.");
-		}
-		
-		if(start < 0){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - start parameter can't be < 0. Current value:"+start+".");
-		}
-		
-		if(limit == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - limit patameter can't be null.");
-		}
-		
-		if(limit <= 0){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - limit parameter can't be <= 0. Current value:"+limit+".");
-		}
-		
-		if(cdList == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - cdList paramete can't be null.");
-		}
-		
-		return vehicleGroupRepository.fetchAll(start, limit, cdList);
+	public List<VehicleGroup> search(Integer arg0, Integer arg1,
+			LinkedHashMap<String, String> arg2, HashMap<String, Object> arg3,
+			HashMap<String, Object> arg4, HashMap<String, Object> arg5,
+			HashMap<String, Object> arg6) {
+		return vehicleGroupRepository.search(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 	}
-
-	@Override
-	public List<VehicleGroup> fetchAll(String user, Integer start, Integer limit, List<ColumnDirection> cdList) throws IllegalArgumentException, Exception {
-		if(user == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be null.");
-		}
-		
-		if(user.equals("")){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be empty.");
-		}
-		
-		if(start == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - start parameter can't be null.");
-		}
-		
-		if(start < 0){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - start parameter can't be < 0. Current value:"+start+".");
-		}
-		
-		if(limit == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - limit parameter can't be null.");
-		}
-		
-		if(limit <= 0){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - limit parameter can't be <= 0. Current value:"+limit+".");
-		}
-		
-		if(cdList == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - cdList parameter can't be null.");
-		}
-		
-		return vehicleGroupRepository.fetchAll(user, start, limit, cdList);
-	}
-
-	@Override
-	public Long count(String user) throws IllegalArgumentException, Exception {
-		if(user == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be null.");
-		}
-		
-		if(user.equals("")){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be empty.");
-			
-		}
-		
-		return vehicleGroupRepository.count(user);
-	}
-
 }

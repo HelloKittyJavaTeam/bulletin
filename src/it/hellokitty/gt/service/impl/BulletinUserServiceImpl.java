@@ -1,57 +1,20 @@
 package it.hellokitty.gt.service.impl;
 
-import java.util.List;
-
+import it.hellokitty.gt.entity.BaseObject;
 import it.hellokitty.gt.entity.BulletinUser;
 import it.hellokitty.gt.repository.BulletinUserRepository;
 import it.hellokitty.gt.repository.impl.BulletinUserRepositoryImpl;
-import it.hellokitty.gt.repository.utils.ColumnDirection;
 import it.hellokitty.gt.service.BulletinUserService;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 public class BulletinUserServiceImpl implements BulletinUserService{
 	BulletinUserRepository bulletinUserRepository = new BulletinUserRepositoryImpl();
 
 	@Override
-	public BulletinUser fetchById(Long id) throws IllegalArgumentException, Exception {
-		if(id == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - id parameter can't be null.");
-		}
-		
-		if(id < 0){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - id parameter can't be < 0.");
-		}
-		
-		return bulletinUserRepository.fetchById(id);
-	}
-
-	@Override
-	public List<BulletinUser> fetchAll(Integer start, Integer limit,
-			List<ColumnDirection> cdList) throws Exception {
-		if(start == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - start parameter can't be null.");
-		}
-		
-		if(start < 0){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - start parameter can't be < 0. Current value:"+start+".");
-		}
-		
-		if(limit == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - limit patameter can't be null.");
-		}
-		
-		if(limit <= 0){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - limit parameter can't be <= 0. Current value:"+limit+".");
-		}
-		
-		if(cdList == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - cdList paramete can't be null.");
-		}
-		
-		return bulletinUserRepository.fetchAll(start, limit, cdList);
-	}
-
-	@Override
-	public List<BulletinUser> fetchAll(String user, Integer start, Integer limit, List<ColumnDirection> cdList) throws IllegalArgumentException, Exception {
+	public List<BulletinUser> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> cdList, String user) throws IllegalArgumentException, Exception {
 		if(user == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be null.");
 		}
@@ -80,11 +43,11 @@ public class BulletinUserServiceImpl implements BulletinUserService{
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - cdList parameter can't be null.");
 		}
 		
-		return bulletinUserRepository.fetchAll(user, start, limit, cdList);
+		return bulletinUserRepository.fetchAll(start, limit, cdList, user);
 	}
 
 	@Override
-	public void insert(BulletinUser elem, String user) throws IllegalArgumentException, Exception {
+	public void insert(BaseObject elem, String user) throws IllegalArgumentException, Exception {
 		if(elem == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
 		}
@@ -101,7 +64,7 @@ public class BulletinUserServiceImpl implements BulletinUserService{
 	}
 
 	@Override
-	public void delete(BulletinUser elem, String user) throws IllegalArgumentException, Exception {
+	public void delete(BaseObject elem, String user) throws IllegalArgumentException, Exception {
 		if(elem == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
 		}
@@ -118,25 +81,7 @@ public class BulletinUserServiceImpl implements BulletinUserService{
 	}
 
 	@Override
-	public BulletinUser update(BulletinUser elem, String user) throws IllegalArgumentException, Exception {
-		if(elem == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
-		}
-		
-		if(user == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be null.");
-		}
-		
-		if(user.equals("")){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be empty.");
-			
-		}
-		
-		return bulletinUserRepository.update(elem, user);
-	}
-
-	@Override
-	public BulletinUser merge(BulletinUser elem, String user) throws IllegalArgumentException, Exception {
+	public BaseObject merge(BaseObject elem, String user) throws IllegalArgumentException, Exception {
 		if(elem == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
 		}
@@ -154,16 +99,32 @@ public class BulletinUserServiceImpl implements BulletinUserService{
 	}
 
 	@Override
-	public Long count(String user) throws IllegalArgumentException, Exception {
-		if(user == null){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be null.");
-		}
-		
-		if(user.equals("")){
-			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be empty.");
-			
-		}
-		
-		return bulletinUserRepository.count(user);
+	public Long count() throws Exception {
+		return bulletinUserRepository.count();
+	}
+
+	@Override
+	public Long count(HashMap<String,Object> paramEquals, HashMap<String,Object> paramLike, HashMap<String,Object> paramGE, HashMap<String,Object> paramLE) throws Exception {
+		return bulletinUserRepository.count(paramEquals, paramLike, paramGE, paramLE);
+	}
+
+	@Override
+	public List<BulletinUser> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> orderColumn) throws Exception {
+		return bulletinUserRepository.fetchAll(start, limit, orderColumn);
+	}
+
+	@Override
+	public BulletinUser fetchById(Object id) throws Exception {
+		return bulletinUserRepository.fetchById(id);
+	}
+
+	@Override
+	public List<BulletinUser> search(Integer start, Integer limit, 
+			LinkedHashMap<String,String> orderColumn,
+			HashMap<String,Object> paramEquals,
+			HashMap<String,Object> paramLike,
+			HashMap<String,Object> paramGE,
+			HashMap<String,Object> paramLE) {
+		return bulletinUserRepository.search(start, limit, orderColumn, paramEquals, paramLike, paramGE, paramLE);
 	}
 }
