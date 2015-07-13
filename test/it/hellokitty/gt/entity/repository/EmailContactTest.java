@@ -50,8 +50,6 @@ public class EmailContactTest {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
-			emailContactAdd = new EmailContact();
-			emailContactAdd.setId(99999l+i);
 			em.remove(em.find(EmailContact.class, 99999l+i));
 		}
 		transaction.commit();

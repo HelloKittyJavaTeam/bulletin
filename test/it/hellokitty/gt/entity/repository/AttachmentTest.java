@@ -197,10 +197,9 @@ public class AttachmentTest {
 		Long result;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("userCreated", "testADD0");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
 		
 		try{
-			result = attachmentRep.count(map, emptyMap, emptyMap, emptyMap);
+			result = attachmentRep.count(map, null, null, null);
 			assertTrue("attachmentCount method failed. Number of Attachment expected: 1 Actual:"+result, result==1);
 		} catch (Exception e){
 			fail("attachmentCount method failed. Unexpected exception catched. "+e.toString());
@@ -210,7 +209,7 @@ public class AttachmentTest {
 		map.put("userCreated", "testADDUNKNOW");
 		
 		try{
-			result = attachmentRep.count(map, emptyMap, emptyMap, emptyMap);
+			result = attachmentRep.count(map, null, null, null);
 			assertTrue("attachmentCount method failed. Number of Attachment expected: 0 Actual:"+result, result==0);
 		} catch (Exception e){
 			fail("attachmentCount method failed. Unexpected exception catched. "+e.toString());
@@ -220,7 +219,7 @@ public class AttachmentTest {
 		map.put("userCreated", "testADD");
 		
 		try{
-			result = attachmentRep.count(emptyMap, map, emptyMap, emptyMap);
+			result = attachmentRep.count(null, map, null, null);
 			assertTrue("attachmentCount method with user parameter = 'unknowUser' failed. Number of Attachment expected: 20 Actual:"+result, result == 20);
 		} catch (Exception e){
 			fail("attachmentCount method with user parameter = 'unknowUser' failed. Unexpected exception catched. "+e.toString());

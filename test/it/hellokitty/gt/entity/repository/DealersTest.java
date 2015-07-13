@@ -49,7 +49,6 @@ public class DealersTest {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
-			dealersAdd = new Dealers();
 			em.remove(em.find(Dealers.class, ""+99999l+i));
 		}
 		transaction.commit();

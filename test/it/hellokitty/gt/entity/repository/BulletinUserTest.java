@@ -50,10 +50,6 @@ public class BulletinUserTest {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
-			bulletinUserAdd = new BulletinUser();
-			bulletinUserAdd.setId(99999l+i);
-			bulletinUserAdd.setUserCreated("testADD"+i);
-			bulletinUserAdd.setnRead(989898l);
 			em.remove(em.find(BulletinUser.class, 99999l+i));
 		}
 		transaction.commit();

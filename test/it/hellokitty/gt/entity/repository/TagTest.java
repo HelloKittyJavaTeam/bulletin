@@ -50,8 +50,6 @@ public class TagTest {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
-			tagAdd = new Tag();
-			tagAdd.setId(99999l+i);
 			em.remove(em.find(Tag.class, 99999l+i));
 		}
 		transaction.commit();

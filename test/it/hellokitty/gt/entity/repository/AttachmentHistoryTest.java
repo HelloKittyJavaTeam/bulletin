@@ -50,8 +50,6 @@ public class AttachmentHistoryTest {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
-			attachmentHistoryAdd = new AttachmentHistory();
-			attachmentHistoryAdd.setId(99999l+i);
 			em.remove(em.find(AttachmentHistory.class, 99999l+i));
 		}
 		transaction.commit();

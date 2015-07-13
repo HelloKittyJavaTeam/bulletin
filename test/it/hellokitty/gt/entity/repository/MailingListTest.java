@@ -50,8 +50,6 @@ public class MailingListTest {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
-			mailingListAdd = new MailingList();
-			mailingListAdd.setId(99999l+i);
 			em.remove(em.find(MailingList.class, 99999l+i));
 		}
 		transaction.commit();

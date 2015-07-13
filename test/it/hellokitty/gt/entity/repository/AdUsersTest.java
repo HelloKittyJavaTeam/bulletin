@@ -49,7 +49,6 @@ public class AdUsersTest {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		for(int i = 0; i < 20; i++){
-			adUsersAdd = new AdUsers();
 			em.remove(em.find(AdUsers.class, 99999l+i));
 		}
 		transaction.commit();

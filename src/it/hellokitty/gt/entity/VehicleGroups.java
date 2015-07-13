@@ -33,7 +33,7 @@ public class VehicleGroups implements Serializable {
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="FAMILY_CODE", referencedColumnName="ID")
+	@JoinColumn(name="DCS_MODEL", referencedColumnName="ID")
 	private VehicleFamily vehicleFamily;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
@@ -56,8 +56,8 @@ public class VehicleGroups implements Serializable {
 	@Column(name="DCS_CATALOG_VERSION")
 	private BigDecimal dcsCatalogVersion;
 
-	@Column(name="DCS_MODEL")
-	private String dcsModel;
+	@Column(name="FAMILY_CODE")
+	private String familyCode;
 
 	@Column(name="DCS_VEHICLECLASS")
 	private String dcsVehicleclass;
@@ -126,14 +126,6 @@ public class VehicleGroups implements Serializable {
 
 	public void setDcsCatalogVersion(BigDecimal dcsCatalogVersion) {
 		this.dcsCatalogVersion = dcsCatalogVersion;
-	}
-
-	public String getDcsModel() {
-		return this.dcsModel;
-	}
-
-	public void setDcsModel(String dcsModel) {
-		this.dcsModel = dcsModel;
 	}
 
 	public String getDcsVehicleclass() {
@@ -206,6 +198,22 @@ public class VehicleGroups implements Serializable {
 
 	public void setUserMod(String userMod) {
 		this.userMod = userMod;
+	}
+
+	public List<VehicleMaster> getVehicleMasters() {
+		return vehicleMasters;
+	}
+
+	public void setVehicleMasters(List<VehicleMaster> vehicleMasters) {
+		this.vehicleMasters = vehicleMasters;
+	}
+
+	public VehicleFamily getVehicleFamily() {
+		return vehicleFamily;
+	}
+
+	public void setFamilyCode(String familyCode) {
+		this.familyCode = familyCode;
 	}
 
 }
