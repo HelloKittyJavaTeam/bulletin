@@ -16,6 +16,7 @@ import it.hellokitty.gt.repository.impl.GeoAreasRepositoryImpl;
 import it.hellokitty.gt.repository.impl.VehicleFamilyRepositoryImpl;
 import it.hellokitty.gt.repository.impl.VehicleMasterRepositoryImpl;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,170 +30,174 @@ public class BulletinTest {
 		List<Bulletin> bullList = new ArrayList<Bulletin>();
 		BulletinRepositoryImpl bullRepo = new BulletinRepositoryImpl();
 		
-//		insert1000x1things();
+		insertThings(1);
 
 		System.out.println("-------------");
-		System.out.println("  BULLETIN");
+		System.out.println("BULLETIN");
 		System.out.println("-------------");
 
 		try {
 			Long cnt = bullRepo.count();
 			System.out.println("bulletin cnt: " + cnt);
 			
+			Method handler  = (Bulletin.class).getMethod("getDescriptionIt", new Class[] {});
+			
+
 			bullList = bullRepo.fetchAll(0,cnt.intValue(), new LinkedHashMap<String, String>());
 			
 			for(Bulletin b : bullList){
-				System.out.println("bulletin id: " + b.getId());
+				String res = (String) handler.invoke(b, new Object[] {});
+				System.out.println("bulletin id: " + b.getId() + " desc: " + res);
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		
 		System.out.println("-------------");
-		System.out.println("  BULLETIN END");
+		System.out.println("BULLETIN END");
 		System.out.println("-------------");
 		
-		System.out.println("-------------");
-		System.out.println("  FETCH BULLETIN BY ID");
-		System.out.println("-------------");
-		
-		try {
-			Bulletin b = bullRepo.fetchById(new Long("1073"));
-			System.out.println("bulletin title: " + b.getTitleIt());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println("-------------");
-		System.out.println("  FETCH BULLETIN BY ID END");
-		System.out.println("-------------");
-		
-		System.out.println("-------------");
-		System.out.println("  SEARCH BULLETIN BY TITLE");
-		System.out.println("-------------");
-		
-		try {
-			HashMap<String, Object> paramLike = new HashMap<String, Object>();
-			paramLike.put("itTitle", "85");
-			
-			Long cnt = bullRepo.count(new HashMap<String,Object>(), paramLike, new HashMap<String,Object>(), new HashMap<String,Object>());
-			System.out.println("bulletin cnt: " + cnt);
-			
-			bullList = bullRepo.search(0, cnt.intValue(), new LinkedHashMap<String, String>(), new HashMap<String,Object>(), paramLike, new HashMap<String,Object>(), new HashMap<String,Object>());
-			
-			for(Bulletin b : bullList){
-				System.out.println("bulletin id: " + b.getId() + " bulletin title: " + b.getTitleIt());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println("-------------");
-		System.out.println("  SEARCH BULLETIN BY TITLE END");
-		System.out.println("-------------");
-		
-		System.out.println("-------------");
-		System.out.println("  DEALER");
-		System.out.println("-------------");
-		
-		DealerRepositoryImpl dealRepo = new DealerRepositoryImpl();
-		
-		try {
-			Long cnt = dealRepo.count();
-			System.out.println("dealers: " + cnt);
-			
-			List<Dealers> dealerList = dealRepo.fetchAll(0, cnt.intValue(), null);
-			for(Dealers d : dealerList){
-				System.out.println("id: " + d.getId() + " name: " + d.getName() + " country: " + d.getCountry().getDescriptionIt() + " region: " + d.getCountry().getRegion().getDescriptionIt() + " area: " + d.getCountry().getRegion().getArea().getDescriptionIt());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println("-------------");
-		System.out.println("  DEALER END");
-		System.out.println("-------------");
-		
-		System.out.println("-------------");
-		System.out.println("  AREA-REGION-COUNTRY-DEALER");
-		System.out.println("-------------");
-		
-		GeoAreasRepositoryImpl geoRepo = new GeoAreasRepositoryImpl();
-		
-		try {
-			Long cnt = geoRepo.count();
-			System.out.println("areas: " + cnt);
-			
-			List<GeoAreas> areaList = geoRepo.fetchAll(0, cnt.intValue(), null);
-			for(GeoAreas a : areaList){
-				System.out.println("id: " + a.getId() + " name: " + a.getDescriptionIt());
-				for(GeoRegions r : a.getRegions()){
-					System.out.println("region_id: " + r.getId() + " name: " + r.getDescriptionIt());
-					for(GeoCountries c : r.getCountries()){
-						System.out.println("country_id: " + c.getId() + " name: " + c.getDescriptionIt());
-						for(Dealers d : c.getDealers()){
-							System.out.println("dealer_id: " + d.getId() + " name: " + d.getName());
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println("-------------");
-		System.out.println("  AREA-REGION-COUNTRY-DEALER END");
-		System.out.println("-------------");
-		
-		System.out.println("-------------");
-		System.out.println("  VEHICLE FAMILY-GROUP-MASTER");
-		System.out.println("-------------");
-		
-		VehicleFamilyRepositoryImpl vehRepo = new VehicleFamilyRepositoryImpl();
-		
-		try {
-			Long cnt = vehRepo.count();
-			System.out.println("families: " + cnt);
-			
-			List<VehicleFamily> familyList = vehRepo.fetchAll(0, cnt.intValue(), null);
-			for(VehicleFamily f : familyList){
-				System.out.println("id: " + f.getId() + " name: " + f.getDescription());
-				for(VehicleGroups g : f.getGroups()){
-					System.out.println("group_id: " + g.getId() + " name: " + g.getDescription());
-					for(VehicleMaster m : g.getVehicles()){
-						System.out.println("master_id: " + m.getId() + " name: " + m.getDescription());
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println("-------------");
-		System.out.println("  VEHICLE FAMILY-GROUP-MASTER END");
-		System.out.println("-------------");
-		
-		System.out.println("-------------");
-		System.out.println("  VEHICLE");
-		System.out.println("-------------");
-		
-		VehicleMasterRepositoryImpl masRepo = new VehicleMasterRepositoryImpl();
-		
-		try {
-			Long cnt = masRepo.count();
-			System.out.println("vehicles: " + cnt);
-			
-			List<VehicleMaster> masterList = masRepo.fetchAll(0, cnt.intValue(), null);
-			for(VehicleMaster m : masterList){
-				System.out.println("id: " + m.getId() + " name: " + m.getDescription() + " group: " + m.getGroup().getDescription() + " family: " + m.getGroup().getFamily().getDescription());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println("-------------");
-		System.out.println("  VEHICLE END");
-		System.out.println("-------------");
+//		System.out.println("-------------");
+//		System.out.println("FETCH BULLETIN BY ID");
+//		System.out.println("-------------");
+//		
+//		try {
+//			Bulletin b = bullRepo.fetchById(new Long("1073"));
+//			System.out.println("bulletin title: " + b.getTitleIt());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println("-------------");
+//		System.out.println("FETCH BULLETIN BY ID END");
+//		System.out.println("-------------");
+//		
+//		System.out.println("-------------");
+//		System.out.println("SEARCH BULLETIN BY TITLE");
+//		System.out.println("-------------");
+//		
+//		try {
+//			HashMap<String, Object> paramLike = new HashMap<String, Object>();
+//			paramLike.put("itTitle", "85");
+//			
+//			Long cnt = bullRepo.count(new HashMap<String,Object>(), paramLike, new HashMap<String,Object>(), new HashMap<String,Object>());
+//			System.out.println("bulletin cnt: " + cnt);
+//			
+//			bullList = bullRepo.search(0, cnt.intValue(), new LinkedHashMap<String, String>(), new HashMap<String,Object>(), paramLike, new HashMap<String,Object>(), new HashMap<String,Object>());
+//			
+//			for(Bulletin b : bullList){
+//				System.out.println("bulletin id: " + b.getId() + " bulletin title: " + b.getTitleIt());
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println("-------------");
+//		System.out.println("SEARCH BULLETIN BY TITLE END");
+//		System.out.println("-------------");
+//		
+//		System.out.println("-------------");
+//		System.out.println("DEALER");
+//		System.out.println("-------------");
+//		
+//		DealerRepositoryImpl dealRepo = new DealerRepositoryImpl();
+//		
+//		try {
+//			Long cnt = dealRepo.count();
+//			System.out.println("dealers: " + cnt);
+//			
+//			List<Dealers> dealerList = dealRepo.fetchAll(0, cnt.intValue(), null);
+//			for(Dealers d : dealerList){
+//				System.out.println("id: " + d.getId() + " name: " + d.getName() + " country: " + d.getCountry().getDescriptionIt() + " region: " + d.getCountry().getRegion().getDescriptionIt() + " area: " + d.getCountry().getRegion().getArea().getDescriptionIt());
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println("-------------");
+//		System.out.println("DEALER END");
+//		System.out.println("-------------");
+//		
+//		System.out.println("-------------");
+//		System.out.println("AREA-REGION-COUNTRY-DEALER");
+//		System.out.println("-------------");
+//		
+//		GeoAreasRepositoryImpl geoRepo = new GeoAreasRepositoryImpl();
+//		
+//		try {
+//			Long cnt = geoRepo.count();
+//			System.out.println("areas: " + cnt);
+//			
+//			List<GeoAreas> areaList = geoRepo.fetchAll(0, cnt.intValue(), null);
+//			for(GeoAreas a : areaList){
+//				System.out.println("id: " + a.getId() + " name: " + a.getDescriptionIt());
+//				for(GeoRegions r : a.getRegions()){
+//					System.out.println("region_id: " + r.getId() + " name: " + r.getDescriptionIt());
+//					for(GeoCountries c : r.getCountries()){
+//						System.out.println("country_id: " + c.getId() + " name: " + c.getDescriptionIt());
+//						for(Dealers d : c.getDealers()){
+//							System.out.println("dealer_id: " + d.getId() + " name: " + d.getName());
+//						}
+//					}
+//				}
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println("-------------");
+//		System.out.println("AREA-REGION-COUNTRY-DEALER END");
+//		System.out.println("-------------");
+//		
+//		System.out.println("-------------");
+//		System.out.println("VEHICLE FAMILY-GROUP-MASTER");
+//		System.out.println("-------------");
+//		
+//		VehicleFamilyRepositoryImpl vehRepo = new VehicleFamilyRepositoryImpl();
+//		
+//		try {
+//			Long cnt = vehRepo.count();
+//			System.out.println("families: " + cnt);
+//			
+//			List<VehicleFamily> familyList = vehRepo.fetchAll(0, cnt.intValue(), null);
+//			for(VehicleFamily f : familyList){
+//				System.out.println("id: " + f.getId() + " name: " + f.getDescription());
+//				for(VehicleGroups g : f.getGroups()){
+//					System.out.println("group_id: " + g.getId() + " name: " + g.getDescription());
+//					for(VehicleMaster m : g.getVehicles()){
+//						System.out.println("master_id: " + m.getId() + " name: " + m.getDescription());
+//					}
+//				}
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println("-------------");
+//		System.out.println("VEHICLE FAMILY-GROUP-MASTER END");
+//		System.out.println("-------------");
+//		
+//		System.out.println("-------------");
+//		System.out.println("VEHICLE");
+//		System.out.println("-------------");
+//		
+//		VehicleMasterRepositoryImpl masRepo = new VehicleMasterRepositoryImpl();
+//		
+//		try {
+//			Long cnt = masRepo.count();
+//			System.out.println("vehicles: " + cnt);
+//			
+//			List<VehicleMaster> masterList = masRepo.fetchAll(0, cnt.intValue(), null);
+//			for(VehicleMaster m : masterList){
+//				System.out.println("id: " + m.getId() + " name: " + m.getDescription() + " group: " + m.getGroup().getDescription() + " family: " + m.getGroup().getFamily().getDescription());
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println("-------------");
+//		System.out.println("VEHICLE END");
+//		System.out.println("-------------");
 	}
 
 	public static void insert1thing(BulletinRepositoryImpl bullRepo, String content, String title){
@@ -224,10 +229,10 @@ public class BulletinTest {
 		}
 	}
 	
-	public static void insert1000x1things(){
+	public static void insertThings(int num){
 		BulletinRepositoryImpl bullRepo = new BulletinRepositoryImpl();
 		
-		for(int i = 0; i < 1000; i++){
+		for(int i = 0; i < num; i++){
 			String content = "contenuto" + i;
 			String title = "title" + i;
 			insert1thing(bullRepo, content, title);
