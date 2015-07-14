@@ -51,14 +51,14 @@ public class VehicleFamily implements Serializable {
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="DCS_MODEL", referencedColumnName="ID")
-	private List<VehicleGroups> vehicleGroups;
+	private List<VehicleGroups> groups;
 
-	public List<VehicleGroups> getVehicleGroups() {
-		return vehicleGroups;
+	public List<VehicleGroups> getGroups() {
+		return groups;
 	}
 
-	public void setVehicleGroups(List<VehicleGroups> vehicleGroups) {
-		this.vehicleGroups = vehicleGroups;
+	public void setGroups(List<VehicleGroups> groups) {
+		this.groups = groups;
 	}
 
 	public VehicleFamily() {

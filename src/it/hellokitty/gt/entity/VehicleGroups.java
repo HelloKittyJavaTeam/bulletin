@@ -34,11 +34,11 @@ public class VehicleGroups implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="DCS_MODEL", referencedColumnName="ID")
-	private VehicleFamily vehicleFamily;
+	private VehicleFamily family;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="VEHICLE_GROUP_ID", referencedColumnName="ID")
-	private List<VehicleMaster> vehicleMasters;
+	private List<VehicleMaster> vehicles;
 
 	private String active;
 
@@ -145,11 +145,11 @@ public class VehicleGroups implements Serializable {
 	}
 
 	public VehicleFamily getFamilyCode() {
-		return this.vehicleFamily;
+		return this.family;
 	}
 
-	public void setVehicleFamily(VehicleFamily vehicleFamily) {
-		this.vehicleFamily = vehicleFamily;
+	public void setFamily(VehicleFamily family) {
+		this.family = family;
 	}
 
 	public Long getId() {
@@ -200,16 +200,16 @@ public class VehicleGroups implements Serializable {
 		this.userMod = userMod;
 	}
 
-	public List<VehicleMaster> getVehicleMasters() {
-		return vehicleMasters;
+	public List<VehicleMaster> getVehicles() {
+		return vehicles;
 	}
 
-	public void setVehicleMasters(List<VehicleMaster> vehicleMasters) {
-		this.vehicleMasters = vehicleMasters;
+	public void setVehicles(List<VehicleMaster> vehicles) {
+		this.vehicles = vehicles;
 	}
 
-	public VehicleFamily getVehicleFamily() {
-		return vehicleFamily;
+	public VehicleFamily getFamily() {
+		return family;
 	}
 
 	public void setFamilyCode(String familyCode) {

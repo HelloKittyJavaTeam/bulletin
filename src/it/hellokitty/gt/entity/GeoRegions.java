@@ -44,7 +44,7 @@ public class GeoRegions implements Serializable {
 	private GeoAreas area;
 
 	@Column(name="DESCRIPTION_IT")
-	private String descriptionIT;
+	private String descriptionIt;
 	
 	@Column(name="DESCRIPTION_EN")
 	private String descriptionEn;
@@ -115,12 +115,12 @@ public class GeoRegions implements Serializable {
 		this.area = geoArea;
 	}
 
-	public String getDescriptionIT() {
-		return descriptionIT;
+	public String getDescriptionIt() {
+		return descriptionIt;
 	}
 
-	public void setDescriptionIT(String descriptionIT) {
-		this.descriptionIT = descriptionIT;
+	public void setDescriptionIt(String descriptionIt) {
+		this.descriptionIt = descriptionIt;
 	}
 
 	public String getDescriptionEn() {
