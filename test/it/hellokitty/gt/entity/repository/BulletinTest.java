@@ -250,13 +250,22 @@ public class BulletinTest {
 	public void bulletinSearch(){
 		List<Bulletin> bulletinList = new ArrayList<Bulletin>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("tag", "testTAG0");
 		
 		try{
-			bulletinList = bulletinRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("bulletinSearch method failed. Expected List of Bulletin size: 1 Actual: "+bulletinList.size(),bulletinList.size() >= 1);
+			bulletinList = bulletinRep.search(0, 20, null, map, null, null, null);
+			assertTrue("bulletinSearch method failed. Expected List of Bulletin size: 1 Actual: "+bulletinList.size(),bulletinList.size() == 1);
+		} catch (Exception e){
+			fail("bulletinSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("tag", "testTAG");
+		
+		try{
+			bulletinList = bulletinRep.search(0, 20, null, null, map, null, null);
+			assertTrue("bulletinSearch method failed. Expected List of Bulletin size: 20 Actual: "+bulletinList.size(),bulletinList.size() == 20);
 		} catch (Exception e){
 			fail("bulletinSearch method failed. Unexpected exception catched. "+e.toString());
 		}
