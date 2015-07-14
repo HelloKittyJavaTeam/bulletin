@@ -38,7 +38,7 @@ public class BulletinUserTest {
 			bulletinUserAdd.setId(99999l+i);
 			bulletinUserAdd.setCreateDate(new Date());
 			bulletinUserAdd.setUserCreated("testADD"+i);
-			bulletinUserAdd.setnRead(989898l);
+			bulletinUserAdd.setnRead(989898l+i);
 			bulletinUserAdd.setActive(true);
 			em.persist(bulletinUserAdd);
 		}
@@ -233,13 +233,80 @@ public class BulletinUserTest {
 	public void bulletinUserSearch(){
 		List<BulletinUser> bulletinUserList = new ArrayList<BulletinUser>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
 		
 		try{
-			bulletinUserList = bulletinUserRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("bulletinUserSearch method failed. Expected List of BulletinUser size: 1 Actual: "+bulletinUserList.size(),bulletinUserList.size() >= 1);
+			bulletinUserList = bulletinUserRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("bulletinUserSearch method failed. Expected List of BulletinUser size: 20 Actual: "+bulletinUserList.size(),bulletinUserList.size() == 20);
+			
+			for(int index = 0; index < bulletinUserList.size() - 1; index++){
+				assertTrue("bulletinUserSearch method failed on asc order check. Id at index "+index+": "+bulletinUserList.get(index).getId()+" next: "+bulletinUserList.get(index+1).getId(),
+						bulletinUserList.get(index).getId() < bulletinUserList.get(index+1).getId());
+			}
+		} catch (Exception e){
+			fail("bulletinUserSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			bulletinUserList = bulletinUserRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("bulletinUserSearch method failed. Expected List of BulletinUser size: 20 Actual: "+bulletinUserList.size(),bulletinUserList.size() == 20);
+			
+			for(int index = 0; index < bulletinUserList.size() - 1; index++){
+				assertTrue("bulletinUserSearch method failed on desc order check. Id at index "+index+": "+bulletinUserList.get(index).getId()+" next: "+bulletinUserList.get(index+1).getId(),
+						bulletinUserList.get(index).getId() > bulletinUserList.get(index+1).getId());
+			}
+		} catch (Exception e){
+			fail("bulletinUserSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("nRead", 989898l);
+		
+		try{
+			bulletinUserList = bulletinUserRep.search(0, 20, null, map, null, null, null);
+			assertTrue("bulletinUserSearch method failed. Expected List of BulletinUser size: 1 Actual: "+bulletinUserList.size(),bulletinUserList.size() == 1);
+		} catch (Exception e){
+			fail("bulletinUserSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("nRead", 989l);
+
+		try{
+			bulletinUserList = bulletinUserRep.search(0, 20, null, null, map, null, null);
+			assertTrue("bulletinUserSearch method failed. Expected List of BulletinUser size: 20 Actual: "+bulletinUserList.size(),bulletinUserList.size() == 20);
+		} catch (Exception e){
+			fail("bulletinUserSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("id", 100l);
+		
+		try{
+			bulletinUserList = bulletinUserRep.search(0, 20, null, null, null, map, null);
+			for(BulletinUser bulletinUser : bulletinUserList){
+				if(bulletinUser.getId() < 100){
+					fail("bulletinUserSearch method failed on lowerEqual check. Id found: "+bulletinUser.getId());
+				}
+			}
+		} catch (Exception e){
+			fail("bulletinUserSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("id", 100l);
+		
+		try{
+			bulletinUserList = bulletinUserRep.search(0, 20, null, null, null, null, map);
+			for(BulletinUser bulletinUser : bulletinUserList){
+				if(bulletinUser.getId() > 100){
+					fail("bulletinUserSearch method failed on lowerEqual check. Id found: "+bulletinUser.getId());
+				}
+			}
 		} catch (Exception e){
 			fail("bulletinUserSearch method failed. Unexpected exception catched. "+e.toString());
 		}

@@ -233,13 +233,52 @@ public class TagTest {
 	public void tagSearch(){
 		List<Tag> tagList = new ArrayList<Tag>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
 		
 		try{
-			tagList = tagRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("tagSearch method failed. Expected List of Tag size: 1 Actual: "+tagList.size(),tagList.size() >= 1);
+			tagList = tagRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("tagSearch method failed. Expected List of Tag size: 20 Actual: "+tagList.size(),tagList.size() == 20);
+			
+			for(int index = 0; index < tagList.size() - 1; index++){
+				assertTrue("tagSearch method failed on asc order check. Id at index "+index+": "+tagList.get(index).getId()+" next: "+tagList.get(index+1).getId(),
+						tagList.get(index).getId().compareTo(tagList.get(index+1).getId()) < 0);
+			}
+		} catch (Exception e){
+			fail("tagSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			tagList = tagRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("tagSearch method failed. Expected List of Tag size: 20 Actual: "+tagList.size(),tagList.size() == 20);
+			
+			for(int index = 0; index < tagList.size() - 1; index++){
+				assertTrue("tagSearch method failed on desc order check. Id at index "+index+": "+tagList.get(index).getId()+" next: "+tagList.get(index+1).getId(),
+						tagList.get(index).getId().compareTo(tagList.get(index+1).getId()) > 0);
+			}
+		} catch (Exception e){
+			fail("tagSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("word", "word0");
+		
+		try{
+			tagList = tagRep.search(0, 20, null, map, null, null, null);
+			assertTrue("tagSearch method failed. Expected List of Tag size: 1 Actual: "+tagList.size(),tagList.size() == 1);
+		} catch (Exception e){
+			fail("tagSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("word", "word");
+
+		try{
+			tagList = tagRep.search(0, 20, null, null, map, null, null);
+			assertTrue("tagSearch method failed. Expected List of Tag size: 20 Actual: "+tagList.size(),tagList.size() == 20);
 		} catch (Exception e){
 			fail("tagSearch method failed. Unexpected exception catched. "+e.toString());
 		}

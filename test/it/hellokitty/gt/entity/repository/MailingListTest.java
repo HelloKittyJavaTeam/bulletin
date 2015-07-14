@@ -233,13 +233,52 @@ public class MailingListTest {
 	public void mailingListSearch(){
 		List<MailingList> mailingListList = new ArrayList<MailingList>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
 		
 		try{
-			mailingListList = mailingListRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("mailingListSearch method failed. Expected List of MailingList size: 1 Actual: "+mailingListList.size(),mailingListList.size() >= 1);
+			mailingListList = mailingListRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("mailingListSearch method failed. Expected List of MailingList size: 20 Actual: "+mailingListList.size(),mailingListList.size() == 20);
+			
+			for(int index = 0; index < mailingListList.size() - 1; index++){
+				assertTrue("mailingListSearch method failed on asc order check. Id at index "+index+": "+mailingListList.get(index).getId()+" next: "+mailingListList.get(index+1).getId(),
+						mailingListList.get(index).getId().compareTo(mailingListList.get(index+1).getId()) < 0);
+			}
+		} catch (Exception e){
+			fail("mailingListSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			mailingListList = mailingListRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("mailingListSearch method failed. Expected List of MailingList size: 20 Actual: "+mailingListList.size(),mailingListList.size() == 20);
+			
+			for(int index = 0; index < mailingListList.size() - 1; index++){
+				assertTrue("mailingListSearch method failed on desc order check. Id at index "+index+": "+mailingListList.get(index).getId()+" next: "+mailingListList.get(index+1).getId(),
+						mailingListList.get(index).getId().compareTo(mailingListList.get(index+1).getId()) > 0);
+			}
+		} catch (Exception e){
+			fail("mailingListSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("descriptionEn", "testDescription0");
+		
+		try{
+			mailingListList = mailingListRep.search(0, 20, null, map, null, null, null);
+			assertTrue("mailingListSearch method failed. Expected List of MailingList size: 1 Actual: "+mailingListList.size(),mailingListList.size() == 1);
+		} catch (Exception e){
+			fail("mailingListSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("descriptionEn", "testDescription");
+
+		try{
+			mailingListList = mailingListRep.search(0, 20, null, null, map, null, null);
+			assertTrue("mailingListSearch method failed. Expected List of MailingList size: 20 Actual: "+mailingListList.size(),mailingListList.size() == 20);
 		} catch (Exception e){
 			fail("mailingListSearch method failed. Unexpected exception catched. "+e.toString());
 		}

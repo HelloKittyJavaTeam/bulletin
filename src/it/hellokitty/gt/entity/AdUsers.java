@@ -86,8 +86,7 @@ public class AdUsers implements Serializable {
 
 	private String username;
 
-	public AdUsers() {
-	}
+	public AdUsers() {}
 
 	public boolean isActive() {
 		if(active.equals("Y")){

@@ -233,13 +233,80 @@ public class AttachmentTest {
 	public void attachmentSearch(){
 		List<Attachment> attachmentList = new ArrayList<Attachment>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
 		
 		try{
-			attachmentList = attachmentRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("attachmentSearch method failed. Expected List of Attachment size: 1 Actual: "+attachmentList.size(),attachmentList.size() >= 1);
+			attachmentList = attachmentRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("attachmentSearch method failed. Expected List of Attachment size: 20 Actual: "+attachmentList.size(),attachmentList.size() == 20);
+			
+			for(int index = 0; index < attachmentList.size() - 1; index++){
+				assertTrue("attachmentSearch method failed on asc order check. Id at index "+index+": "+attachmentList.get(index).getId()+" next: "+attachmentList.get(index+1).getId(),
+						attachmentList.get(index).getId() < attachmentList.get(index+1).getId());
+			}
+		} catch (Exception e){
+			fail("attachmentSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			attachmentList = attachmentRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("attachmentSearch method failed. Expected List of Attachment size: 20 Actual: "+attachmentList.size(),attachmentList.size() == 20);
+			
+			for(int index = 0; index < attachmentList.size() - 1; index++){
+				assertTrue("attachmentSearch method failed on desc order check. Id at index "+index+": "+attachmentList.get(index).getId()+" next: "+attachmentList.get(index+1).getId(),
+						attachmentList.get(index).getId() > attachmentList.get(index+1).getId());
+			}
+		} catch (Exception e){
+			fail("attachmentSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fileName", "NAMETEST 0");
+		
+		try{
+			attachmentList = attachmentRep.search(0, 20, null, map, null, null, null);
+			assertTrue("attachmentSearch method failed. Expected List of Attachment size: 1 Actual: "+attachmentList.size(),attachmentList.size() == 1);
+		} catch (Exception e){
+			fail("attachmentSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("fileName", "NAMETEST");
+
+		try{
+			attachmentList = attachmentRep.search(0, 20, null, null, map, null, null);
+			assertTrue("attachmentSearch method failed. Expected List of Attachment size: 20 Actual: "+attachmentList.size(),attachmentList.size() == 20);
+		} catch (Exception e){
+			fail("attachmentSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("id", 100l);
+		
+		try{
+			attachmentList = attachmentRep.search(0, 20, null, null, null, map, null);
+			for(Attachment attachment : attachmentList){
+				if(attachment.getId() < 100){
+					fail("attachmentSearch method failed on lowerEqual check. Id found: "+attachment.getId());
+				}
+			}
+		} catch (Exception e){
+			fail("attachmentSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("id", 100l);
+		
+		try{
+			attachmentList = attachmentRep.search(0, 20, null, null, null, null, map);
+			for(Attachment attachment : attachmentList){
+				if(attachment.getId() > 100){
+					fail("attachmentSearch method failed on lowerEqual check. Id found: "+attachment.getId());
+				}
+			}
 		} catch (Exception e){
 			fail("attachmentSearch method failed. Unexpected exception catched. "+e.toString());
 		}

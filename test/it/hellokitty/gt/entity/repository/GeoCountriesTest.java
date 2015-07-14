@@ -161,13 +161,52 @@ public class GeoCountriesTest {
 	public void geoCountriesSearch(){
 		List<GeoCountries> geoCountriesList = new ArrayList<GeoCountries>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
 		
 		try{
-			geoCountriesList = geoCountriesRep.search(0, 10, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("geoCountriesSearch method failed. Expected List of GeoCountries size: 1 Actual: "+geoCountriesList.size(),geoCountriesList.size() >= 1);
+			geoCountriesList = geoCountriesRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("geoCountriesSearch method failed. Expected List of GeoCountries size: 10 Actual: "+geoCountriesList.size(),geoCountriesList.size() == 10);
+			
+			for(int index = 0; index < geoCountriesList.size() - 1; index++){
+				assertTrue("geoCountriesSearch method failed on asc order check. Id at index "+index+": "+geoCountriesList.get(index).getId()+" next: "+geoCountriesList.get(index+1).getId(),
+						geoCountriesList.get(index).getId().compareTo(geoCountriesList.get(index+1).getId()) < 0);
+			}
+		} catch (Exception e){
+			fail("geoCountriesSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			geoCountriesList = geoCountriesRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("geoCountriesSearch method failed. Expected List of GeoCountries size: 10 Actual: "+geoCountriesList.size(),geoCountriesList.size() == 10);
+			
+			for(int index = 0; index < geoCountriesList.size() - 1; index++){
+				assertTrue("geoCountriesSearch method failed on desc order check. Id at index "+index+": "+geoCountriesList.get(index).getId()+" next: "+geoCountriesList.get(index+1).getId(),
+						geoCountriesList.get(index).getId().compareTo(geoCountriesList.get(index+1).getId()) > 0);
+			}
+		} catch (Exception e){
+			fail("geoCountriesSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("descriptionEn", "testDescription0");
+		
+		try{
+			geoCountriesList = geoCountriesRep.search(0, 20, null, map, null, null, null);
+			assertTrue("geoCountriesSearch method failed. Expected List of GeoCountries size: 1 Actual: "+geoCountriesList.size(),geoCountriesList.size() == 1);
+		} catch (Exception e){
+			fail("geoCountriesSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("descriptionEn", "testDescription");
+
+		try{
+			geoCountriesList = geoCountriesRep.search(0, 20, null, null, map, null, null);
+			assertTrue("geoCountriesSearch method failed. Expected List of GeoCountries size: 10 Actual: "+geoCountriesList.size(),geoCountriesList.size() == 10);
 		} catch (Exception e){
 			fail("geoCountriesSearch method failed. Unexpected exception catched. "+e.toString());
 		}

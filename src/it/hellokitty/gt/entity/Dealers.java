@@ -34,9 +34,9 @@ public class Dealers implements Serializable {
 	@Id
 	private String id;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="BULLETIN_DEALER",
-			joinColumns=@JoinColumn(name="DEALER_ID"),
+			joinColumns=@JoinColumn(name="ID_DEALER"),
 			inverseJoinColumns=@JoinColumn(name="BULLETIN_ID"))
 	private List<Bulletin> bulletins;
 	
@@ -547,6 +547,14 @@ public class Dealers implements Serializable {
 
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
+	}
+
+	public List<Bulletin> getBulletins() {
+		return bulletins;
+	}
+
+	public void setBulletins(List<Bulletin> bulletins) {
+		this.bulletins = bulletins;
 	}
 
 }

@@ -38,7 +38,7 @@ public class AttachmentHistoryTest {
 			attachmentHistoryAdd.setId(99999l+i);
 			attachmentHistoryAdd.setUserCreated("testADD"+i);
 			attachmentHistoryAdd.setCreateDate(new Date());
-			attachmentHistoryAdd.setnDownload(989898l);;
+			attachmentHistoryAdd.setnDownload(989898l+i);;
 			attachmentHistoryAdd.setActive(true);
 			em.persist(attachmentHistoryAdd);
 		}
@@ -232,13 +232,80 @@ public class AttachmentHistoryTest {
 	public void attachmentHistorySearch(){
 		List<AttachmentHistory> attachmentHistoryList = new ArrayList<AttachmentHistory>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
 		
 		try{
-			attachmentHistoryList = attachmentHistoryRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("attachmentHistorySearch method failed. Expected List of AttachmentHistory size: 1 Actual: "+attachmentHistoryList.size(),attachmentHistoryList.size() >= 1);
+			attachmentHistoryList = attachmentHistoryRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("attachmentHistorySearch method failed. Expected List of AttachmentHistory size: 20 Actual: "+attachmentHistoryList.size(),attachmentHistoryList.size() == 20);
+			
+			for(int index = 0; index < attachmentHistoryList.size() - 1; index++){
+				assertTrue("attachmentHistorySearch method failed on asc order check. Id at index "+index+": "+attachmentHistoryList.get(index).getId()+" next: "+attachmentHistoryList.get(index+1).getId(),
+						attachmentHistoryList.get(index).getId() < attachmentHistoryList.get(index+1).getId());
+			}
+		} catch (Exception e){
+			fail("attachmentHistorySearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			attachmentHistoryList = attachmentHistoryRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("attachmentHistorySearch method failed. Expected List of AttachmentHistory size: 20 Actual: "+attachmentHistoryList.size(),attachmentHistoryList.size() == 20);
+			
+			for(int index = 0; index < attachmentHistoryList.size() - 1; index++){
+				assertTrue("attachmentHistorySearch method failed on desc order check. Id at index "+index+": "+attachmentHistoryList.get(index).getId()+" next: "+attachmentHistoryList.get(index+1).getId(),
+						attachmentHistoryList.get(index).getId() > attachmentHistoryList.get(index+1).getId());
+			}
+		} catch (Exception e){
+			fail("attachmentHistorySearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("nDownload", 989898l);
+		
+		try{
+			attachmentHistoryList = attachmentHistoryRep.search(0, 20, null, map, null, null, null);
+			assertTrue("attachmentHistorySearch method failed. Expected List of AttachmentHistory size: 1 Actual: "+attachmentHistoryList.size(),attachmentHistoryList.size() == 1);
+		} catch (Exception e){
+			fail("attachmentHistorySearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("nDownload", 989l);
+
+		try{
+			attachmentHistoryList = attachmentHistoryRep.search(0, 20, null, null, map, null, null);
+			assertTrue("attachmentHistorySearch method failed. Expected List of AttachmentHistory size: 20 Actual: "+attachmentHistoryList.size(),attachmentHistoryList.size() == 20);
+		} catch (Exception e){
+			fail("attachmentHistorySearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("id", 100l);
+		
+		try{
+			attachmentHistoryList = attachmentHistoryRep.search(0, 20, null, null, null, map, null);
+			for(AttachmentHistory attachmentHistory : attachmentHistoryList){
+				if(attachmentHistory.getId() < 100){
+					fail("attachmentHistorySearch method failed on lowerEqual check. Id found: "+attachmentHistory.getId());
+				}
+			}
+		} catch (Exception e){
+			fail("attachmentHistorySearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("id", 100l);
+		
+		try{
+			attachmentHistoryList = attachmentHistoryRep.search(0, 20, null, null, null, null, map);
+			for(AttachmentHistory attachmentHistory : attachmentHistoryList){
+				if(attachmentHistory.getId() > 100){
+					fail("attachmentHistorySearch method failed on lowerEqual check. Id found: "+attachmentHistory.getId());
+				}
+			}
 		} catch (Exception e){
 			fail("attachmentHistorySearch method failed. Unexpected exception catched. "+e.toString());
 		}

@@ -161,13 +161,52 @@ public class GeoRegionsTest {
 	public void geoRegionsSearch(){
 		List<GeoRegions> geoRegionsList = new ArrayList<GeoRegions>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
 		
 		try{
-			geoRegionsList = geoRegionsRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("geoRegionsSearch method failed. Expected List of GeoRegions size: 1 Actual: "+geoRegionsList.size(),geoRegionsList.size() >= 1);
+			geoRegionsList = geoRegionsRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("geoRegionsSearch method failed. Expected List of GeoRegions size: 20 Actual: "+geoRegionsList.size(),geoRegionsList.size() == 20);
+			
+			for(int index = 0; index < geoRegionsList.size() - 1; index++){
+				assertTrue("geoRegionsSearch method failed on asc order check. Id at index "+index+": "+geoRegionsList.get(index).getId()+" next: "+geoRegionsList.get(index+1).getId(),
+						geoRegionsList.get(index).getId().compareTo(geoRegionsList.get(index+1).getId()) < 0);
+			}
+		} catch (Exception e){
+			fail("geoRegionsSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			geoRegionsList = geoRegionsRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("geoRegionsSearch method failed. Expected List of GeoRegions size: 20 Actual: "+geoRegionsList.size(),geoRegionsList.size() == 20);
+			
+			for(int index = 0; index < geoRegionsList.size() - 1; index++){
+				assertTrue("geoRegionsSearch method failed on desc order check. Id at index "+index+": "+geoRegionsList.get(index).getId()+" next: "+geoRegionsList.get(index+1).getId(),
+						geoRegionsList.get(index).getId().compareTo(geoRegionsList.get(index+1).getId()) > 0);
+			}
+		} catch (Exception e){
+			fail("geoRegionsSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("descriptionEn", "testDescription0");
+		
+		try{
+			geoRegionsList = geoRegionsRep.search(0, 20, null, map, null, null, null);
+			assertTrue("geoRegionsSearch method failed. Expected List of GeoRegions size: 1 Actual: "+geoRegionsList.size(),geoRegionsList.size() == 1);
+		} catch (Exception e){
+			fail("geoRegionsSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("descriptionEn", "testDescription");
+
+		try{
+			geoRegionsList = geoRegionsRep.search(0, 20, null, null, map, null, null);
+			assertTrue("geoRegionsSearch method failed. Expected List of GeoRegions size: 20 Actual: "+geoRegionsList.size(),geoRegionsList.size() == 20);
 		} catch (Exception e){
 			fail("geoRegionsSearch method failed. Unexpected exception catched. "+e.toString());
 		}

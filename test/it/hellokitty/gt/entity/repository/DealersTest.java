@@ -60,7 +60,7 @@ public class DealersTest {
 	@Test
 	public void dealersFetchById(){
 		try {
-			Dealers bull = dealersRep.fetchById(""+999990);
+			Dealers bull = dealersRep.fetchById(""+999990l);
 			assertNotNull("No Dealers returned from fetchById", bull);
 			assertTrue("dealersFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getEmail()+" "
@@ -162,13 +162,52 @@ public class DealersTest {
 	public void dealersSearch(){
 		List<Dealers> dealersList = new ArrayList<Dealers>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
 		
 		try{
-			dealersList = dealersRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("dealersSearch method failed. Expected List of Dealers size: 1 Actual: "+dealersList.size(),dealersList.size() >= 1);
+			dealersList = dealersRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("dealersSearch method failed. Expected List of Dealers size: 20 Actual: "+dealersList.size(),dealersList.size() == 20);
+			
+			for(int index = 0; index < dealersList.size() - 1; index++){
+				assertTrue("dealersSearch method failed on asc order check. Id at index "+index+": "+dealersList.get(index).getId()+" next: "+dealersList.get(index+1).getId(),
+						dealersList.get(index).getId().compareTo(dealersList.get(index+1).getId()) < 0);
+			}
+		} catch (Exception e){
+			fail("dealersSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			dealersList = dealersRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("dealersSearch method failed. Expected List of Dealers size: 20 Actual: "+dealersList.size(),dealersList.size() == 20);
+			
+			for(int index = 0; index < dealersList.size() - 1; index++){
+				assertTrue("dealersSearch method failed on desc order check. Id at index "+index+": "+dealersList.get(index).getId()+" next: "+dealersList.get(index+1).getId(),
+						dealersList.get(index).getId().compareTo(dealersList.get(index+1).getId()) > 0);
+			}
+		} catch (Exception e){
+			fail("dealersSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("email", "emailTEST0");
+		
+		try{
+			dealersList = dealersRep.search(0, 20, null, map, null, null, null);
+			assertTrue("dealersSearch method failed. Expected List of Dealers size: 1 Actual: "+dealersList.size(),dealersList.size() == 1);
+		} catch (Exception e){
+			fail("dealersSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("email", "emailTEST");
+
+		try{
+			dealersList = dealersRep.search(0, 20, null, null, map, null, null);
+			assertTrue("dealersSearch method failed. Expected List of Dealers size: 20 Actual: "+dealersList.size(),dealersList.size() == 20);
 		} catch (Exception e){
 			fail("dealersSearch method failed. Unexpected exception catched. "+e.toString());
 		}

@@ -84,37 +84,37 @@ public class Bulletin extends BaseObject implements Serializable{
 	@JoinColumn(name="BULLETIN_ID", referencedColumnName="ID")
 	private List<Attachment> bulletinAttachments;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name="BULLETIN_DEALER",
 			joinColumns=@JoinColumn(name="BULLETIN_ID"),
 			inverseJoinColumns=@JoinColumn(name="ID_DEALER"))
 	private List<Dealers> dealers;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name="BULLETIN_CONTACT",
 			joinColumns=@JoinColumn(name="BULLETIN_ID"),
 			inverseJoinColumns=@JoinColumn(name="EMAILCONTACT_ID"))
 	private List<EmailContact> emailContacts;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name="BULLETIN_MAILINGLIST",
 			joinColumns=@JoinColumn(name="BULLETIN_ID"),
 			inverseJoinColumns=@JoinColumn(name="MAILINGLIST_ID"))
 	private List<MailingList> mailingLists;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name="BULLETIN_GEOAREA",
 			joinColumns=@JoinColumn(name="BULLETIN_ID"),
 			inverseJoinColumns=@JoinColumn(name="ID_AREA"))
 	private List<GeoAreas> Areas;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name="BULLETIN_REGION",
 			joinColumns=@JoinColumn(name="BULLETIN_ID"),
 			inverseJoinColumns=@JoinColumn(name="ID_REGION"))
 	private List<GeoRegions> regions;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name="BULLETIN_COUNTRY",
 			joinColumns=@JoinColumn(name="BULLETIN_ID"),
 			inverseJoinColumns=@JoinColumn(name="ID_COUNTRY"))

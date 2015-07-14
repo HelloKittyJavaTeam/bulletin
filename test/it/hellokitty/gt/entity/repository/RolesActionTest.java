@@ -233,13 +233,52 @@ public class RolesActionTest {
 	public void rolesActionSearch(){
 		List<RolesAction> rolesActionList = new ArrayList<RolesAction>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
 		
 		try{
-			rolesActionList = rolesActionRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("rolesActionSearch method failed. Expected List of RolesAction size: 1 Actual: "+rolesActionList.size(),rolesActionList.size() >= 1);
+			rolesActionList = rolesActionRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("rolesActionSearch method failed. Expected List of RolesAction size: 20 Actual: "+rolesActionList.size(),rolesActionList.size() == 20);
+			
+			for(int index = 0; index < rolesActionList.size() - 1; index++){
+				assertTrue("rolesActionSearch method failed on asc order check. Id at index "+index+": "+rolesActionList.get(index).getId()+" next: "+rolesActionList.get(index+1).getId(),
+						rolesActionList.get(index).getId().compareTo(rolesActionList.get(index+1).getId()) < 0);
+			}
+		} catch (Exception e){
+			fail("rolesActionSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			rolesActionList = rolesActionRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("rolesActionSearch method failed. Expected List of RolesAction size: 20 Actual: "+rolesActionList.size(),rolesActionList.size() == 20);
+			
+			for(int index = 0; index < rolesActionList.size() - 1; index++){
+				assertTrue("rolesActionSearch method failed on desc order check. Id at index "+index+": "+rolesActionList.get(index).getId()+" next: "+rolesActionList.get(index+1).getId(),
+						rolesActionList.get(index).getId().compareTo(rolesActionList.get(index+1).getId()) > 0);
+			}
+		} catch (Exception e){
+			fail("rolesActionSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("roles", "roles0");
+		
+		try{
+			rolesActionList = rolesActionRep.search(0, 20, null, map, null, null, null);
+			assertTrue("rolesActionSearch method failed. Expected List of RolesAction size: 1 Actual: "+rolesActionList.size(),rolesActionList.size() == 1);
+		} catch (Exception e){
+			fail("rolesActionSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("roles", "roles");
+
+		try{
+			rolesActionList = rolesActionRep.search(0, 20, null, null, map, null, null);
+			assertTrue("rolesActionSearch method failed. Expected List of RolesAction size: 20 Actual: "+rolesActionList.size(),rolesActionList.size() == 20);
 		} catch (Exception e){
 			fail("rolesActionSearch method failed. Unexpected exception catched. "+e.toString());
 		}

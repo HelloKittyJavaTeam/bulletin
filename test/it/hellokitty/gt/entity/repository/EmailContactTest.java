@@ -38,7 +38,7 @@ public class EmailContactTest {
 			emailContactAdd.setId(99999l+i);
 			emailContactAdd.setCreateDate(new Date());
 			emailContactAdd.setUserCreated("testADD"+i);
-			emailContactAdd.setName("name");
+			emailContactAdd.setName("name"+i);
 			emailContactAdd.setActive(true);
 			em.persist(emailContactAdd);
 		}
@@ -65,7 +65,7 @@ public class EmailContactTest {
 			assertNotNull("No EmailContact returned from fetchById", bull);
 			assertTrue("emailContactFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getName()+" "
-					+ "Expected value: CONTENUTOTEST 0", bull.getName().equals("name"));
+					+ "Expected value: name0", bull.getName().equals("name0"));
 			
 			bull= emailContactRep.fetchById(987654321l);
 			assertNull(bull);
@@ -233,13 +233,52 @@ public class EmailContactTest {
 	public void emailContactSearch(){
 		List<EmailContact> emailContactList = new ArrayList<EmailContact>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
 		
 		try{
-			emailContactList = emailContactRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("emailContactSearch method failed. Expected List of EmailContact size: 1 Actual: "+emailContactList.size(),emailContactList.size() >= 1);
+			emailContactList = emailContactRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("emailContactSearch method failed. Expected List of EmailContact size: 20 Actual: "+emailContactList.size(),emailContactList.size() == 20);
+			
+			for(int index = 0; index < emailContactList.size() - 1; index++){
+				assertTrue("emailContactSearch method failed on asc order check. Id at index "+index+": "+emailContactList.get(index).getId()+" next: "+emailContactList.get(index+1).getId(),
+						emailContactList.get(index).getId().compareTo(emailContactList.get(index+1).getId()) < 0);
+			}
+		} catch (Exception e){
+			fail("emailContactSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			emailContactList = emailContactRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("emailContactSearch method failed. Expected List of EmailContact size: 20 Actual: "+emailContactList.size(),emailContactList.size() == 20);
+			
+			for(int index = 0; index < emailContactList.size() - 1; index++){
+				assertTrue("emailContactSearch method failed on desc order check. Id at index "+index+": "+emailContactList.get(index).getId()+" next: "+emailContactList.get(index+1).getId(),
+						emailContactList.get(index).getId().compareTo(emailContactList.get(index+1).getId()) > 0);
+			}
+		} catch (Exception e){
+			fail("emailContactSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("name", "name0");
+		
+		try{
+			emailContactList = emailContactRep.search(0, 20, null, map, null, null, null);
+			assertTrue("emailContactSearch method failed. Expected List of EmailContact size: 1 Actual: "+emailContactList.size(),emailContactList.size() == 1);
+		} catch (Exception e){
+			fail("emailContactSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("name", "name");
+
+		try{
+			emailContactList = emailContactRep.search(0, 20, null, null, map, null, null);
+			assertTrue("emailContactSearch method failed. Expected List of EmailContact size: 20 Actual: "+emailContactList.size(),emailContactList.size() == 20);
 		} catch (Exception e){
 			fail("emailContactSearch method failed. Unexpected exception catched. "+e.toString());
 		}

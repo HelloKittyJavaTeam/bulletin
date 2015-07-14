@@ -161,13 +161,52 @@ public class GeoAreasTest {
 	public void geoAreasSearch(){
 		List<GeoAreas> geoAreasList = new ArrayList<GeoAreas>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
 		
 		try{
-			geoAreasList = geoAreasRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("geoAreasSearch method failed. Expected List of GeoAreas size: 1 Actual: "+geoAreasList.size(),geoAreasList.size() >= 1);
+			geoAreasList = geoAreasRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("geoAreasSearch method failed. Expected List of GeoAreas size: 20 Actual: "+geoAreasList.size(),geoAreasList.size() == 20);
+			
+			for(int index = 0; index < geoAreasList.size() - 1; index++){
+				assertTrue("geoAreasSearch method failed on asc order check. Id at index "+index+": "+geoAreasList.get(index).getId()+" next: "+geoAreasList.get(index+1).getId(),
+						geoAreasList.get(index).getId().compareTo(geoAreasList.get(index+1).getId()) < 0);
+			}
+		} catch (Exception e){
+			fail("geoAreasSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			geoAreasList = geoAreasRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("geoAreasSearch method failed. Expected List of GeoAreas size: 20 Actual: "+geoAreasList.size(),geoAreasList.size() == 20);
+			
+			for(int index = 0; index < geoAreasList.size() - 1; index++){
+				assertTrue("geoAreasSearch method failed on desc order check. Id at index "+index+": "+geoAreasList.get(index).getId()+" next: "+geoAreasList.get(index+1).getId(),
+						geoAreasList.get(index).getId().compareTo(geoAreasList.get(index+1).getId()) > 0);
+			}
+		} catch (Exception e){
+			fail("geoAreasSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("descriptionEn", "testDescription0");
+		
+		try{
+			geoAreasList = geoAreasRep.search(0, 20, null, map, null, null, null);
+			assertTrue("geoAreasSearch method failed. Expected List of GeoAreas size: 1 Actual: "+geoAreasList.size(),geoAreasList.size() == 1);
+		} catch (Exception e){
+			fail("geoAreasSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("descriptionEn", "testDescription");
+
+		try{
+			geoAreasList = geoAreasRep.search(0, 20, null, null, map, null, null);
+			assertTrue("geoAreasSearch method failed. Expected List of GeoAreas size: 20 Actual: "+geoAreasList.size(),geoAreasList.size() == 20);
 		} catch (Exception e){
 			fail("geoAreasSearch method failed. Unexpected exception catched. "+e.toString());
 		}
