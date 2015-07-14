@@ -28,11 +28,11 @@ public class GeoCountriesTest {
 	private static GeoCountries geoCountriesAdd;
 
 	@Before
-	public void insert20Elements() {
+	public void insert10Elements() {
 		EntityTransaction transaction = em.getTransaction();
 		
 		transaction.begin();
-		for(int i = 0; i < 20; i++){
+		for(int i = 0; i < 10; i++){
 			geoCountriesAdd = new GeoCountries();
 			geoCountriesAdd.setId(""+99999l+i);
 			geoCountriesAdd.setUserIns("testADD"+i);
@@ -45,10 +45,10 @@ public class GeoCountriesTest {
 	}
 	
 	@After
-	public void delete20Elements() {
+	public void delete10Elements() {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		for(int i = 0; i < 20; i++){
+		for(int i = 0; i < 10; i++){
 			em.remove(em.find(GeoCountries.class, ""+99999l+i));
 		}
 		transaction.commit();
@@ -81,9 +81,9 @@ public class GeoCountriesTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<GeoCountries> bullList = geoCountriesRep.fetchAll(0, 20, cdMap);
+			List<GeoCountries> bullList = geoCountriesRep.fetchAll(0, 10, cdMap);
 			assertTrue("geoCountriesFetchAll returned a empty list.", bullList.size() > 0);
-			assertTrue("geoCountriesFetchAll didn't return all the elements.", bullList.size() >= 20);
+			assertTrue("geoCountriesFetchAll didn't return all the elements.", bullList.size() >= 10);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId().compareTo(bullList.get(index+1).getId()) > 0){
 					fail("geoCountriesFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -96,7 +96,7 @@ public class GeoCountriesTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<GeoCountries> bullList = geoCountriesRep.fetchAll(0, 20, cdMap);
+			List<GeoCountries> bullList = geoCountriesRep.fetchAll(0, 10, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId().compareTo(bullList.get(index+1).getId()) < 0){
 					fail("geoCountriesFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -109,8 +109,8 @@ public class GeoCountriesTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<GeoCountries> bullList = geoCountriesRep.fetchAll(0, 17, cdMap);
-			assertTrue("geoCountriesFetchAll didn't return all the elements.", bullList.size() == 17);
+			List<GeoCountries> bullList = geoCountriesRep.fetchAll(0, 7, cdMap);
+			assertTrue("geoCountriesFetchAll didn't return all the elements.", bullList.size() == 7);
 		} catch (Exception e) {
 			fail("Caught Exception in geoCountriesFetchById method. "+e.toString());
 		}
@@ -148,7 +148,7 @@ public class GeoCountriesTest {
 		
 		try{
 			result = geoCountriesRep.count(emptyMap, map, emptyMap, emptyMap);
-			assertTrue("geoCountriesCount method with user parameter = 'unknowUser' failed. Number of GeoCountries expected: 20 Actual:"+result, result == 20);
+			assertTrue("geoCountriesCount method with user parameter = 'unknowUser' failed. Number of GeoCountries expected: 10 Actual:"+result, result == 10);
 		} catch (Exception e){
 			fail("geoCountriesCount method with user parameter = 'unknowUser' failed. Unexpected exception catched. "+e.toString());
 		}
@@ -166,7 +166,7 @@ public class GeoCountriesTest {
 		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
 		
 		try{
-			geoCountriesList = geoCountriesRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
+			geoCountriesList = geoCountriesRep.search(0, 10, map, emptyMap, emptyMap, emptyMap, emptyMap);
 			assertTrue("geoCountriesSearch method failed. Expected List of GeoCountries size: 1 Actual: "+geoCountriesList.size(),geoCountriesList.size() >= 1);
 		} catch (Exception e){
 			fail("geoCountriesSearch method failed. Unexpected exception catched. "+e.toString());

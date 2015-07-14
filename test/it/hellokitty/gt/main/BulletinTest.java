@@ -3,23 +3,12 @@ package it.hellokitty.gt.main;
 import it.hellokitty.gt.entity.Attachment;
 import it.hellokitty.gt.entity.Bulletin;
 import it.hellokitty.gt.entity.Dealers;
-import it.hellokitty.gt.entity.GeoAreas;
-import it.hellokitty.gt.entity.GeoCountries;
-import it.hellokitty.gt.entity.GeoRegions;
 import it.hellokitty.gt.entity.Tag;
-import it.hellokitty.gt.entity.VehicleFamily;
-import it.hellokitty.gt.entity.VehicleGroups;
-import it.hellokitty.gt.entity.VehicleMaster;
 import it.hellokitty.gt.repository.impl.BulletinRepositoryImpl;
-import it.hellokitty.gt.repository.impl.DealerRepositoryImpl;
-import it.hellokitty.gt.repository.impl.GeoAreasRepositoryImpl;
-import it.hellokitty.gt.repository.impl.VehicleFamilyRepositoryImpl;
-import it.hellokitty.gt.repository.impl.VehicleMasterRepositoryImpl;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 

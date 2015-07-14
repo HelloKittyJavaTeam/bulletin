@@ -148,7 +148,7 @@ public class GeoAreasTest {
 		
 		try{
 			result = geoAreasRep.count(emptyMap, map, emptyMap, emptyMap);
-			assertTrue("geoAreasCount method failed. Number of GeoAreas expected: 20 Actual:"+result, result == 20);
+			assertTrue(" Number of GeoAreas expected: 20 Actual:"+result, result == 20);
 		} catch (Exception e){
 			fail("geoAreasCount method with user parameter = 'unknowUser' failed. Unexpected exception catched. "+e.toString());
 		}

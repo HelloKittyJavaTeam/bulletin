@@ -1,11 +1,10 @@
 package it.hellokitty.gt.entity;
 
-import it.hellokitty.gt.entity.BaseObject;
+import it.hellokitty.gt.utils.Utils;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -54,7 +53,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	public static final String FIND_BY_TAG_LIKE_ADMIN ="Bulletin.FIND_BY_TAG_LIKE_ADMIN";
 	
 	@Transient
-	Map<String, String> languageMap = new HashMap<String, String>();
+	Utils utils = new Utils();
 	
 	@Id 
 	@GeneratedValue(generator = "SEQ_BULLETIN_ID", strategy = GenerationType.SEQUENCE)
@@ -483,15 +482,39 @@ public class Bulletin extends BaseObject implements Serializable{
 		this.bulletinUsers = bulletinUsers;
 	}
 	
-	public String getTitle(String lang){
-		return languageMap.get(lang+"Title");
+	public String getTitle(String language){
+		String result = null;
+		try {
+			Method method = this.getClass().getMethod(utils.getTitleMap().get(language));
+			result = (String) method.invoke(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
-	public String getContent(String lang){
-		return languageMap.get(lang+"Content");
+	public String getDescription(String language){
+		String result = null;
+		try {
+			Method method = this.getClass().getMethod(utils.getDescriptionMap().get(language));
+			result = (String) method.invoke(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
-	public String getDescription(String lang){
-		return languageMap.get(lang+"Description");
+	public String getContent(String language){
+		String result = null;
+		try {
+			Method method = this.getClass().getMethod(utils.getContentMap().get(language));
+			result = (String) method.invoke(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 }
