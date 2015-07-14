@@ -162,13 +162,80 @@ public class AdUsersTest {
 	public void adUsersSearch(){
 		List<AdUsers> adUsersList = new ArrayList<AdUsers>();
 		
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("id", "asc");
-		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
 		
 		try{
-			adUsersList = adUsersRep.search(0, 20, map, emptyMap, emptyMap, emptyMap, emptyMap);
-			assertTrue("adUsersSearch method failed. Expected List of AdUsers size: 1 Actual: "+adUsersList.size(),adUsersList.size() >= 1);
+			adUsersList = adUsersRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("adUsersSearch method failed. Expected List of AdUsers size: 20 Actual: "+adUsersList.size(),adUsersList.size() == 20);
+			
+			for(int index = 0; index < adUsersList.size() - 1; index++){
+				assertTrue("adUsersSearch method failed on asc order check. Id at index "+index+": "+adUsersList.get(index).getId()+" next: "+adUsersList.get(index+1).getId(),
+						adUsersList.get(index).getId() < adUsersList.get(index+1).getId());
+			}
+		} catch (Exception e){
+			fail("adUsersSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			adUsersList = adUsersRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("adUsersSearch method failed. Expected List of AdUsers size: 20 Actual: "+adUsersList.size(),adUsersList.size() == 20);
+			
+			for(int index = 0; index < adUsersList.size() - 1; index++){
+				assertTrue("adUsersSearch method failed on desc order check. Id at index "+index+": "+adUsersList.get(index).getId()+" next: "+adUsersList.get(index+1).getId(),
+						adUsersList.get(index).getId() > adUsersList.get(index+1).getId());
+			}
+		} catch (Exception e){
+			fail("adUsersSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("email", "emailTEST0");
+		
+		try{
+			adUsersList = adUsersRep.search(0, 20, null, map, null, null, null);
+			assertTrue("adUsersSearch method failed. Expected List of AdUsers size: 1 Actual: "+adUsersList.size(),adUsersList.size() == 1);
+		} catch (Exception e){
+			fail("adUsersSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("email", "emailTEST");
+
+		try{
+			adUsersList = adUsersRep.search(0, 20, null, null, map, null, null);
+			assertTrue("adUsersSearch method failed. Expected List of AdUsers size: 20 Actual: "+adUsersList.size(),adUsersList.size() == 20);
+		} catch (Exception e){
+			fail("adUsersSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("id", 100l);
+		
+		try{
+			adUsersList = adUsersRep.search(0, 20, null, null, null, map, null);
+			for(AdUsers adUsers : adUsersList){
+				if(adUsers.getId() < 100){
+					fail("adUsersSearch method failed on lowerEqual check. Id found: "+adUsers.getId());
+				}
+			}
+		} catch (Exception e){
+			fail("adUsersSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("id", 100l);
+		
+		try{
+			adUsersList = adUsersRep.search(0, 20, null, null, null, null, map);
+			for(AdUsers adUsers : adUsersList){
+				if(adUsers.getId() > 100){
+					fail("adUsersSearch method failed on lowerEqual check. Id found: "+adUsers.getId());
+				}
+			}
 		} catch (Exception e){
 			fail("adUsersSearch method failed. Unexpected exception catched. "+e.toString());
 		}

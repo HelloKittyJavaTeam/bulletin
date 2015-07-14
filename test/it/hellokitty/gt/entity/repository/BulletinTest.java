@@ -250,6 +250,36 @@ public class BulletinTest {
 	public void bulletinSearch(){
 		List<Bulletin> bulletinList = new ArrayList<Bulletin>();
 		
+		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "asc");
+		
+		try{
+			bulletinList = bulletinRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("bulletinSearch method failed. Expected List of Bulletin size: 20 Actual: "+bulletinList.size(),bulletinList.size() == 20);
+			
+			for(int index = 0; index < bulletinList.size() - 1; index++){
+				assertTrue("bulletinSearch method failed on asc order check. Id at index "+index+": "+bulletinList.get(index).getId()+" next: "+bulletinList.get(index+1).getId(),
+						bulletinList.get(index).getId() < bulletinList.get(index+1).getId());
+			}
+		} catch (Exception e){
+			fail("bulletinSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		orderMap = new LinkedHashMap<String, String>();
+		orderMap.put("id", "desc");
+		
+		try{
+			bulletinList = bulletinRep.search(0, 20, orderMap, null, null, null, null);
+			assertTrue("bulletinSearch method failed. Expected List of Bulletin size: 20 Actual: "+bulletinList.size(),bulletinList.size() == 20);
+			
+			for(int index = 0; index < bulletinList.size() - 1; index++){
+				assertTrue("bulletinSearch method failed on desc order check. Id at index "+index+": "+bulletinList.get(index).getId()+" next: "+bulletinList.get(index+1).getId(),
+						bulletinList.get(index).getId() > bulletinList.get(index+1).getId());
+			}
+		} catch (Exception e){
+			fail("bulletinSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("tag", "testTAG0");
 		
@@ -266,6 +296,34 @@ public class BulletinTest {
 		try{
 			bulletinList = bulletinRep.search(0, 20, null, null, map, null, null);
 			assertTrue("bulletinSearch method failed. Expected List of Bulletin size: 20 Actual: "+bulletinList.size(),bulletinList.size() == 20);
+		} catch (Exception e){
+			fail("bulletinSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("id", 100l);
+		
+		try{
+			bulletinList = bulletinRep.search(0, 20, null, null, null, map, null);
+			for(Bulletin bulletin : bulletinList){
+				if(bulletin.getId() < 100){
+					fail("bulletinSearch method failed on lowerEqual check. Id found: "+bulletin.getId());
+				}
+			}
+		} catch (Exception e){
+			fail("bulletinSearch method failed. Unexpected exception catched. "+e.toString());
+		}
+		
+		map = new HashMap<String, Object>();
+		map.put("id", 100l);
+		
+		try{
+			bulletinList = bulletinRep.search(0, 20, null, null, null, null, map);
+			for(Bulletin bulletin : bulletinList){
+				if(bulletin.getId() > 100){
+					fail("bulletinSearch method failed on lowerEqual check. Id found: "+bulletin.getId());
+				}
+			}
 		} catch (Exception e){
 			fail("bulletinSearch method failed. Unexpected exception catched. "+e.toString());
 		}

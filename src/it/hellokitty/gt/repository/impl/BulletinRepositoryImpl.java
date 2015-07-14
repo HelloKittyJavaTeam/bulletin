@@ -23,7 +23,7 @@ public class BulletinRepositoryImpl extends RepositoryUtils<Bulletin> implements
 		typeParameterClass = Bulletin.class;
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings({"rawtypes"})
 	@Override
 	protected CriteriaQuery innerSearch(CriteriaBuilder cb, CriteriaQuery cq, Root<Bulletin> t, LinkedHashMap<String, String> orderColumn,
 			HashMap<String,Object> paramEquals,
@@ -31,7 +31,7 @@ public class BulletinRepositoryImpl extends RepositoryUtils<Bulletin> implements
 			HashMap<String,Object> paramGE,
 			HashMap<String,Object> paramLE){
 		List<Predicate> listPred = new LinkedList<Predicate>();
-		Join<Bulletin, Tag> tags = t.join("tags", JoinType.LEFT);
+		
 		Predicate pred;
 
 		if(orderColumn != null){
@@ -47,6 +47,7 @@ public class BulletinRepositoryImpl extends RepositoryUtils<Bulletin> implements
 		if(paramEquals != null){
 			for(String column: paramEquals.keySet()){
 				if(column.equals("tag")){
+					Join<Bulletin, Tag> tags = t.join("tags", JoinType.LEFT);
 					pred = cb.equal(tags.get("word"), paramEquals.get(column));
 				} else {
 					pred = cb.equal(t.get(column), paramEquals.get(column));
@@ -58,6 +59,7 @@ public class BulletinRepositoryImpl extends RepositoryUtils<Bulletin> implements
 		if(paramLike != null){
 			for(String column: paramLike.keySet()){
 				if(column.equals("tag")){
+					Join<Bulletin, Tag> tags = t.join("tags", JoinType.LEFT);
 					pred = cb.like(tags.<String>get("word"), "%"+paramLike.get(column)+"%");
 				} else {
 					pred = cb.like(t.<String>get(column), "%"+paramLike.get(column).toString()+"%");
@@ -67,15 +69,15 @@ public class BulletinRepositoryImpl extends RepositoryUtils<Bulletin> implements
 		}
 		
 		if(paramGE != null){
-			for(String column: paramLE.keySet()){
-				pred = cb.le(t.<Number>get(column), (Number)paramGE.get(column));
+			for(String column: paramGE.keySet()){
+				pred = cb.ge(t.<Number>get(column), (Number)paramGE.get(column));
 				listPred.add(pred);
 			}
 		}
 		
 		if(paramLE != null){
-			for(String column: paramGE.keySet()){
-				pred = cb.ge(t.<Number>get(column), (Number)paramLE.get(column));
+			for(String column: paramLE.keySet()){
+				pred = cb.le(t.<Number>get(column), (Number)paramLE.get(column));
 				listPred.add(pred);
 			}
 		}
