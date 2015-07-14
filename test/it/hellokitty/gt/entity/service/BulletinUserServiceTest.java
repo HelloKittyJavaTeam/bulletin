@@ -1,6 +1,5 @@
 package it.hellokitty.gt.entity.service;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -8,10 +7,7 @@ import static org.junit.Assert.fail;
 import it.hellokitty.gt.entity.BulletinUser;
 import it.hellokitty.gt.service.impl.BulletinUserServiceImpl;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;

@@ -9,10 +9,7 @@ import it.hellokitty.gt.entity.Attachment;
 
 import it.hellokitty.gt.service.impl.AttachmentServiceImpl;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;

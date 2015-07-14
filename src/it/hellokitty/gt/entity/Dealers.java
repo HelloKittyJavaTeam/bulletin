@@ -53,7 +53,7 @@ public class Dealers implements Serializable {
 	}
 
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="DEALER_CODE", referencedColumnName="ID_ISO3166")
+	@JoinColumn(name="DEALER_CODE", referencedColumnName="ID")
 	private List<AdUsers> AdUsers;
 
 	private String active;
