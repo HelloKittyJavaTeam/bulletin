@@ -118,6 +118,9 @@ public class AttachmentHistoryServiceImpl implements AttachmentHistoryService {
 
 	@Override
 	public AttachmentHistory fetchById(Object id) throws Exception {
+		if(id == null){
+			throw new IllegalArgumentException(this+" - "+this.getClass()+" - id parameter cannot be null.");
+		}
 		return attachmentHistoryRepository.fetchById(id);
 	}
 

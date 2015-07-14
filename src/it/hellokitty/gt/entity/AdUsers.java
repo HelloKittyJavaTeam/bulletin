@@ -64,7 +64,7 @@ public class AdUsers implements Serializable {
 	@Column(name="FIRST_NAME")
 	private String firstName;
 
-	@Column(name="\"LANGUAGE\"")
+	@Column(name="LANGUAGE")
 	private String language;
 
 	@Column(name="LAST_NAME")

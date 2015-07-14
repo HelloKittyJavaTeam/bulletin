@@ -58,7 +58,7 @@ public class BulletinTest {
 		
 		try {
 			Bulletin b = bullRepo.fetchById(new Long("1073"));
-			System.out.println("bulletin title: " + b.getItTitle());
+			System.out.println("bulletin title: " + b.getTitleIt());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -81,7 +81,7 @@ public class BulletinTest {
 			bullList = bullRepo.search(0, cnt.intValue(), new LinkedHashMap<String, String>(), new HashMap<String,Object>(), paramLike, new HashMap<String,Object>(), new HashMap<String,Object>());
 			
 			for(Bulletin b : bullList){
-				System.out.println("bulletin id: " + b.getId() + " bulletin title: " + b.getItTitle());
+				System.out.println("bulletin id: " + b.getId() + " bulletin title: " + b.getTitleIt());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,7 +103,7 @@ public class BulletinTest {
 			
 			List<Dealers> dealerList = dealRepo.fetchAll(0, cnt.intValue(), null);
 			for(Dealers d : dealerList){
-				System.out.println("id: " + d.getId() + " name: " + d.getName() + " country: " + d.getCountry().getDescriptionIT() + " region: " + d.getCountry().getRegion().getDescriptionIT() + " area: " + d.getCountry().getRegion().getArea().getDescriptionIt());
+				System.out.println("id: " + d.getId() + " name: " + d.getName() + " country: " + d.getCountry().getDescriptionIt() + " region: " + d.getCountry().getRegion().getDescriptionIt() + " area: " + d.getCountry().getRegion().getArea().getDescriptionIt());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -127,9 +127,9 @@ public class BulletinTest {
 			for(GeoAreas a : areaList){
 				System.out.println("id: " + a.getId() + " name: " + a.getDescriptionIt());
 				for(GeoRegions r : a.getRegions()){
-					System.out.println("region_id: " + r.getId() + " name: " + r.getDescriptionIT());
+					System.out.println("region_id: " + r.getId() + " name: " + r.getDescriptionIt());
 					for(GeoCountries c : r.getCountries()){
-						System.out.println("country_id: " + c.getId() + " name: " + c.getDescriptionIT());
+						System.out.println("country_id: " + c.getId() + " name: " + c.getDescriptionIt());
 						for(Dealers d : c.getDealers()){
 							System.out.println("dealer_id: " + d.getId() + " name: " + d.getName());
 						}
@@ -157,9 +157,9 @@ public class BulletinTest {
 			List<VehicleFamily> familyList = vehRepo.fetchAll(0, cnt.intValue(), null);
 			for(VehicleFamily f : familyList){
 				System.out.println("id: " + f.getId() + " name: " + f.getDescription());
-				for(VehicleGroups g : f.getVehicleGroups()){
+				for(VehicleGroups g : f.getGroups()){
 					System.out.println("group_id: " + g.getId() + " name: " + g.getDescription());
-					for(VehicleMaster m : g.getVehicleMasters()){
+					for(VehicleMaster m : g.getVehicles()){
 						System.out.println("master_id: " + m.getId() + " name: " + m.getDescription());
 					}
 				}
@@ -184,7 +184,7 @@ public class BulletinTest {
 			
 			List<VehicleMaster> masterList = masRepo.fetchAll(0, cnt.intValue(), null);
 			for(VehicleMaster m : masterList){
-				System.out.println("id: " + m.getId() + " name: " + m.getDescription() + " group: " + m.getVehicleGroup().getDescription() + " family: " + m.getVehicleGroup().getVehicleFamily().getDescription());
+				System.out.println("id: " + m.getId() + " name: " + m.getDescription() + " group: " + m.getGroup().getDescription() + " family: " + m.getGroup().getFamily().getDescription());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -205,8 +205,8 @@ public class BulletinTest {
 		//bull.setDealers(dealers);
 		//bull.setEmailContacts(emailContacts);
 		//bull.setGeoAreas(geoAreas);
-		bull.setItContent(content);
-		bull.setItTitle(title);
+		bull.setContentIt(content);
+		bull.setTitleIt(title);
 		//bull.setMailingLists(mailingLists);
 		bull.setPriority("1");
 		//bull.setRegions(regions);
@@ -247,8 +247,8 @@ public class BulletinTest {
 		for(int i = 0; i < 1000; i++){
 			bull = new Bulletin();
 			bull.setCreateDate(new Date());
-			bull.setItTitle("titolo"+i);
-			bull.setItContent("contenuto della comunicazione n:"+i);
+			bull.setTitleIt("titolo"+i);
+			bull.setContentIt("contenuto della comunicazione n:"+i);
 			bull.setPriority((i%50)+"");
 			tagList = new ArrayList<Tag>();
 			int maxIndex = 10;

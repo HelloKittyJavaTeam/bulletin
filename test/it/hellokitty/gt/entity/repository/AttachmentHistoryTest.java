@@ -59,7 +59,7 @@ public class AttachmentHistoryTest {
 	 *  FETCH BY ID TEST
 	 */
 	@Test
-	public void attachmentHistoryFetchById(){
+	public void attachmentHistoryFetchById(){		
 		try {
 			AttachmentHistory bull = attachmentHistoryRep.fetchById(99999l);
 			assertNotNull("No AttachmentHistory returned from fetchById", bull);

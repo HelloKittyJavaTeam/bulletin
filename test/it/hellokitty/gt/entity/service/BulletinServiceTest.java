@@ -53,7 +53,7 @@ public class BulletinServiceTest {
 			bullAdd.setId(99999l+i);
 			bullAdd.setUserCreated("testADD"+i);
 			bullAdd.setCreateDate(new Date());
-			bullAdd.setItContent("CONTENUTOTEST "+i);
+			bullAdd.setContentIt("CONTENUTOTEST "+i);
 			bullAdd.setActive(true);
 			bullAdd.setTags(tagAddList);
 			bullAdd.setBulletinUsers(bullUserAddList);
@@ -70,7 +70,7 @@ public class BulletinServiceTest {
 			bullAdd = new Bulletin();
 			bullAdd.setId(99999l+i);
 			bullAdd.setUserCreated("testADD"+i);
-			bullAdd.setItContent("CONTENUTOTEST "+i);
+			bullAdd.setContentIt("CONTENUTOTEST "+i);
 			em.remove(em.find(Bulletin.class, 99999l+i));
 
 		}
@@ -104,8 +104,8 @@ public class BulletinServiceTest {
 			Bulletin bull = bullRep.fetchById(99999l);
 			assertNotNull("No Bulletin returned from fetchById", bull);
 			assertTrue("bulletinFetchById method failed on retrieve content value. "
-					+ "Actual value: "+bull.getItContent()+" "
-					+ "Expected value: CONTENUTOTEST 0", bull.getItContent().equals("CONTENUTOTEST 0"));
+					+ "Actual value: "+bull.getContentIt()+" "
+					+ "Expected value: CONTENUTOTEST 0", bull.getContentIt().equals("CONTENUTOTEST 0"));
 			bull= bullRep.fetchById(987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
@@ -225,7 +225,7 @@ public class BulletinServiceTest {
 	public void bulletinMerge(){
 		Bulletin bullToMerge = new Bulletin();
 		bullToMerge = em.find(Bulletin.class, 99999l);
-		bullToMerge.setItContent("CONTENUTO TEST ITA");
+		bullToMerge.setContentIt("CONTENUTO TEST ITA");
 		
 		try{
 			bullRep.merge(null, "testADD");
@@ -258,8 +258,8 @@ public class BulletinServiceTest {
 			bullRep.merge(bullToMerge, "testMERGE");
 			bullToMerge = em.find(Bulletin.class, 99999l);
 			assertTrue("bulletinMErge method failed. ItContent value wrong or not updated. "
-					+ "Current value: "+bullToMerge.getItTitle()+" "
-					+ "Expected value: CONTENUTO TEST ITA.",bullToMerge.getItContent().equals("CONTENUTO TEST ITA"));
+					+ "Current value: "+bullToMerge.getTitleIt()+" "
+					+ "Expected value: CONTENUTO TEST ITA.",bullToMerge.getContentIt().equals("CONTENUTO TEST ITA"));
 			assertTrue("bulletinMerge method failed. UserUpdate value not updated."
 					+ "Current value: "+bullToMerge.getUserUpdate()+" "
 					+ "Expected value: testMERGE.", bullToMerge.getUserUpdate().equals("testMERGE"));
@@ -271,7 +271,7 @@ public class BulletinServiceTest {
 			bullToMerge = new Bulletin();
 			bullToMerge.setId(9898989898l);
 			bullToMerge.setUserCreated("test");
-			bullToMerge.setItContent("CONTENUTO TEST ITA");
+			bullToMerge.setContentIt("CONTENUTO TEST ITA");
 			bullRep.merge(bullToMerge, "testMERGE");
 			assertNotNull("bulletinMerge method fail. No element added.", em.find(Bulletin.class, 9898989898l));
 		} catch (Exception e){

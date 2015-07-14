@@ -81,10 +81,6 @@ public class Bulletin extends BaseObject implements Serializable{
 	@JoinColumn(name="BULLETIN_ID", referencedColumnName="ID")
 	private List<BulletinUser> bulletinUsers;
 	
-//	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JoinColumn(name="BULLETIN_ID", referencedColumnname="ID")
-//	private List<>
-	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="BULLETIN_ID", referencedColumnName="ID")
 	private List<Attachment> bulletinAttachments;
@@ -111,7 +107,7 @@ public class Bulletin extends BaseObject implements Serializable{
 	@JoinTable(name="BULLETIN_GEOAREA",
 			joinColumns=@JoinColumn(name="BULLETIN_ID"),
 			inverseJoinColumns=@JoinColumn(name="ID_AREA"))
-	private List<GeoAreas> geoAreas;
+	private List<GeoAreas> Areas;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="BULLETIN_REGION",
@@ -127,87 +123,87 @@ public class Bulletin extends BaseObject implements Serializable{
 
 	@Index
 	@Column(name="IT_TITLE")
-	private String itTitle;
+	private String titleIt;
 
 	@Index
 	@Column(name="IT_DESCRIPTION")
-	private String itDescription;
+	private String descriptionIt;
 
 	@Index
 	@Column(name="IT_CONTENT")
-	private String itContent;
+	private String contentIt;
 
 	@Index
 	@Column(name="EN_TITLE")
-	private String enTitle;
+	private String titleEn;
 
 	@Index
 	@Column(name="EN_DESCRIPTION")
-	private String enDescription;
+	private String descriptionEn;
 
 	@Index
 	@Column(name="EN_CONTENT")
-	private String enContent;
+	private String contentEn;
 
 	@Index
 	@Column(name="FR_TITLE")
-	private String frTitle;
+	private String titleFr;
 
 	@Index
 	@Column(name="FR_DESCRIPTION")
-	private String frDescription;
+	private String descriptionFr;
 
 	@Index
 	@Column(name="FR_CONTENT")
-	private String frContent;
+	private String contentFr;
 
 	@Index
 	@Column(name="ES_TITLE")
-	private String esTitle;
+	private String titleEs;
 
 	@Index
 	@Column(name="ES_DESCRIPTION")
-	private String esDescription;
+	private String descriptionEs;
 
 	@Index
 	@Column(name="ES_CONTENT")
-	private String esContent;
+	private String contentEs;
 
 	@Index
 	@Column(name="JP_TITLE")
-	private String jpTitle;
+	private String titleJp;
 
 	@Index
 	@Column(name="JP_DESCRIPTION")
-	private String jpDescription;
+	private String descriptionJp;
 
 	@Index
 	@Column(name="JP_CONTENT")
-	private String jpContent;
+	private String contentJp;
 
 	@Index
 	@Column(name="ZH_TITLE")
-	private String zhTitle;
+	private String titleZh;
 
 	@Index
 	@Column(name="ZH_DESCRIPTION")
-	private String zhDescription;
+	private String descriptionZh;
 
 	@Index
 	@Column(name="ZH_CONTENT")
-	private String zhContent;
+	private String contentZh;
 
 	@Index
 	@Column(name="DE_TITLE")
-	private String deTitle;
+	private String titleDe;
 
 	@Index
 	@Column(name="DE_DESCRIPTION")
-	private String deDescription;
+	private String descriptionDe;
 
 	@Index
 	@Column(name="DE_CONTENT")
-	private String deContent;
+	private String contentDe;
 	
 	public Bulletin(){}
 	
@@ -287,12 +283,12 @@ public class Bulletin extends BaseObject implements Serializable{
 		this.mailingLists = mailingLists;
 	}
 
-	public List<GeoAreas> getGeoAreas() {
-		return geoAreas;
+	public List<GeoAreas> getAreas() {
+		return Areas;
 	}
 
 	public void setGeoAreas(List<GeoAreas> geoAreas) {
-		this.geoAreas = geoAreas;
+		this.Areas = geoAreas;
 	}
 
 	public List<GeoRegions> getRegions() {
@@ -311,193 +307,172 @@ public class Bulletin extends BaseObject implements Serializable{
 		this.countries = countries;
 	}
 
-	public String getItTitle() {
-		return itTitle;
+	public String getTitleIt() {
+		return titleIt;
 	}
 
-	public void setItTitle(String itTitle) {
-		languageMap.put("itTitle", itTitle);
-		this.itTitle = itTitle;
+	public void setTitleIt(String titleIt) {
+		this.titleIt = titleIt;
 	}
 
-	public String getItDescription() {
-		return itDescription;
+	public String getDescriptionIt() {
+		return descriptionIt;
 	}
 
-	public void setItDescription(String itDescription) {
-		languageMap.put("itDescription", itDescription);
-		this.itDescription = itDescription;
+	public void setDescriptionIt(String descriptionIt) {
+		this.descriptionIt = descriptionIt;
 	}
 
-	public String getItContent() {
-		return itContent;
+	public String getContentIt() {
+		return contentIt;
 	}
 
-	public void setItContent(String itContent) {
-		languageMap.put("itContent", itContent);
-		this.itContent = itContent;
+	public void setContentIt(String contentIt) {
+		this.contentIt = contentIt;
 	}
 
-	public String getEnTitle() {
-		return enTitle;
+	public String getTitleEn() {
+		return titleEn;
 	}
 
-	public void setEnTitle(String enTitle) {
-		languageMap.put("enTitle", enTitle);
-		this.enTitle = enTitle;
+	public void setTitleEn(String titleEn) {
+		this.titleEn = titleEn;
 	}
 
-	public String getEnDescription() {
-		return enDescription;
+	public String getDescriptionEn() {
+		return descriptionEn;
 	}
 
-	public void setEnDescription(String enDescription) {
-		languageMap.put("enDescription", enDescription);
-		this.enDescription = enDescription;
+	public void setDescriptionEn(String descriptionEn) {
+		this.descriptionEn = descriptionEn;
 	}
 
-	public String getEnContent() {
-		return enContent;
+	public String getContentEn() {
+		return contentEn;
 	}
 
-	public void setEnContent(String enContent) {
-		languageMap.put("enContent", enContent);
-		this.enContent = enContent;
+	public void setContentEn(String contentEn) {
+		this.contentEn = contentEn;
 	}
 
-	public String getFrTitle() {
-		return frTitle;
+	public String getTitleFr() {
+		return titleFr;
 	}
 
-	public void setFrTitle(String frTitle) {
-		languageMap.put("frTitle", frTitle);
-		this.frTitle = frTitle;
+	public void setTitleFr(String titleFr) {
+		this.titleFr = titleFr;
 	}
 
-	public String getFrDescription() {
-		return frDescription;
+	public String getDescriptionFr() {
+		return descriptionFr;
 	}
 
-	public void setFrDescription(String frDescription) {
-		languageMap.put("frDescription", frDescription);
-		this.frDescription = frDescription;
+	public void setDescriptionFr(String descriptionFr) {
+		this.descriptionFr = descriptionFr;
 	}
 
-	public String getFrContent() {
-		return frContent;
+	public String getContentFr() {
+		return contentFr;
 	}
 
-	public void setFrContent(String frContent) {
-		languageMap.put("frContent", frContent);
-		this.frContent = frContent;
+	public void setContentFr(String contentFr) {
+		this.contentFr = contentFr;
 	}
 
-	public String getEsTitle() {
-		return esTitle;
+	public String getTitleEs() {
+		return titleEs;
 	}
 
-	public void setEsTitle(String esTitle) {
-		languageMap.put("esTitle", esTitle);
-		this.esTitle = esTitle;
+	public void setTitleEs(String titleEs) {
+		this.titleEs = titleEs;
 	}
 
-	public String getEsDescription() {
-		return esDescription;
+	public String getDescriptionEs() {
+		return descriptionEs;
 	}
 
-	public void setEsDescription(String esDescription) {
-		languageMap.put("esDescription", esDescription);
-		this.esDescription = esDescription;
+	public void setDescriptionEs(String descriptionEs) {
+		this.descriptionEs = descriptionEs;
 	}
 
-	public String getEsContent() {
-		return esContent;
+	public String getContentEs() {
+		return contentEs;
 	}
 
-	public void setEsContent(String esContent) {
-		languageMap.put("esContent", esContent);
-		this.esContent = esContent;
+	public void setContentEs(String contentEs) {
+		this.contentEs = contentEs;
 	}
 
-	public String getJpTitle() {
-		return jpTitle;
+	public String getTitleJp() {
+		return titleJp;
 	}
 
-	public void setJpTitle(String jpTitle) {
-		languageMap.put("jpTitle", jpTitle);
-		this.jpTitle = jpTitle;
+	public void setTitleJp(String titleJp) {
+		this.titleJp = titleJp;
 	}
 
-	public String getJpDescription() {
-		return jpDescription;
+	public String getDescriptionJp() {
+		return descriptionJp;
 	}
 
-	public void setJpDescription(String jpDescription) {
-		languageMap.put("jpDescription", jpDescription);
-		this.jpDescription = jpDescription;
+	public void setDescriptionJp(String descriptionJp) {
+		this.descriptionJp = descriptionJp;
 	}
 
-	public String getJpContent() {
-		return jpContent;
+	public String getContentJp() {
+		return contentJp;
 	}
 
-	public void setJpContent(String jpContent) {
-		languageMap.put("jpContent", jpContent);
-		this.jpContent = jpContent;
+	public void setContentJp(String contentJp) {
+		this.contentJp = contentJp;
 	}
 
-	public String getZhTitle() {
-		return zhTitle;
+	public String getTitleZh() {
+		return titleZh;
 	}
 
-	public void setZhTitle(String zhTitle) {
-		languageMap.put("zhTitle", zhTitle);
-		this.zhTitle = zhTitle;
+	public void setTitleZh(String titleZh) {
+		this.titleZh = titleZh;
 	}
 
-	public String getZhDescription() {
-		return zhDescription;
+	public String getDescriptionZh() {
+		return descriptionZh;
 	}
 
-	public void setZhDescription(String zhDescription) {
-		languageMap.put("zhDescription", zhDescription);
-		this.zhDescription = zhDescription;
+	public void setDescriptionZh(String descriptionZh) {
+		this.descriptionZh = descriptionZh;
 	}
 
-	public String getZhContent() {
-		return zhContent;
+	public String getContentZh() {
+		return contentZh;
 	}
 
-	public void setZhContent(String zhContent) {
-		languageMap.put("zhContent", zhContent);
-		this.zhContent = zhContent;
+	public void setContentZh(String contentZh) {
+		this.contentZh = contentZh;
 	}
 
-	public String getDeTitle() {
-		return deTitle;
+	public String getTitleDe() {
+		return titleDe;
 	}
 
-	public void setDeTitle(String deTitle) {
-		languageMap.put("deTitle", deTitle);
-		this.deTitle = deTitle;
+	public void setTitleDe(String titleDe) {
+		this.titleDe = titleDe;
 	}
 
-	public String getDeDescription() {
-		return deDescription;
+	public String getDescriptionDe() {
+		return descriptionDe;
 	}
 
-	public void setDeDescription(String deDescription) {
-		languageMap.put("deDescription", deDescription);
-		this.deDescription = deDescription;
+	public void setDescriptionDe(String descriptionDe) {
+		this.descriptionDe = descriptionDe;
 	}
 
-	public String getDeContent() {
-		return deContent;
+	public String getContentDe() {
+		return contentDe;
 	}
 
-	public void setDeContent(String deContent) {
-		languageMap.put("deContent", deContent);
-		this.deContent = deContent;
+	public void setContentDe(String contentDe) {
+		this.contentDe = contentDe;
 	}
 
 	public List<BulletinUser> getBulletinUsers() {
