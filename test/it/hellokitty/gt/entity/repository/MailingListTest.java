@@ -5,8 +5,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import it.hellokitty.gt.entity.MailingList;
-import it.hellokitty.gt.repository.impl.MailingListRepositoryImpl;
+import it.hellokitty.gt.bulletin.entity.MailingList;
+import it.hellokitty.gt.bulletin.repository.impl.MailingListRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +38,7 @@ public class MailingListTest {
 			mailingListAdd.setId(99999l+i);
 			mailingListAdd.setCreateDate(new Date());
 			mailingListAdd.setUserCreated("testADD"+i);
-			mailingListAdd.setName("name");
+			mailingListAdd.setName("name"+i);
 			mailingListAdd.setActive(true);
 			em.persist(mailingListAdd);
 		}
@@ -65,7 +65,7 @@ public class MailingListTest {
 			assertNotNull("No MailingList returned from fetchById", bull);
 			assertTrue("mailingListFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getName()+" "
-					+ "Expected value: CONTENUTOTEST 0", bull.getName().equals("name"));
+					+ "Expected value: CONTENUTOTEST 0", bull.getName().equals("name0"));
 			
 			bull= mailingListRep.fetchById(987654321l);
 			assertNull(bull);
@@ -264,7 +264,7 @@ public class MailingListTest {
 		}
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("descriptionEn", "testDescription0");
+		map.put("name", "name0");
 		
 		try{
 			mailingListList = mailingListRep.search(0, 20, null, map, null, null, null);
@@ -274,7 +274,7 @@ public class MailingListTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("descriptionEn", "testDescription");
+		map.put("name", "name");
 
 		try{
 			mailingListList = mailingListRep.search(0, 20, null, null, map, null, null);

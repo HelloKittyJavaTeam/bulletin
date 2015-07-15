@@ -5,10 +5,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import it.hellokitty.gt.entity.Bulletin;
-import it.hellokitty.gt.entity.BulletinUser;
-import it.hellokitty.gt.entity.Tag;
-import it.hellokitty.gt.service.impl.BulletinServiceImpl;
+import it.hellokitty.gt.bulletin.entity.Bulletin;
+import it.hellokitty.gt.bulletin.entity.BulletinUser;
+import it.hellokitty.gt.bulletin.entity.Tag;
+import it.hellokitty.gt.bulletin.service.impl.BulletinServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -5,11 +5,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import it.hellokitty.gt.entity.Attachment;
-
-import it.hellokitty.gt.service.impl.AttachmentServiceImpl;
+import it.hellokitty.gt.bulletin.entity.Attachment;
+import it.hellokitty.gt.bulletin.service.impl.AttachmentServiceImpl;
 
 import java.util.Date;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;

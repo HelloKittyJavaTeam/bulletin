@@ -4,8 +4,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import it.hellokitty.gt.entity.GeoCountries;
-import it.hellokitty.gt.repository.impl.GeoCountriesRepositoryImpl;
+import it.hellokitty.gt.bulletin.entity.GeoCountries;
+import it.hellokitty.gt.bulletin.repository.impl.GeoCountriesRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.Date;
