@@ -9,6 +9,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,13 +43,13 @@ public class MailingList extends BaseObject implements Serializable{
 	@Column(name="ID")
 	private Long id;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name="MAILING_EMAIL",
 			joinColumns=@JoinColumn(name="MAILINGLIST_ID"),
 			inverseJoinColumns=@JoinColumn(name="EMAILCONTACT_ID"))
 	private List<EmailContact> emailContacts;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name="BULLETIN_MAILINGLIST",
 			joinColumns=@JoinColumn(name="MAILINGLIST_ID"),
 			inverseJoinColumns=@JoinColumn(name="BULLETIN_ID"))

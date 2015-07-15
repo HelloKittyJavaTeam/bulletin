@@ -303,7 +303,7 @@ public class AttachmentHistoryTest {
 			attachmentHistoryList = attachmentHistoryRep.search(0, 20, null, null, null, null, map);
 			for(AttachmentHistory attachmentHistory : attachmentHistoryList){
 				if(attachmentHistory.getId() > 100){
-					fail("attachmentHistorySearch method failed on lowerEqual check. Id found: "+attachmentHistory.getId());
+					fail("attachmentHistorySearch method failed on greaterEqual check. Id found: "+attachmentHistory.getId());
 				}
 			}
 		} catch (Exception e){

@@ -29,7 +29,7 @@ public class GeoCountries implements Serializable {
 	@Column(name="ID")
 	private String id;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name="BULLETIN_COUNTRY",
 			joinColumns=@JoinColumn(name="ID_COUNTRY"),
 			inverseJoinColumns=@JoinColumn(name="BULLETIN_ID"))

@@ -28,7 +28,7 @@ public class GeoAreas implements Serializable {
 	@Column(name="ID")
 	private String id;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name="BULLETIN_GEOAREA",
 			joinColumns=@JoinColumn(name="ID_AREA"),
 			inverseJoinColumns=@JoinColumn(name="BULLETIN_ID"))

@@ -304,7 +304,7 @@ public class BulletinUserTest {
 			bulletinUserList = bulletinUserRep.search(0, 20, null, null, null, null, map);
 			for(BulletinUser bulletinUser : bulletinUserList){
 				if(bulletinUser.getId() > 100){
-					fail("bulletinUserSearch method failed on lowerEqual check. Id found: "+bulletinUser.getId());
+					fail("bulletinUserSearch method failed on greaterEqual check. Id found: "+bulletinUser.getId());
 				}
 			}
 		} catch (Exception e){

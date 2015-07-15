@@ -233,7 +233,7 @@ public class AdUsersTest {
 			adUsersList = adUsersRep.search(0, 20, null, null, null, null, map);
 			for(AdUsers adUsers : adUsersList){
 				if(adUsers.getId() > 100){
-					fail("adUsersSearch method failed on lowerEqual check. Id found: "+adUsers.getId());
+					fail("adUsersSearch method failed on greaterEqual check. Id found: "+adUsers.getId());
 				}
 			}
 		} catch (Exception e){

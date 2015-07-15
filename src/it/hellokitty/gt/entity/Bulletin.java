@@ -62,12 +62,6 @@ public class Bulletin extends BaseObject implements Serializable{
 	@Column(name="ID")
 	private Long id;
 	
-	@Column(name="PRIORITY",length=20)
-	private String priority;
-	
-	@Column(name="STATUS",length=20)
-	private String status;
-	
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="TECHAREA_ID")
 	private TechAreaDept techAreaDept;
@@ -119,6 +113,12 @@ public class Bulletin extends BaseObject implements Serializable{
 			joinColumns=@JoinColumn(name="BULLETIN_ID"),
 			inverseJoinColumns=@JoinColumn(name="ID_COUNTRY"))
 	private List<GeoCountries> countries;
+	
+	@Column(name="PRIORITY",length=20)
+	private String priority;
+	
+	@Column(name="STATUS",length=20)
+	private String status;
 
 	@Index
 	@Column(name="IT_TITLE")

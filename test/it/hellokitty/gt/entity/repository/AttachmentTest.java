@@ -304,7 +304,7 @@ public class AttachmentTest {
 			attachmentList = attachmentRep.search(0, 20, null, null, null, null, map);
 			for(Attachment attachment : attachmentList){
 				if(attachment.getId() > 100){
-					fail("attachmentSearch method failed on lowerEqual check. Id found: "+attachment.getId());
+					fail("attachmentSearch method failed on greaterEqual check. Id found: "+attachment.getId());
 				}
 			}
 		} catch (Exception e){
