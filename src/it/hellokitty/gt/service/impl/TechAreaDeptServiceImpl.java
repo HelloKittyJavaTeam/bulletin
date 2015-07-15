@@ -12,6 +12,10 @@ import java.util.List;
 public class TechAreaDeptServiceImpl implements TechAreaDeptService {
 	TechAreaDeptRepository techAreaDeptRepository = new TechAreaDeptRepositoryImpl();
 
+	public TechAreaDeptServiceImpl(){
+		super();
+	}
+	
 	@Override
 	public Long count() throws Exception {
 		return techAreaDeptRepository.count();

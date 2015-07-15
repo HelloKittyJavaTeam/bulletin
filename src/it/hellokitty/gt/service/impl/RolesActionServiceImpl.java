@@ -13,6 +13,10 @@ import java.util.List;
 public class RolesActionServiceImpl implements RolesActionService{
 	RolesActionRepository rolesActionRepository = new RolesActionRepositoryImpl();
 
+	public RolesActionServiceImpl(){
+		super();
+	}
+	
 	@Override
 	public List<RolesAction> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> cdList, String user) throws IllegalArgumentException, Exception {
 		if(user == null){

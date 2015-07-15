@@ -9,4 +9,8 @@ public class DepartmentRepositoryImpl extends RepositoryUtils<Department> implem
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = Department.class;
 	}
+	
+	public DepartmentRepositoryImpl(){
+		super();
+	}
 }

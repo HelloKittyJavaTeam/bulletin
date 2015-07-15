@@ -22,6 +22,10 @@ public class BulletinRepositoryImpl extends RepositoryUtils<Bulletin> implements
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = Bulletin.class;
 	}
+	
+	public BulletinRepositoryImpl() {
+		super();
+	}
 
 	@SuppressWarnings({"rawtypes"})
 	@Override

@@ -13,6 +13,10 @@ import java.util.List;
 public class MailingListServiceImpl implements MailingListService {
 	MailingListRepository mailingListRepository = new MailingListRepositoryImpl();
 
+	public MailingListServiceImpl(){
+		super();
+	}
+	
 	@Override
 	public List<MailingList> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> cdList, String user) throws IllegalArgumentException, Exception {
 		if(user == null){

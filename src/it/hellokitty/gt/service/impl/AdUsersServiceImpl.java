@@ -13,6 +13,10 @@ import java.util.List;
 public class AdUsersServiceImpl implements AdUsersService{
 	AdUsersRepository adUsersRepository = new AdUsersRepositoryImpl();
 
+	public AdUsersServiceImpl() {
+		super();
+	}
+	
 	@Override
 	public Long count() throws Exception {
 		return adUsersRepository.count();

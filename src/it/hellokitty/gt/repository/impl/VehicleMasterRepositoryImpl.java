@@ -9,4 +9,8 @@ public class VehicleMasterRepositoryImpl extends RepositoryUtilsExt<VehicleMaste
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = VehicleMaster.class;
 	}
+	
+	public VehicleMasterRepositoryImpl(){
+		super();
+	}
 }

@@ -12,6 +12,10 @@ import java.util.List;
 public class UserDealerRolesServiceImpl implements UserDealerRolesService{
 	UserDealerRolesRepository userDealerRolesRepository = new UserDealerRolesRepositoryImpl();
 	
+	public UserDealerRolesServiceImpl(){
+		super();
+	}
+	
 	@Override
 	public Long count() throws Exception {
 		return userDealerRolesRepository.count();

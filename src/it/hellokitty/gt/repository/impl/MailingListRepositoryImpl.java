@@ -9,4 +9,8 @@ public class MailingListRepositoryImpl extends RepositoryUtils<MailingList> impl
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = MailingList.class;
 	}
+	
+	public MailingListRepositoryImpl(){
+		super();
+	}
 }

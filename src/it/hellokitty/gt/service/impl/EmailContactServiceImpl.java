@@ -13,6 +13,10 @@ import java.util.List;
 public class EmailContactServiceImpl implements EmailContactService {
 	EmailContactRepository emailContactRepository = new EmailContactRepositoryImpl();
 
+	public EmailContactServiceImpl(){
+		super();
+	}
+	
 	@Override
 	public List<EmailContact> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> cdList, String user) throws IllegalArgumentException, Exception {
 		if(user == null){

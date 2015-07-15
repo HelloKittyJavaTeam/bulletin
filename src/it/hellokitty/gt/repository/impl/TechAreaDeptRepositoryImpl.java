@@ -9,4 +9,8 @@ public class TechAreaDeptRepositoryImpl extends RepositoryUtils<TechAreaDept> im
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = TechAreaDept.class;
 	}
+	
+	public TechAreaDeptRepositoryImpl(){
+		super();
+	}
 }

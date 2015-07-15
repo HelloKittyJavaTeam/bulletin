@@ -9,4 +9,8 @@ public class RolesActionRepositoryImpl extends RepositoryUtils<RolesAction> impl
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = RolesAction.class;
 	}
+	
+	public RolesActionRepositoryImpl(){
+		super();
+	}
 }

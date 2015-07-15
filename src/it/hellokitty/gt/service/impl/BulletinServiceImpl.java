@@ -13,6 +13,10 @@ import java.util.List;
 public class BulletinServiceImpl implements BulletinService {
 	BulletinRepository bulletinRepository = new BulletinRepositoryImpl();
 	
+	public BulletinServiceImpl() {
+		super();
+	}
+	
 	@Override
 	public List<Bulletin> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> cdList, String user) throws IllegalArgumentException, Exception {
 		if(user == null){

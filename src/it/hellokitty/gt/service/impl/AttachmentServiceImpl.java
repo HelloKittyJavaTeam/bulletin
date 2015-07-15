@@ -13,6 +13,10 @@ import java.util.List;
 public class AttachmentServiceImpl implements AttachmentService {
 	AttachmentRepository attachmentRepository =  new AttachmentRepositoryImpl();
 
+	public AttachmentServiceImpl() {
+		super();
+	}
+	
 	@Override
 	public List<Attachment> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> cdList, String user) throws IllegalArgumentException, Exception {
 		if(user == null){

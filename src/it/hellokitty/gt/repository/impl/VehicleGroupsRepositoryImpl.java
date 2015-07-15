@@ -9,4 +9,8 @@ public class VehicleGroupsRepositoryImpl extends RepositoryUtilsExt<VehicleGroup
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = VehicleGroups.class;
 	}
+	
+	public VehicleGroupsRepositoryImpl(){
+		super();
+	}
 }

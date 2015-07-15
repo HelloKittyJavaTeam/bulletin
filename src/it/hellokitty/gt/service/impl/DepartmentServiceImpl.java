@@ -13,6 +13,10 @@ public class DepartmentServiceImpl implements DepartmentService{
 
 	DepartmentRepository departmentRepository = new DepartmentRepositoryImpl();
 
+	public DepartmentServiceImpl(){
+		super();
+	}
+	
 	@Override
 	public Long count() throws Exception {
 		return departmentRepository.count();

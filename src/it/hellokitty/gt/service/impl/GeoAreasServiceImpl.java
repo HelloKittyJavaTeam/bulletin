@@ -12,6 +12,10 @@ import java.util.List;
 public class GeoAreasServiceImpl implements GeoAreaService{
 	GeoAreasRepository geoAreasRepository = new GeoAreasRepositoryImpl();
 
+	public GeoAreasServiceImpl(){
+		super();
+	}
+	
 	@Override
 	public Long count() throws Exception {
 		return geoAreasRepository.count();

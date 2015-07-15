@@ -9,4 +9,8 @@ public class GeoCountriesRepositoryImpl extends RepositoryUtilsExt<GeoCountries>
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = GeoCountries.class;
 	}
+	
+	public GeoCountriesRepositoryImpl(){
+		super();
+	}
 }

@@ -9,4 +9,8 @@ public class GeoRegionsRepositoryImpl extends RepositoryUtilsExt<GeoRegions> imp
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = GeoRegions.class;
 	}
+	
+	public GeoRegionsRepositoryImpl(){
+		super();
+	}
 }

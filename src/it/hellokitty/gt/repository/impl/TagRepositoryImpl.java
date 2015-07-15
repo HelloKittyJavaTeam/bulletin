@@ -9,4 +9,8 @@ public class TagRepositoryImpl extends RepositoryUtils<Tag> implements TagReposi
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = Tag.class;
 	}
+	
+	public TagRepositoryImpl(){
+		super();
+	}
 }

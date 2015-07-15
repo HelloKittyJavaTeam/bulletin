@@ -12,6 +12,10 @@ import java.util.List;
 public class VehicleFamilyServiceImpl implements VehicleFamilyService{
 	VehicleFamilyRepository vehicleFamilyRepository = new VehicleFamilyRepositoryImpl();
 	
+	public VehicleFamilyServiceImpl(){
+		super();
+	}
+	
 	@Override
 	public Long count() throws Exception {
 		return vehicleFamilyRepository.count();

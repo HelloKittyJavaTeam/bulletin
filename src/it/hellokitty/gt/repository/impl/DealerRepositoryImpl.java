@@ -9,4 +9,8 @@ public class DealerRepositoryImpl extends RepositoryUtilsExt<Dealers> implements
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = Dealers.class;
 	}
+	
+	public DealerRepositoryImpl(){
+		super();
+	}
 }

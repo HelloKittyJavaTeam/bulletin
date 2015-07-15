@@ -9,4 +9,8 @@ public class EmailContactRepositoryImpl extends RepositoryUtils<EmailContact> im
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = EmailContact.class;
 	}
+	
+	public EmailContactRepositoryImpl(){
+		super();
+	}
 }

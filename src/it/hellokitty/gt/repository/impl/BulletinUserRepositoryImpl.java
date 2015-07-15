@@ -9,4 +9,8 @@ public class BulletinUserRepositoryImpl extends RepositoryUtils<BulletinUser> im
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = BulletinUser.class;
 	}
+	
+	public BulletinUserRepositoryImpl(){
+		super();
+	}
 }

@@ -9,4 +9,8 @@ public class GeoAreasRepositoryImpl extends RepositoryUtilsExt<GeoAreas> impleme
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = GeoAreas.class;
 	}
+	
+	public GeoAreasRepositoryImpl(){
+		super();
+	}
 }

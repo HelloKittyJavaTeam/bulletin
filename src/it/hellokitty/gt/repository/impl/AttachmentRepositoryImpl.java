@@ -9,4 +9,8 @@ public class AttachmentRepositoryImpl extends RepositoryUtils<Attachment> implem
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = Attachment.class;
 	}
+	
+	public AttachmentRepositoryImpl(){
+		super();
+	}
 }

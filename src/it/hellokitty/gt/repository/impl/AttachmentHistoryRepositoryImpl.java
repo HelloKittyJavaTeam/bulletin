@@ -9,4 +9,8 @@ public class AttachmentHistoryRepositoryImpl extends RepositoryUtils<AttachmentH
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = AttachmentHistory.class;
 	}
+	
+	public AttachmentHistoryRepositoryImpl(){
+		super();
+	}
 }

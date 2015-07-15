@@ -9,4 +9,8 @@ public class AdUsersRepositoryImpl extends RepositoryUtilsExt<AdUsers> implement
 		persistenceUnitName = "BULLETIN_PU";
 		typeParameterClass = AdUsers.class;
 	}
+	
+	public AdUsersRepositoryImpl(){
+		super();
+	}
 }

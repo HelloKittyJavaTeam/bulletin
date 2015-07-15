@@ -12,6 +12,10 @@ import java.util.List;
 public class GeoCountriesServiceImpl implements GeoCountriesService{
 	GeoCountriesRepository geoCountriesRepository = new GeoCountriesRepositoryImpl();
 
+	public GeoCountriesServiceImpl(){
+		super();
+	}
+	
 	@Override
 	public Long count() throws Exception {
 		return geoCountriesRepository.count();

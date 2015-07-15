@@ -12,6 +12,10 @@ import java.util.List;
 public class DealerServiceImpl implements DealerService {
 	DealerRepository dealerRepository = new DealerRepositoryImpl();
 
+	public DealerServiceImpl(){
+		super();
+	}
+	
 	@Override
 	public Long count() throws Exception {
 		return dealerRepository.count();
