@@ -34,6 +34,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="oracle.eclipse.tools.weblogic.lib.application/bulletinEAR"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/commonJPA"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/commonJPA">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

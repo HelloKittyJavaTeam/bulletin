@@ -37,7 +37,7 @@ public class MailingListTest {
 			mailingListAdd = new MailingList();
 			mailingListAdd.setId(99999l+i);
 			mailingListAdd.setCreateDate(new Date());
-			mailingListAdd.setUserCreated("testADD"+i);
+			mailingListAdd.setUserCreate("testADD"+i);
 			mailingListAdd.setName("name"+i);
 			mailingListAdd.setActive(true);
 			em.persist(mailingListAdd);
@@ -161,7 +161,7 @@ public class MailingListTest {
 		try{
 			bullToMerge = new MailingList();
 			bullToMerge.setId(9898989898l);
-			bullToMerge.setUserCreated("test");
+			bullToMerge.setUserCreate("test");
 			bullToMerge.setName("nameMERGE");
 			mailingListRep.merge(bullToMerge, "testMERGE");
 			assertNotNull("mailingListMerge method fail. No element added.", em.find(MailingList.class, 9898989898l));
@@ -195,7 +195,7 @@ public class MailingListTest {
 	public void mailingListCount(){
 		Long result;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD0");
+		map.put("userCreate", "testADD0");
 		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
 		
 		try{
@@ -206,7 +206,7 @@ public class MailingListTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADDUNKNOW");
+		map.put("userCreate", "testADDUNKNOW");
 		
 		try{
 			result = mailingListRep.count(map, emptyMap, emptyMap, emptyMap);
@@ -216,7 +216,7 @@ public class MailingListTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD");
+		map.put("userCreate", "testADD");
 		
 		try{
 			result = mailingListRep.count(emptyMap, map, emptyMap, emptyMap);

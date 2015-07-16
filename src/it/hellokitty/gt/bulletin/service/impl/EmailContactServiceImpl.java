@@ -3,21 +3,27 @@ package it.hellokitty.gt.bulletin.service.impl;
 import it.hellokitty.gt.bulletin.entity.EmailContact;
 import it.hellokitty.gt.bulletin.repository.EmailContactRepository;
 import it.hellokitty.gt.bulletin.repository.impl.EmailContactRepositoryImpl;
-import it.hellokitty.gt.bulletin.service.EmailContactService;
 import it.hellokitty.gt.entity.BaseObject;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class EmailContactServiceImpl implements EmailContactService {
+public class EmailContactServiceImpl{
 	EmailContactRepository emailContactRepository = new EmailContactRepositoryImpl();
+	private static EmailContactServiceImpl emailContactServiceImpl;
 
-	public EmailContactServiceImpl(){
+	private EmailContactServiceImpl() {
 		super();
 	}
 	
-	@Override
+	public static EmailContactServiceImpl getInstance(){
+		if(emailContactServiceImpl == null){
+			emailContactServiceImpl = new EmailContactServiceImpl();
+		}
+		return emailContactServiceImpl;
+	}
+	
 	public List<EmailContact> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> cdList, String user) throws IllegalArgumentException, Exception {
 		if(user == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be null.");
@@ -50,7 +56,7 @@ public class EmailContactServiceImpl implements EmailContactService {
 		return emailContactRepository.fetchAll(start, limit, cdList, user);
 	}
 
-	@Override
+	
 	public void insert(BaseObject elem, String user) throws IllegalArgumentException, Exception {
 		if(elem == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
@@ -67,7 +73,7 @@ public class EmailContactServiceImpl implements EmailContactService {
 		emailContactRepository.insert(elem, user);
 	}
 
-	@Override
+	
 	public void delete(BaseObject elem, String user) throws IllegalArgumentException, Exception {
 		if(elem == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
@@ -84,7 +90,7 @@ public class EmailContactServiceImpl implements EmailContactService {
 		emailContactRepository.delete(elem, user);
 	}
 
-	@Override
+	
 	public BaseObject merge(BaseObject elem, String user) throws IllegalArgumentException, Exception {
 		if(elem == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
@@ -102,27 +108,27 @@ public class EmailContactServiceImpl implements EmailContactService {
 		return emailContactRepository.merge(elem, user);
 	}
 
-	@Override
+	
 	public Long count() throws Exception {
 		return emailContactRepository.count();
 	}
 
-	@Override
+	
 	public Long count(HashMap<String,Object> paramEquals, HashMap<String,Object> paramLike, HashMap<String,Object> paramGE, HashMap<String,Object> paramLE) throws Exception {
 		return emailContactRepository.count(paramEquals, paramLike, paramGE, paramLE);
 	}
 
-	@Override
+	
 	public List<EmailContact> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> orderColumn) throws Exception {
 		return emailContactRepository.fetchAll(start, limit, orderColumn);
 	}
 
-	@Override
+	
 	public EmailContact fetchById(Object id) throws Exception {
 		return emailContactRepository.fetchById(id);
 	}
 
-	@Override
+	
 	public List<EmailContact> search(Integer start, Integer limit, 
 			LinkedHashMap<String,String> orderColumn,
 			HashMap<String,Object> paramEquals,

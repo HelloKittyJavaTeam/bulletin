@@ -19,7 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class AttachmentServiceTest {
-	private AttachmentServiceImpl attachmentRep = new AttachmentServiceImpl();
+	private AttachmentServiceImpl attachmentRep = AttachmentServiceImpl.getInstance();
 	private static EntityManager em = Persistence.createEntityManagerFactory("BULLETIN_PU").createEntityManager();
 	private static Attachment attachmentAdd;
 	
@@ -31,7 +31,7 @@ public class AttachmentServiceTest {
 		for(int i = 0; i < 20; i++){
 			attachmentAdd = new Attachment();
 			attachmentAdd.setId(99999l+i);
-			attachmentAdd.setUserCreated("testADD"+i);
+			attachmentAdd.setUserCreate("testADD"+i);
 			attachmentAdd.setCreateDate(new Date());
 			attachmentAdd.setActive(true);
 
@@ -47,7 +47,7 @@ public class AttachmentServiceTest {
 		for(int i = 0; i < 20; i++){
 			attachmentAdd = new Attachment();
 			attachmentAdd.setId(99999l+i);
-			attachmentAdd.setUserCreated("testADD"+i);
+			attachmentAdd.setUserCreate("testADD"+i);
 			em.remove(em.find(Attachment.class, 99999l+i));
 
 		}
@@ -245,7 +245,7 @@ public class AttachmentServiceTest {
 		try{
 			attachmentToMerge = new Attachment();
 			attachmentToMerge.setId(9898989898l);
-			attachmentToMerge.setUserCreated("test");
+			attachmentToMerge.setUserCreate("test");
 			attachmentRep.merge(attachmentToMerge, "testMERGE");
 			assertNotNull("attachmentMerge method fail. No element added.", em.find(Attachment.class, 9898989898l));
 		} catch (Exception e){
@@ -363,6 +363,7 @@ public class AttachmentServiceTest {
 	/*
 	 *  COUNT TEST
 	 */
+	@SuppressWarnings("unused")
 	@Test
 	public void attachmentCount(){
 		Long result;

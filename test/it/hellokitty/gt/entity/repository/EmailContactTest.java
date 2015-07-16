@@ -37,7 +37,7 @@ public class EmailContactTest {
 			emailContactAdd = new EmailContact();
 			emailContactAdd.setId(99999l+i);
 			emailContactAdd.setCreateDate(new Date());
-			emailContactAdd.setUserCreated("testADD"+i);
+			emailContactAdd.setUserCreate("testADD"+i);
 			emailContactAdd.setName("name"+i);
 			emailContactAdd.setActive(true);
 			em.persist(emailContactAdd);
@@ -161,7 +161,7 @@ public class EmailContactTest {
 		try{
 			bullToMerge = new EmailContact();
 			bullToMerge.setId(9898989898l);
-			bullToMerge.setUserCreated("test");
+			bullToMerge.setUserCreate("test");
 			bullToMerge.setName("nameMERGE");
 			emailContactRep.merge(bullToMerge, "testMERGE");
 			assertNotNull("emailContactMerge method fail. No element added.", em.find(EmailContact.class, 9898989898l));
@@ -195,7 +195,7 @@ public class EmailContactTest {
 	public void emailContactCount(){
 		Long result;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD0");
+		map.put("userCreate", "testADD0");
 		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
 		
 		try{
@@ -206,7 +206,7 @@ public class EmailContactTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADDUNKNOW");
+		map.put("userCreate", "testADDUNKNOW");
 		
 		try{
 			result = emailContactRep.count(map, emptyMap, emptyMap, emptyMap);
@@ -216,7 +216,7 @@ public class EmailContactTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD");
+		map.put("userCreate", "testADD");
 		
 		try{
 			result = emailContactRep.count(emptyMap, map, emptyMap, emptyMap);

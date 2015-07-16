@@ -36,7 +36,7 @@ public class AttachmentHistoryTest {
 		for(int i = 0; i < 20; i++){
 			attachmentHistoryAdd = new AttachmentHistory();
 			attachmentHistoryAdd.setId(99999l+i);
-			attachmentHistoryAdd.setUserCreated("testADD"+i);
+			attachmentHistoryAdd.setUserCreate("testADD"+i);
 			attachmentHistoryAdd.setCreateDate(new Date());
 			attachmentHistoryAdd.setnDownload(989898l+i);;
 			attachmentHistoryAdd.setActive(true);
@@ -160,7 +160,7 @@ public class AttachmentHistoryTest {
 		try{
 			bullToMerge = new AttachmentHistory();
 			bullToMerge.setId(9898989898l);
-			bullToMerge.setUserCreated("test");
+			bullToMerge.setUserCreate("test");
 			bullToMerge.setnDownload(989898l);
 			attachmentHistoryRep.merge(bullToMerge, "testMERGE");
 			assertNotNull("attachmentHistoryMerge method fail. No element added.", em.find(AttachmentHistory.class, 9898989898l));
@@ -194,7 +194,7 @@ public class AttachmentHistoryTest {
 	public void attachmentHistoryCount(){
 		Long result;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD0");
+		map.put("userCreate", "testADD0");
 		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
 		
 		try{
@@ -205,7 +205,7 @@ public class AttachmentHistoryTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADDUNKNOW");
+		map.put("userCreate", "testADDUNKNOW");
 		
 		try{
 			result = attachmentHistoryRep.count(map, emptyMap, emptyMap, emptyMap);
@@ -215,7 +215,7 @@ public class AttachmentHistoryTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD");
+		map.put("userCreate", "testADD");
 		
 		try{
 			result = attachmentHistoryRep.count(emptyMap, map, emptyMap, emptyMap);

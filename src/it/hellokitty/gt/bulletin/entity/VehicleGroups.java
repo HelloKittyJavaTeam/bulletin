@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,6 +33,12 @@ public class VehicleGroups implements Serializable {
 	@Id
 	@Column(name="ID")
 	private Long id;
+	
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name="BULLETIN_VEHICLE_GROUP",
+			joinColumns=@JoinColumn(name="VEHICLE_GROUP_ID"),
+			inverseJoinColumns=@JoinColumn(name="BULLETIN_ID"))
+	private List<Bulletin> bulletins;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="DCS_MODEL", referencedColumnName="ID")
@@ -214,6 +222,14 @@ public class VehicleGroups implements Serializable {
 
 	public void setFamilyCode(String familyCode) {
 		this.familyCode = familyCode;
+	}
+
+	public List<Bulletin> getBulletins() {
+		return bulletins;
+	}
+
+	public void setBulletins(List<Bulletin> bulletins) {
+		this.bulletins = bulletins;
 	}
 
 }

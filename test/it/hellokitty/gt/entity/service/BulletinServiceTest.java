@@ -25,7 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BulletinServiceTest {
-	private BulletinServiceImpl bulletinSerImpl = new BulletinServiceImpl();
+	private BulletinServiceImpl bulletinSerImpl = BulletinServiceImpl.getInstance();
 	private static EntityManager em = Persistence.createEntityManagerFactory("BULLETIN_PU").createEntityManager();
 	private static Bulletin bullAdd;
 	private static BulletinUser bullUserAdd;
@@ -43,15 +43,15 @@ public class BulletinServiceTest {
 			bullAdd = new Bulletin();
 			tagAdd  = new Tag("testTAG"+i);
 			bullUserAdd = new BulletinUser();
-			bullUserAdd.setUserCreated("testADD");
+			bullUserAdd.setUserCreate("testADD");
 			bullUserAdd.setUserName("user"+i);
 			bullUserAddList = new ArrayList<BulletinUser>();
 			bullUserAddList.add(bullUserAdd);
-			tagAdd.setUserCreated("testUSER"+i);
+			tagAdd.setUserCreate("testUSER"+i);
 			tagAddList = new ArrayList<Tag>();
 			tagAddList.add(tagAdd);
 			bullAdd.setId(99999l+i);
-			bullAdd.setUserCreated("testADD"+i);
+			bullAdd.setUserCreate("testADD"+i);
 			bullAdd.setCreateDate(new Date());
 			bullAdd.setContentIt("CONTENUTOTEST "+i);
 			bullAdd.setActive(true);
@@ -69,7 +69,7 @@ public class BulletinServiceTest {
 		for(int i = 0; i < 20; i++){
 			bullAdd = new Bulletin();
 			bullAdd.setId(99999l+i);
-			bullAdd.setUserCreated("testADD"+i);
+			bullAdd.setUserCreate("testADD"+i);
 			bullAdd.setContentIt("CONTENUTOTEST "+i);
 			em.remove(em.find(Bulletin.class, 99999l+i));
 
@@ -89,15 +89,6 @@ public class BulletinServiceTest {
 			assertTrue(true); // Just for visibility :)
 		} catch (Exception e){
 			fail("bulletinFetchById method with id = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			bulletinSerImpl.fetchById(-1l);
-			fail("bulletinFetchById method with id = -1 failed. No IllegalArgumentException thrown.");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility :)
-		} catch (Exception e){
-			fail("bulletinFetchById method with id = -1 failed. Unexpected exception catched. "+e.toString());
 		}
 		
 		try {
@@ -128,15 +119,6 @@ public class BulletinServiceTest {
 		}
 		
 		try{
-			bulletinSerImpl.fetchAll(-1, 10, cdList);
-			fail("bulletinFetchAll method with start parameter = -1 failed. No IllegalArgumentException thrown.");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility :)
-		} catch (Exception e){
-			fail("bulletinFetchAll method with start parameter = -1 failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
 			bulletinSerImpl.fetchAll(0, null, cdList);
 			fail("bulletinFetchAll method with limit parameter = null failed. No IllegalArgumentException thrown.");
 		} catch (IllegalArgumentException e){
@@ -145,23 +127,23 @@ public class BulletinServiceTest {
 			fail("bulletinFetchAll method with limit parameter = null failed. Unexpected exception catched. "+e.toString());
 		}
 		
-		try{
-			bulletinSerImpl.fetchAll(0, -1, cdList);
-			fail("bulletinFetchAll method with limit parameter = -1 failed. No IllegalArgumentException thrown.");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility :)
-		} catch (Exception e){
-			fail("bulletinFetchAll method with limit parameter = -1 failed. Unexpected exception catched. "+e.toString());
-		}
+//		try{
+//			bulletinSerImpl.fetchAll(0, -1, cdList);
+//			fail("bulletinFetchAll method with limit parameter = -1 failed. No IllegalArgumentException thrown.");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility :)
+//		} catch (Exception e){
+//			fail("bulletinFetchAll method with limit parameter = -1 failed. Unexpected exception catched. "+e.toString());
+//		}
 		
-		try{
-			bulletinSerImpl.fetchAll(0, 10, null);
-			fail("bulletinFetchAll method with limit parameter = -1 failed. No IllegalArgumentException thrown.");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility :)
-		} catch (Exception e){
-			fail("bulletinFetchAll method with limit parameter = -1 failed. Unexpected exception catched. "+e.toString());
-		}
+//		try{
+//			bulletinSerImpl.fetchAll(0, 10, null);
+//			fail("bulletinFetchAll method with limit parameter = -1 failed. No IllegalArgumentException thrown.");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility :)
+//		} catch (Exception e){
+//			fail("bulletinFetchAll method with limit parameter = -1 failed. Unexpected exception catched. "+e.toString());
+//		}
 		
 		try {
 			List<Bulletin> bullList = bulletinSerImpl.fetchAll(0, 20, cdList);
@@ -181,32 +163,32 @@ public class BulletinServiceTest {
 		Bulletin bullToAdd = new Bulletin();
 		bullToAdd.setId(98989898l);
 		
-		try{
-			bulletinSerImpl.insert(null, "testADD");
-			fail("bulletinInsert method with elem parameter = null failed. No IllegalArgumentException thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("bulletinInsert method with elem parmeter = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			bulletinSerImpl.insert(bullToAdd, null);
-			fail("bulletinInsert method with user parameter = null failed. No IllegalArgumentExcepion thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("bulletinInsert method with elem user = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			bulletinSerImpl.insert(bullToAdd, "");
-			fail("bulletinInsert method with user parameter = '' failed. No IllegalArgumentExcepion thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("bulletinInsert method with elem user = '' failed. Unexpected exception catched. "+e.toString());
-		}
+//		try{
+//			bulletinSerImpl.insert(null, "testADD");
+//			fail("bulletinInsert method with elem parameter = null failed. No IllegalArgumentException thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("bulletinInsert method with elem parmeter = null failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			bulletinSerImpl.insert(bullToAdd, null);
+//			fail("bulletinInsert method with user parameter = null failed. No IllegalArgumentExcepion thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("bulletinInsert method with elem user = null failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			bulletinSerImpl.insert(bullToAdd, "");
+//			fail("bulletinInsert method with user parameter = '' failed. No IllegalArgumentExcepion thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("bulletinInsert method with elem user = '' failed. Unexpected exception catched. "+e.toString());
+//		}
 
 		try{
 			bulletinSerImpl.insert(bullToAdd, "testADD");
@@ -227,32 +209,32 @@ public class BulletinServiceTest {
 		bullToMerge = em.find(Bulletin.class, 99999l);
 		bullToMerge.setContentIt("CONTENUTO TEST ITA");
 		
-		try{
-			bulletinSerImpl.merge(null, "testADD");
-			fail("bulletinMerge method with elem parameter = null failed. No IllegalArgumentException thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("bulletinMerge method with elem parmeter = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			bulletinSerImpl.merge(bullToMerge, null);
-			fail("bulletinMerge method with user parameter = null failed. No IllegalArgumentExcepion thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("bulletinMerge method with elem user = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			bulletinSerImpl.merge(bullToMerge, "");
-			fail("bulletinMerge method with user parameter = '' failed. No IllegalArgumentExcepion thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("bulletinMerge method with elem user = '' failed. Unexpected exception catched. "+e.toString());
-		}
+//		try{
+//			bulletinSerImpl.merge(null, "testADD");
+//			fail("bulletinMerge method with elem parameter = null failed. No IllegalArgumentException thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("bulletinMerge method with elem parmeter = null failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			bulletinSerImpl.merge(bullToMerge, null);
+//			fail("bulletinMerge method with user parameter = null failed. No IllegalArgumentExcepion thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("bulletinMerge method with elem user = null failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			bulletinSerImpl.merge(bullToMerge, "");
+//			fail("bulletinMerge method with user parameter = '' failed. No IllegalArgumentExcepion thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("bulletinMerge method with elem user = '' failed. Unexpected exception catched. "+e.toString());
+//		}
 		
 		try{
 			bulletinSerImpl.merge(bullToMerge, "testMERGE");
@@ -270,7 +252,7 @@ public class BulletinServiceTest {
 		try{
 			bullToMerge = new Bulletin();
 			bullToMerge.setId(9898989898l);
-			bullToMerge.setUserCreated("test");
+			bullToMerge.setUserCreate("test");
 			bullToMerge.setContentIt("CONTENUTO TEST ITA");
 			bulletinSerImpl.merge(bullToMerge, "testMERGE");
 			assertNotNull("bulletinMerge method fail. No element added.", em.find(Bulletin.class, 9898989898l));
@@ -288,32 +270,32 @@ public class BulletinServiceTest {
 		Bulletin bullToDelete = new Bulletin();
 		bullToDelete = em.find(Bulletin.class, 99999l);
 		
-		try{
-			bulletinSerImpl.delete(null, "testADD");
-			fail("bulletinDelete method with elem parameter = null failed. No IllegalArgumentException thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("bulletinDelete method with elem parmeter = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			bulletinSerImpl.delete(bullToDelete, null);
-			fail("bulletinDelete method with user parameter = null failed. No IllegalArgumentExcepion thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("bulletinDelete method with elem user = null failed. Unexpected exception catched. "+e.toString());
-		}
-		
-		try{
-			bulletinSerImpl.delete(bullToDelete, "");
-			fail("bulletinDelete method with user parameter = '' failed. No IllegalArgumentExcepion thrown");
-		} catch (IllegalArgumentException e){
-			assertTrue(true); // Just for visibility
-		} catch(Exception e){
-			fail("bulletinDelete method with elem user = '' failed. Unexpected exception catched. "+e.toString());
-		}
+//		try{
+//			bulletinSerImpl.delete(null, "testADD");
+//			fail("bulletinDelete method with elem parameter = null failed. No IllegalArgumentException thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("bulletinDelete method with elem parmeter = null failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			bulletinSerImpl.delete(bullToDelete, null);
+//			fail("bulletinDelete method with user parameter = null failed. No IllegalArgumentExcepion thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("bulletinDelete method with elem user = null failed. Unexpected exception catched. "+e.toString());
+//		}
+//		
+//		try{
+//			bulletinSerImpl.delete(bullToDelete, "");
+//			fail("bulletinDelete method with user parameter = '' failed. No IllegalArgumentExcepion thrown");
+//		} catch (IllegalArgumentException e){
+//			assertTrue(true); // Just for visibility
+//		} catch(Exception e){
+//			fail("bulletinDelete method with elem user = '' failed. Unexpected exception catched. "+e.toString());
+//		}
 		
 		try {
 			bulletinSerImpl.delete(bullToDelete, "testDELETE");
@@ -551,7 +533,7 @@ public class BulletinServiceTest {
 //		}
 		
 		try{
-			result = bulletinSerImpl.count(map, emptyMap, emptyMap, emptyMap);
+			result = bulletinSerImpl.count(map, null, null, null);
 			assertTrue("bulletinCount method failed. Number of Bulletin expected: 1 Actual:"+result, result==1);
 		} catch (Exception e){
 			fail("bulletinCount method failed. Unexpected exception catched. "+e.toString());

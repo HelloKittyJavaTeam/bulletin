@@ -253,7 +253,7 @@ public class BulletinTest {
 				tag = new Tag();
 
 				tag.setCreateDate(new Date());
-				tag.setUserCreated("gb");
+				tag.setUserCreate("gb");
 				tag.setWord("TAG"+t);
 				tag.setActive(true);
 
@@ -271,13 +271,13 @@ public class BulletinTest {
 			attach = new Attachment();
 			attach.setFileName("file"+i+".png");
 			attach.setCreateDate(new Date());
-			attach.setUserCreated("gb");
+			attach.setUserCreate("gb");
 			attachList = new ArrayList<Attachment>();
 			attachList.add(attach);
 			bull.setBulletinAttachments(attachList);
 
 			bull.setTags(tagList);
-			bull.setUserCreated("gb");
+			bull.setUserCreate("gb");
 
 			try {
 				bullRepo.insert(bull, "user");

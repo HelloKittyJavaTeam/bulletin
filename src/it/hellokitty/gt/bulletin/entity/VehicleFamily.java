@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -30,6 +32,12 @@ public class VehicleFamily implements Serializable {
 	@Id
 	@Column(name="ID")
 	private String id;
+	
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name="BULLETIN_VEHICLE_FAMILY",
+			joinColumns=@JoinColumn(name="VEHICLE_FAMILY_ID"),
+			inverseJoinColumns=@JoinColumn(name="BULLETIN_ID"))
+	private List<Bulletin> bulletins;
 	
 	private String active;
 

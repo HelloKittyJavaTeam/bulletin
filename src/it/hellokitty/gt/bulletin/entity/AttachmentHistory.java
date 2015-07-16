@@ -7,9 +7,12 @@ import it.hellokitty.gt.entity.BaseObject;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
@@ -35,8 +38,13 @@ public class AttachmentHistory extends BaseObject implements Serializable{
 	@Column(name="ID")
 	private Long id;
 	
-	@Column(name="ATTACHMENT_ID",length=20)
-	private Long attachmentId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="ATTACHMENT_ID", referencedColumnName="ID")
+	private Attachment attachment;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="ADUSER_ID", referencedColumnName="ID")
+	private AdUsers adUser;
 	
 	@Column(name="BULLETIN_ID",length=20)
 	private Long bulletinId;
@@ -66,19 +74,27 @@ public class AttachmentHistory extends BaseObject implements Serializable{
 		this.bulletinId = bulletinId;
 	}
 
-	public Long getAttachmentId() {
-		return attachmentId;
-	}
-
-	public void setAttachmentId(Long attachmentId) {
-		this.attachmentId = attachmentId;
-	}
-
 	public Long getnDownload() {
 		return nDownload;
 	}
 
 	public void setnDownload(Long nDownload) {
 		this.nDownload = nDownload;
+	}
+
+	public Attachment getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(Attachment attachment) {
+		this.attachment = attachment;
+	}
+
+	public AdUsers getAdUser() {
+		return adUser;
+	}
+
+	public void setAdUser(AdUsers adUser) {
+		this.adUser = adUser;
 	}
 }

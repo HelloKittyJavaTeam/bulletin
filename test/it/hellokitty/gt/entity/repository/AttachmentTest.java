@@ -36,7 +36,7 @@ public class AttachmentTest {
 		for(int i = 0; i < 20; i++){
 			attachmentAdd = new Attachment();
 			attachmentAdd.setId(99999l+i);
-			attachmentAdd.setUserCreated("testADD"+i);
+			attachmentAdd.setUserCreate("testADD"+i);
 			attachmentAdd.setCreateDate(new Date());
 			attachmentAdd.setFileName("NAMETEST "+i);
 			attachmentAdd.setActive(true);
@@ -162,7 +162,7 @@ public class AttachmentTest {
 		try{
 			bullToMerge = new Attachment();
 			bullToMerge.setId(9898989898l);
-			bullToMerge.setUserCreated("test");
+			bullToMerge.setUserCreate("test");
 			bullToMerge.setFileName("NAME TEST");
 			attachmentRep.merge(bullToMerge, "testMERGE");
 			assertNotNull("attachmentMerge method fail. No element added.", em.find(Attachment.class, 9898989898l));
@@ -196,7 +196,7 @@ public class AttachmentTest {
 	public void attachmentCount(){
 		Long result;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD0");
+		map.put("userCreate", "testADD0");
 		
 		try{
 			result = attachmentRep.count(map, null, null, null);
@@ -206,7 +206,7 @@ public class AttachmentTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADDUNKNOW");
+		map.put("userCreate", "testADDUNKNOW");
 		
 		try{
 			result = attachmentRep.count(map, null, null, null);
@@ -216,7 +216,7 @@ public class AttachmentTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD");
+		map.put("userCreate", "testADD");
 		
 		try{
 			result = attachmentRep.count(null, map, null, null);

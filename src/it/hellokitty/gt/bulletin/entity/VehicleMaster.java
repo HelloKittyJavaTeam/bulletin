@@ -2,12 +2,16 @@ package it.hellokitty.gt.bulletin.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -28,6 +32,12 @@ public class VehicleMaster implements Serializable {
 	@Id
 	@Column(name="ID")
 	private Long id;
+	
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name="BULLETIN_VEHICLE_MASTER",
+			joinColumns=@JoinColumn(name="VEHICLE_MASTER_ID"),
+			inverseJoinColumns=@JoinColumn(name="BULLETIN_ID"))
+	private List<Bulletin> bulletins;
 	
 	private String active;
 
@@ -135,5 +145,13 @@ public class VehicleMaster implements Serializable {
 
 	public void setUserMod(String userMod) {
 		this.userMod = userMod;
+	}
+
+	public List<Bulletin> getBulletins() {
+		return bulletins;
+	}
+
+	public void setBulletins(List<Bulletin> bulletins) {
+		this.bulletins = bulletins;
 	}
 }

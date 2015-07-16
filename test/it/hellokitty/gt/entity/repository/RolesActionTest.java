@@ -37,7 +37,7 @@ public class RolesActionTest {
 			rolesActionAdd = new RolesAction();
 			rolesActionAdd.setId(99999l+i);
 			rolesActionAdd.setCreateDate(new Date());
-			rolesActionAdd.setUserCreated("testADD"+i);
+			rolesActionAdd.setUserCreate("testADD"+i);
 			rolesActionAdd.setRoles("roles"+i);
 			rolesActionAdd.setActive(true);
 			em.persist(rolesActionAdd);
@@ -161,7 +161,7 @@ public class RolesActionTest {
 		try{
 			bullToMerge = new RolesAction();
 			bullToMerge.setId(9898989898l);
-			bullToMerge.setUserCreated("test");
+			bullToMerge.setUserCreate("test");
 			bullToMerge.setRoles("rolesMERGE");;
 			rolesActionRep.merge(bullToMerge, "testMERGE");
 			assertNotNull("rolesActionMerge method fail. No element added.", em.find(RolesAction.class, 9898989898l));
@@ -195,7 +195,7 @@ public class RolesActionTest {
 	public void rolesActionCount(){
 		Long result;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD0");
+		map.put("userCreate", "testADD0");
 		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
 		
 		try{
@@ -206,7 +206,7 @@ public class RolesActionTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADDUNKNOW");
+		map.put("userCreate", "testADDUNKNOW");
 		
 		try{
 			result = rolesActionRep.count(map, emptyMap, emptyMap, emptyMap);
@@ -216,7 +216,7 @@ public class RolesActionTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD");
+		map.put("userCreate", "testADD");
 		
 		try{
 			result = rolesActionRep.count(emptyMap, map, emptyMap, emptyMap);

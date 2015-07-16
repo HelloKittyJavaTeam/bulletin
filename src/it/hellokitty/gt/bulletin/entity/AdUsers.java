@@ -2,7 +2,9 @@ package it.hellokitty.gt.bulletin.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,6 +34,14 @@ public class AdUsers implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="DEALER_CODE", referencedColumnName="ID")
 	private Dealers dealerCode;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="ADUSER_ID", referencedColumnName="ID")
+	private List<AttachmentHistory> attachmentHistories;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="ADUSER_ID", referencedColumnName="ID")
+	private List<BulletinUser> bulletinUsers;
 	
 	private String active;
 
@@ -270,6 +281,22 @@ public class AdUsers implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public List<AttachmentHistory> getAttachmentHistories() {
+		return attachmentHistories;
+	}
+
+	public void setAttachmentHistories(List<AttachmentHistory> attachmentHistories) {
+		this.attachmentHistories = attachmentHistories;
+	}
+
+	public List<BulletinUser> getBulletinUsers() {
+		return bulletinUsers;
+	}
+
+	public void setBulletinUsers(List<BulletinUser> bulletinUsers) {
+		this.bulletinUsers = bulletinUsers;
 	}
 
 }

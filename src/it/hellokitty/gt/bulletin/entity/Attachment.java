@@ -1,10 +1,12 @@
 package it.hellokitty.gt.bulletin.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import it.hellokitty.gt.entity.BaseObject;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +18,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -49,6 +52,10 @@ public class Attachment extends BaseObject implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="BULLETIN_ID", referencedColumnName="id")
 	private Bulletin bulletin;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="ATTACHMENT_ID", referencedColumnName="ID")
+	private List<AttachmentHistory> AttachmentHistories;
 
 	public Attachment(){}
 	
@@ -86,5 +93,13 @@ public class Attachment extends BaseObject implements Serializable{
 
 	public void setBulletin(Bulletin bulletin) {
 		this.bulletin = bulletin;
+	}
+
+	public List<AttachmentHistory> getAttachmentHistories() {
+		return AttachmentHistories;
+	}
+
+	public void setAttachmentHistories(List<AttachmentHistory> attachmentHistories) {
+		AttachmentHistories = attachmentHistories;
 	}
 }

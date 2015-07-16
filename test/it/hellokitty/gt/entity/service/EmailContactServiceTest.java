@@ -18,7 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class EmailContactServiceTest {
-	private EmailContactServiceImpl emailContactRep = new EmailContactServiceImpl();
+	private EmailContactServiceImpl emailContactRep = EmailContactServiceImpl.getInstance();
 	private static EntityManager em = Persistence.createEntityManagerFactory("BULLETIN_PU").createEntityManager();
 	private static EmailContact emailContactAdd;
 	
@@ -30,7 +30,7 @@ public class EmailContactServiceTest {
 		for(int i = 0; i < 20; i++){
 			emailContactAdd = new EmailContact();
 			emailContactAdd.setId(99999l+i);
-			emailContactAdd.setUserCreated("testADD"+i);
+			emailContactAdd.setUserCreate("testADD"+i);
 			emailContactAdd.setCreateDate(new Date());
 			emailContactAdd.setActive(true);
 
@@ -46,7 +46,7 @@ public class EmailContactServiceTest {
 		for(int i = 0; i < 20; i++){
 			emailContactAdd = new EmailContact();
 			emailContactAdd.setId(99999l+i);
-			emailContactAdd.setUserCreated("testADD"+i);
+			emailContactAdd.setUserCreate("testADD"+i);
 			em.remove(em.find(EmailContact.class, 99999l+i));
 
 		}
@@ -244,7 +244,7 @@ public class EmailContactServiceTest {
 		try{
 			emailContactToMerge = new EmailContact();
 			emailContactToMerge.setId(9898989898l);
-			emailContactToMerge.setUserCreated("test");
+			emailContactToMerge.setUserCreate("test");
 			emailContactRep.merge(emailContactToMerge, "testMERGE");
 			assertNotNull("emailContactMerge method fail. No element added.", em.find(EmailContact.class, 9898989898l));
 		} catch (Exception e){
@@ -318,6 +318,7 @@ public class EmailContactServiceTest {
 	/*
 	 *  DELETE TEST
 	 */
+	@SuppressWarnings("unused")
 	@Test
 	public void emailContactDelete(){
 		EmailContact emailContactToDelete = new EmailContact();

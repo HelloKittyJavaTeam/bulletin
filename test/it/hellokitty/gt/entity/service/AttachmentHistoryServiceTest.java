@@ -18,7 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class AttachmentHistoryServiceTest {
-	private AttachmentHistoryServiceImpl attachmentHistoryRep = new AttachmentHistoryServiceImpl();
+	private AttachmentHistoryServiceImpl attachmentHistoryRep = AttachmentHistoryServiceImpl.getInstance();
 	private static EntityManager em = Persistence.createEntityManagerFactory("BULLETIN_PU").createEntityManager();
 	private static AttachmentHistory attachmentHistoryAdd;
 	
@@ -30,7 +30,7 @@ public class AttachmentHistoryServiceTest {
 		for(int i = 0; i < 20; i++){
 			attachmentHistoryAdd = new AttachmentHistory();
 			attachmentHistoryAdd.setId(99999l+i);
-			attachmentHistoryAdd.setUserCreated("testADD"+i);
+			attachmentHistoryAdd.setUserCreate("testADD"+i);
 			attachmentHistoryAdd.setCreateDate(new Date());
 			attachmentHistoryAdd.setActive(true);
 
@@ -46,7 +46,7 @@ public class AttachmentHistoryServiceTest {
 		for(int i = 0; i < 20; i++){
 			attachmentHistoryAdd = new AttachmentHistory();
 			attachmentHistoryAdd.setId(99999l+i);
-			attachmentHistoryAdd.setUserCreated("testADD"+i);
+			attachmentHistoryAdd.setUserCreate("testADD"+i);
 			em.remove(em.find(AttachmentHistory.class, 99999l+i));
 
 		}
@@ -244,7 +244,7 @@ public class AttachmentHistoryServiceTest {
 		try{
 			attachmentHistoryToMerge = new AttachmentHistory();
 			attachmentHistoryToMerge.setId(9898989898l);
-			attachmentHistoryToMerge.setUserCreated("test");
+			attachmentHistoryToMerge.setUserCreate("test");
 			attachmentHistoryRep.merge(attachmentHistoryToMerge, "testMERGE");
 			assertNotNull("attachmentHistoryMerge method fail. No element added.", em.find(AttachmentHistory.class, 9898989898l));
 		} catch (Exception e){
@@ -318,6 +318,7 @@ public class AttachmentHistoryServiceTest {
 	/*
 	 *  DELETE TEST
 	 */
+	@SuppressWarnings("unused")
 	@Test
 	public void attachmentHistoryDelete(){
 		AttachmentHistory attachmentHistoryToDelete = new AttachmentHistory();
@@ -362,6 +363,7 @@ public class AttachmentHistoryServiceTest {
 	/*
 	 *  COUNT TEST
 	 */
+	@SuppressWarnings("unused")
 	@Test
 	public void attachmentHistoryCount(){
 		Long result;

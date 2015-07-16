@@ -43,15 +43,15 @@ public class BulletinTest {
 			bulletinAdd = new Bulletin();
 			tagAdd  = new Tag("testTAG"+i);
 			bulletinUserAdd = new BulletinUser();
-			bulletinUserAdd.setUserCreated("testADD");
+			bulletinUserAdd.setUserCreate("testADD");
 			bulletinUserAdd.setUserName("user"+i);
 			bulletinUserAddList = new ArrayList<BulletinUser>();
 			bulletinUserAddList.add(bulletinUserAdd);
-			tagAdd.setUserCreated("testUSER"+i);
+			tagAdd.setUserCreate("testUSER"+i);
 			tagAddList = new ArrayList<Tag>();
 			tagAddList.add(tagAdd);
 			bulletinAdd.setId(99999l+i);
-			bulletinAdd.setUserCreated("testADD"+i);
+			bulletinAdd.setUserCreate("testADD"+i);
 			bulletinAdd.setCreateDate(new Date());
 			bulletinAdd.setContentIt("CONTENUTOTEST "+i);
 			bulletinAdd.setActive(true);
@@ -179,7 +179,7 @@ public class BulletinTest {
 		try{
 			bullToMerge = new Bulletin();
 			bullToMerge.setId(9898989898l);
-			bullToMerge.setUserCreated("test");
+			bullToMerge.setUserCreate("test");
 			bullToMerge.setContentIt("CONTENUTO TEST ITA");
 			bulletinRep.merge(bullToMerge, "testMERGE");
 			assertNotNull("bulletinMerge method fail. No element added.", em.find(Bulletin.class, 9898989898l));
@@ -213,7 +213,7 @@ public class BulletinTest {
 	public void bulletinCount(){
 		Long result;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD0");
+		map.put("userCreate", "testADD0");
 		
 		try{
 			result = bulletinRep.count(map, null, null, null);
@@ -223,7 +223,7 @@ public class BulletinTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADDUNKNOW");
+		map.put("userCreate", "testADDUNKNOW");
 		
 		try{
 			result = bulletinRep.count(map, null, null, null);
@@ -233,7 +233,7 @@ public class BulletinTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD");
+		map.put("userCreate", "testADD");
 		
 		try{
 			result = bulletinRep.count(null, map, null, null);

@@ -86,6 +86,24 @@ public class Bulletin extends BaseObject implements Serializable{
 	private List<Dealers> dealers;
 	
 	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name="BULLETIN_VEHICLE_FAMILY",
+			joinColumns=@JoinColumn(name="BULLETIN_ID"),
+			inverseJoinColumns=@JoinColumn(name="VEHICLE_FAMILY_ID"))
+	private List<VehicleFamily> vehicleFamilies;
+	
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name="BULLETIN_VEHICLE_GROUP",
+			joinColumns=@JoinColumn(name="BULLETIN_ID"),
+			inverseJoinColumns=@JoinColumn(name="VEHICLE_GROUP_ID"))
+	private List<VehicleGroups> vehicleGroups;
+	
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name="BULLETIN_VEHICLE_MASTER",
+			joinColumns=@JoinColumn(name="BULLETIN_ID"),
+			inverseJoinColumns=@JoinColumn(name="VEHICLE_MASTER_ID"))
+	private List<VehicleMaster> vehicleMasters;
+	
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name="BULLETIN_CONTACT",
 			joinColumns=@JoinColumn(name="BULLETIN_ID"),
 			inverseJoinColumns=@JoinColumn(name="EMAILCONTACT_ID"))
@@ -517,5 +535,33 @@ public class Bulletin extends BaseObject implements Serializable{
 		}
 		
 		return result;
+	}
+
+	public List<VehicleFamily> getVehicleFamilies() {
+		return vehicleFamilies;
+	}
+
+	public void setVehicleFamilies(List<VehicleFamily> vehicleFamilies) {
+		this.vehicleFamilies = vehicleFamilies;
+	}
+
+	public List<VehicleGroups> getVehicleGroups() {
+		return vehicleGroups;
+	}
+
+	public void setVehicleGroups(List<VehicleGroups> vehicleGroups) {
+		this.vehicleGroups = vehicleGroups;
+	}
+
+	public List<VehicleMaster> getVehicleMasters() {
+		return vehicleMasters;
+	}
+
+	public void setVehicleMasters(List<VehicleMaster> vehicleMasters) {
+		this.vehicleMasters = vehicleMasters;
+	}
+
+	public void setAreas(List<GeoAreas> areas) {
+		Areas = areas;
 	}
 }

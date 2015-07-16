@@ -44,6 +44,10 @@ public class BulletinUser extends BaseObject implements Serializable{
 	@JoinColumn(name="BULLETIN_ID")
 	private Bulletin bulletinId;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="ADUSER_ID", referencedColumnName="ID")
+	private AdUsers adUser;
+	
 	@Column(name="USER_NAME")
 	private String userName;
 
@@ -93,6 +97,14 @@ public class BulletinUser extends BaseObject implements Serializable{
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public AdUsers getAdUser() {
+		return adUser;
+	}
+
+	public void setAdUser(AdUsers adUser) {
+		this.adUser = adUser;
 	}
 
 //	public static final String IDENTITY = "BulletinUser.IDENTITY";

@@ -3,21 +3,27 @@ package it.hellokitty.gt.bulletin.service.impl;
 import it.hellokitty.gt.bulletin.entity.Attachment;
 import it.hellokitty.gt.bulletin.repository.AttachmentRepository;
 import it.hellokitty.gt.bulletin.repository.impl.AttachmentRepositoryImpl;
-import it.hellokitty.gt.bulletin.service.AttachmentService;
 import it.hellokitty.gt.entity.BaseObject;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class AttachmentServiceImpl implements AttachmentService {
+public class AttachmentServiceImpl{
 	AttachmentRepository attachmentRepository =  new AttachmentRepositoryImpl();
+	private static AttachmentServiceImpl attachmentServiceImpl;
 
-	public AttachmentServiceImpl() {
+	private AttachmentServiceImpl() {
 		super();
 	}
 	
-	@Override
+	public static AttachmentServiceImpl getInstance(){
+		if(attachmentServiceImpl == null){
+			attachmentServiceImpl = new AttachmentServiceImpl();
+		}
+		return attachmentServiceImpl;
+	}
+	
 	public List<Attachment> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> cdList, String user) throws IllegalArgumentException, Exception {
 		if(user == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - user parameter can't be null.");
@@ -50,7 +56,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 		return attachmentRepository.fetchAll(start, limit, cdList, user);
 	}
 
-	@Override
+	
 	public void insert(BaseObject elem, String user) throws IllegalArgumentException, Exception {
 		if(elem == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
@@ -67,7 +73,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 		attachmentRepository.insert(elem, user);
 	}
 
-	@Override
+	
 	public void delete(BaseObject elem, String user) throws IllegalArgumentException, Exception {
 		if(elem == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
@@ -84,7 +90,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 		attachmentRepository.delete(elem, user);
 	}
 
-	@Override
+	
 	public BaseObject merge(BaseObject elem, String user) throws IllegalArgumentException, Exception {
 		if(elem == null){
 			throw new IllegalArgumentException(this.getClass().getPackage()+" - "+this.getClass()+" - elem parameter can't be null.");
@@ -102,27 +108,27 @@ public class AttachmentServiceImpl implements AttachmentService {
 		return attachmentRepository.merge(elem, user);
 	}
 
-	@Override
+	
 	public Long count() throws Exception {
 		return attachmentRepository.count();
 	}
 
-	@Override
+	
 	public Long count(HashMap<String,Object> paramEquals, HashMap<String,Object> paramLike, HashMap<String,Object> paramGE, HashMap<String,Object> paramLE) throws Exception {
 		return attachmentRepository.count(paramEquals, paramLike, paramGE, paramLE);
 	}
 
-	@Override
+	
 	public List<Attachment> fetchAll(Integer start, Integer limit, LinkedHashMap<String, String> orderColumn) throws Exception {
 		return attachmentRepository.fetchAll(start, limit, orderColumn);
 	}
 
-	@Override
+	
 	public Attachment fetchById(Object id) throws Exception {
 		return attachmentRepository.fetchById(id);
 	}
 
-	@Override
+	
 	public List<Attachment> search(Integer start, Integer limit, 
 			LinkedHashMap<String,String> orderColumn,
 			HashMap<String,Object> paramEquals,

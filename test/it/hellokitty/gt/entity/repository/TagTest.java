@@ -37,7 +37,7 @@ public class TagTest {
 			tagAdd = new Tag();
 			tagAdd.setId(99999l+i);
 			tagAdd.setCreateDate(new Date());
-			tagAdd.setUserCreated("testADD"+i);
+			tagAdd.setUserCreate("testADD"+i);
 			tagAdd.setWord("word"+i);
 			tagAdd.setActive(true);
 			em.persist(tagAdd);
@@ -161,7 +161,7 @@ public class TagTest {
 		try{
 			bullToMerge = new Tag();
 			bullToMerge.setId(9898989898l);
-			bullToMerge.setUserCreated("test");
+			bullToMerge.setUserCreate("test");
 			bullToMerge.setWord("wordMERGE");
 			tagRep.merge(bullToMerge, "testMERGE");
 			assertNotNull("tagMerge method fail. No element added.", em.find(Tag.class, 9898989898l));
@@ -195,7 +195,7 @@ public class TagTest {
 	public void tagCount(){
 		Long result;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD0");
+		map.put("userCreate", "testADD0");
 		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
 		
 		try{
@@ -206,7 +206,7 @@ public class TagTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADDUNKNOW");
+		map.put("userCreate", "testADDUNKNOW");
 		
 		try{
 			result = tagRep.count(map, emptyMap, emptyMap, emptyMap);
@@ -216,7 +216,7 @@ public class TagTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("userCreated", "testADD");
+		map.put("userCreate", "testADD");
 		
 		try{
 			result = tagRep.count(emptyMap, map, emptyMap, emptyMap);

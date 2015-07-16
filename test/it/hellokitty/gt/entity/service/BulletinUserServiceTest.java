@@ -18,7 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BulletinUserServiceTest {
-	private BulletinUserServiceImpl bulletinUserRep = new BulletinUserServiceImpl();
+	private BulletinUserServiceImpl bulletinUserRep = BulletinUserServiceImpl.getInstance();
 	private static EntityManager em = Persistence.createEntityManagerFactory("BULLETIN_PU").createEntityManager();
 	private static BulletinUser bulletinUserAdd;
 	
@@ -30,7 +30,7 @@ public class BulletinUserServiceTest {
 		for(int i = 0; i < 20; i++){
 			bulletinUserAdd = new BulletinUser();
 			bulletinUserAdd.setId(99999l+i);
-			bulletinUserAdd.setUserCreated("testADD"+i);
+			bulletinUserAdd.setUserCreate("testADD"+i);
 			bulletinUserAdd.setCreateDate(new Date());
 			bulletinUserAdd.setActive(true);
 
@@ -46,7 +46,7 @@ public class BulletinUserServiceTest {
 		for(int i = 0; i < 20; i++){
 			bulletinUserAdd = new BulletinUser();
 			bulletinUserAdd.setId(99999l+i);
-			bulletinUserAdd.setUserCreated("testADD"+i);
+			bulletinUserAdd.setUserCreate("testADD"+i);
 			em.remove(em.find(BulletinUser.class, 99999l+i));
 
 		}
@@ -244,7 +244,7 @@ public class BulletinUserServiceTest {
 		try{
 			bulletinUserToMerge = new BulletinUser();
 			bulletinUserToMerge.setId(9898989898l);
-			bulletinUserToMerge.setUserCreated("test");
+			bulletinUserToMerge.setUserCreate("test");
 			bulletinUserRep.merge(bulletinUserToMerge, "testMERGE");
 			assertNotNull("bulletinUserMerge method fail. No element added.", em.find(BulletinUser.class, 9898989898l));
 		} catch (Exception e){
@@ -318,6 +318,7 @@ public class BulletinUserServiceTest {
 	/*
 	 *  DELETE TEST
 	 */
+	@SuppressWarnings("unused")
 	@Test
 	public void bulletinUserDelete(){
 		BulletinUser bulletinUserToDelete = new BulletinUser();

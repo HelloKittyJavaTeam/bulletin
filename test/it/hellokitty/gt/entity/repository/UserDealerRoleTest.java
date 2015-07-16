@@ -39,6 +39,7 @@ public class UserDealerRoleTest {
 			userDealerRolesAdd.setDateIns(new Date());
 			userDealerRolesAdd.setLanguage("languageTEST"+i);
 			userDealerRolesAdd.setActive(true);
+			userDealerRolesAdd.setUsername("USERNAMETEST"+i);
 			em.persist(userDealerRolesAdd);
 		}
 		transaction.commit();
@@ -193,7 +194,7 @@ public class UserDealerRoleTest {
 		}
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("email", "emailTEST0");
+		map.put("username", "USERNAMETEST0");
 		
 		try{
 			userDealerRolesList = userDealerRolesRep.search(0, 20, null, map, null, null, null);
@@ -203,7 +204,7 @@ public class UserDealerRoleTest {
 		}
 		
 		map = new HashMap<String, Object>();
-		map.put("email", "emailTEST");
+		map.put("username", "USERNAMETEST");
 
 		try{
 			userDealerRolesList = userDealerRolesRep.search(0, 20, null, null, map, null, null);
