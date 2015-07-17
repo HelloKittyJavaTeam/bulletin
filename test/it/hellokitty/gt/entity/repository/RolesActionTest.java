@@ -61,13 +61,13 @@ public class RolesActionTest {
 	@Test
 	public void rolesActionFetchById(){
 		try {
-			RolesAction bull = rolesActionRep.fetchById(99999l);
+			RolesAction bull = rolesActionRep.getById(99999l);
 			assertNotNull("No RolesAction returned from fetchById", bull);
 			assertTrue("rolesActionFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getRoles()+" "
 					+ "Expected value: roles0", bull.getRoles().equals("roles0"));
 			
-			bull= rolesActionRep.fetchById(987654321l);
+			bull= rolesActionRep.getById(987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class RolesActionTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<RolesAction> bullList = rolesActionRep.fetchAll(0, 20, cdMap);
+			List<RolesAction> bullList = rolesActionRep.getAll(0, 20, cdMap);
 			assertTrue("rolesActionFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("rolesActionFetchAll didn't return all the elements.", bullList.size() >= 20);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -98,7 +98,7 @@ public class RolesActionTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<RolesAction> bullList = rolesActionRep.fetchAll(0, 20, cdMap);
+			List<RolesAction> bullList = rolesActionRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
 					fail("rolesActionFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -111,7 +111,7 @@ public class RolesActionTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<RolesAction> bullList = rolesActionRep.fetchAll(0, 17, cdMap);
+			List<RolesAction> bullList = rolesActionRep.getAll(0, 17, cdMap);
 			assertTrue("rolesActionFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in rolesActionFetchById method. "+e.toString());

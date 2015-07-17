@@ -61,13 +61,13 @@ public class MailingListTest {
 	@Test
 	public void mailingListFetchById(){
 		try {
-			MailingList bull = mailingListRep.fetchById(99999l);
+			MailingList bull = mailingListRep.getById(99999l);
 			assertNotNull("No MailingList returned from fetchById", bull);
 			assertTrue("mailingListFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getName()+" "
 					+ "Expected value: CONTENUTOTEST 0", bull.getName().equals("name0"));
 			
-			bull= mailingListRep.fetchById(987654321l);
+			bull= mailingListRep.getById(987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class MailingListTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<MailingList> bullList = mailingListRep.fetchAll(0, 20, cdMap);
+			List<MailingList> bullList = mailingListRep.getAll(0, 20, cdMap);
 			assertTrue("mailingListFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("mailingListFetchAll didn't return all the elements.", bullList.size() >= 20);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -98,7 +98,7 @@ public class MailingListTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<MailingList> bullList = mailingListRep.fetchAll(0, 20, cdMap);
+			List<MailingList> bullList = mailingListRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
 					fail("mailingListFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -111,7 +111,7 @@ public class MailingListTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<MailingList> bullList = mailingListRep.fetchAll(0, 17, cdMap);
+			List<MailingList> bullList = mailingListRep.getAll(0, 17, cdMap);
 			assertTrue("mailingListFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in mailingListFetchById method. "+e.toString());

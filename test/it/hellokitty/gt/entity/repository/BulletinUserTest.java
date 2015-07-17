@@ -61,13 +61,13 @@ public class BulletinUserTest {
 	@Test
 	public void bulletinUserFetchById(){
 		try {
-			BulletinUser bull = bulletinUserRep.fetchById(99999l);
+			BulletinUser bull = bulletinUserRep.getById(99999l);
 			assertNotNull("No BulletinUser returned from fetchById", bull);
 			assertTrue("bulletinUserFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getnRead()+" "
 					+ "Expected value: CONTENUTOTEST 0", bull.getnRead() == 989898);
 			
-			bull= bulletinUserRep.fetchById(987654321l);
+			bull= bulletinUserRep.getById(987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class BulletinUserTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<BulletinUser> bullList = bulletinUserRep.fetchAll(0, 20, cdMap);
+			List<BulletinUser> bullList = bulletinUserRep.getAll(0, 20, cdMap);
 			assertTrue("bulletinUserFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("bulletinUserFetchAll didn't return all the elements.", bullList.size() >= 20);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -98,7 +98,7 @@ public class BulletinUserTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<BulletinUser> bullList = bulletinUserRep.fetchAll(0, 20, cdMap);
+			List<BulletinUser> bullList = bulletinUserRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
 					fail("bulletinUserFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -111,7 +111,7 @@ public class BulletinUserTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<BulletinUser> bullList = bulletinUserRep.fetchAll(0, 17, cdMap);
+			List<BulletinUser> bullList = bulletinUserRep.getAll(0, 17, cdMap);
 			assertTrue("bulletinUserFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in bulletinUserFetchById method. "+e.toString());

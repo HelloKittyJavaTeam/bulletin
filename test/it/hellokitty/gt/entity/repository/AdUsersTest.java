@@ -60,13 +60,13 @@ public class AdUsersTest {
 	@Test
 	public void adUsersFetchById(){
 		try {
-			AdUsers bull = adUsersRep.fetchById(99999l);
+			AdUsers bull = adUsersRep.getById(99999l);
 			assertNotNull("No AdUsers returned from fetchById", bull);
 			assertTrue("adUsersFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getEmail()+" "
 					+ "Expected value: emailTEST0", bull.getEmail().equals("emailTEST0"));
 			
-			bull= adUsersRep.fetchById(987654321l);
+			bull= adUsersRep.getById(987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,7 +82,7 @@ public class AdUsersTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<AdUsers> bullList = adUsersRep.fetchAll(0, 20, cdMap);
+			List<AdUsers> bullList = adUsersRep.getAll(0, 20, cdMap);
 			assertTrue("adUsersFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("adUsersFetchAll didn't return all the elements.", bullList.size() >= 20);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -97,7 +97,7 @@ public class AdUsersTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<AdUsers> bullList = adUsersRep.fetchAll(0, 20, cdMap);
+			List<AdUsers> bullList = adUsersRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
 					fail("adUsersFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -110,7 +110,7 @@ public class AdUsersTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<AdUsers> bullList = adUsersRep.fetchAll(0, 17, cdMap);
+			List<AdUsers> bullList = adUsersRep.getAll(0, 17, cdMap);
 			assertTrue("adUsersFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in adUsersFetchById method. "+e.toString());

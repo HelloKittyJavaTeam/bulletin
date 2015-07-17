@@ -61,13 +61,13 @@ public class EmailContactTest {
 	@Test
 	public void emailContactFetchById(){
 		try {
-			EmailContact bull = emailContactRep.fetchById(99999l);
+			EmailContact bull = emailContactRep.getById(99999l);
 			assertNotNull("No EmailContact returned from fetchById", bull);
 			assertTrue("emailContactFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getName()+" "
 					+ "Expected value: name0", bull.getName().equals("name0"));
 			
-			bull= emailContactRep.fetchById(987654321l);
+			bull= emailContactRep.getById(987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class EmailContactTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<EmailContact> bullList = emailContactRep.fetchAll(0, 20, cdMap);
+			List<EmailContact> bullList = emailContactRep.getAll(0, 20, cdMap);
 			assertTrue("emailContactFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("emailContactFetchAll didn't return all the elements.", bullList.size() >= 20);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -98,7 +98,7 @@ public class EmailContactTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<EmailContact> bullList = emailContactRep.fetchAll(0, 20, cdMap);
+			List<EmailContact> bullList = emailContactRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
 					fail("emailContactFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -111,7 +111,7 @@ public class EmailContactTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<EmailContact> bullList = emailContactRep.fetchAll(0, 17, cdMap);
+			List<EmailContact> bullList = emailContactRep.getAll(0, 17, cdMap);
 			assertTrue("emailContactFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in emailContactFetchById method. "+e.toString());

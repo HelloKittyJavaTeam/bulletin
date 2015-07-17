@@ -59,13 +59,13 @@ public class VehicleFamilyTest {
 	@Test
 	public void vehicleFamilyFetchById(){
 		try {
-			VehicleFamily bull = vehicleFamilyRep.fetchById(""+999990l);
+			VehicleFamily bull = vehicleFamilyRep.getById(""+999990l);
 			assertNotNull("No VehicleFamily returned from fetchById", bull);
 			assertTrue("vehicleFamilyFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getDescription()+" "
 					+ "Expected value: testDescription0", bull.getDescription().equals("testDescription0"));
 			
-			bull= vehicleFamilyRep.fetchById(""+987654321l);
+			bull= vehicleFamilyRep.getById(""+987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			fail("Caught Exception in vehicleFamilyFetchById method. "+e.toString());
@@ -80,7 +80,7 @@ public class VehicleFamilyTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<VehicleFamily> bullList = vehicleFamilyRep.fetchAll(0, 20, cdMap);
+			List<VehicleFamily> bullList = vehicleFamilyRep.getAll(0, 20, cdMap);
 			assertTrue("vehicleFamilyFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("vehicleFamilyFetchAll didn't return all the elements.", bullList.size() >= 20);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -95,7 +95,7 @@ public class VehicleFamilyTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<VehicleFamily> bullList = vehicleFamilyRep.fetchAll(0, 20, cdMap);
+			List<VehicleFamily> bullList = vehicleFamilyRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId().compareTo(bullList.get(index+1).getId()) < 0){
 					fail("vehicleFamilyFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -108,7 +108,7 @@ public class VehicleFamilyTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<VehicleFamily> bullList = vehicleFamilyRep.fetchAll(0, 17, cdMap);
+			List<VehicleFamily> bullList = vehicleFamilyRep.getAll(0, 17, cdMap);
 			assertTrue("vehicleFamilyFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in vehicleFamilyFetchById method. "+e.toString());

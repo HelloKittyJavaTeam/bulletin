@@ -61,13 +61,13 @@ public class TagTest {
 	@Test
 	public void tagFetchById(){
 		try {
-			Tag bull = tagRep.fetchById(99999l);
+			Tag bull = tagRep.getById(99999l);
 			assertNotNull("No Tag returned from fetchById", bull);
 			assertTrue("tagFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getWord()+" "
 					+ "Expected value: CONTENUTOTEST 0", bull.getWord().equals("word0"));
 			
-			bull= tagRep.fetchById(987654321l);
+			bull= tagRep.getById(987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class TagTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<Tag> bullList = tagRep.fetchAll(0, 20, cdMap);
+			List<Tag> bullList = tagRep.getAll(0, 20, cdMap);
 			assertTrue("tagFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("tagFetchAll didn't return all the elements.", bullList.size() >= 20);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -98,7 +98,7 @@ public class TagTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<Tag> bullList = tagRep.fetchAll(0, 20, cdMap);
+			List<Tag> bullList = tagRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
 					fail("tagFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -111,7 +111,7 @@ public class TagTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<Tag> bullList = tagRep.fetchAll(0, 17, cdMap);
+			List<Tag> bullList = tagRep.getAll(0, 17, cdMap);
 			assertTrue("tagFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in tagFetchById method. "+e.toString());

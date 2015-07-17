@@ -60,13 +60,13 @@ public class GeoCountriesTest {
 	@Test
 	public void geoCountriesFetchById(){
 		try {
-			GeoCountries bull = geoCountriesRep.fetchById(""+999990l);
+			GeoCountries bull = geoCountriesRep.getById(""+999990l);
 			assertNotNull("No GeoCountries returned from fetchById", bull);
 			assertTrue("geoCountriesFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getDescriptionEn()+" "
 					+ "Expected value: testDescription0", bull.getDescriptionEn().equals("testDescription0"));
 			
-			bull= geoCountriesRep.fetchById(""+987654321l);
+			bull= geoCountriesRep.getById(""+987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			fail("Caught Exception in geoCountriesFetchById method. "+e.toString());
@@ -81,7 +81,7 @@ public class GeoCountriesTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<GeoCountries> bullList = geoCountriesRep.fetchAll(0, 10, cdMap);
+			List<GeoCountries> bullList = geoCountriesRep.getAll(0, 10, cdMap);
 			assertTrue("geoCountriesFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("geoCountriesFetchAll didn't return all the elements.", bullList.size() >= 10);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -96,7 +96,7 @@ public class GeoCountriesTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<GeoCountries> bullList = geoCountriesRep.fetchAll(0, 10, cdMap);
+			List<GeoCountries> bullList = geoCountriesRep.getAll(0, 10, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId().compareTo(bullList.get(index+1).getId()) < 0){
 					fail("geoCountriesFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -109,7 +109,7 @@ public class GeoCountriesTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<GeoCountries> bullList = geoCountriesRep.fetchAll(0, 7, cdMap);
+			List<GeoCountries> bullList = geoCountriesRep.getAll(0, 7, cdMap);
 			assertTrue("geoCountriesFetchAll didn't return all the elements.", bullList.size() == 7);
 		} catch (Exception e) {
 			fail("Caught Exception in geoCountriesFetchById method. "+e.toString());

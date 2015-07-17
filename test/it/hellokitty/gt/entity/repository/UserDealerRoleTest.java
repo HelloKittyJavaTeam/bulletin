@@ -61,13 +61,13 @@ public class UserDealerRoleTest {
 	@Test
 	public void userDealerRolesFetchById(){
 		try {
-			UserDealerRoles bull = userDealerRolesRep.fetchById(99999l);
+			UserDealerRoles bull = userDealerRolesRep.getById(99999l);
 			assertNotNull("No UserDealerRoles returned from fetchById", bull);
 			assertTrue("userDealerRolesFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getLanguage()+" "
 					+ "Expected value: emailTEST0", bull.getLanguage().equals("languageTEST0"));
 			
-			bull= userDealerRolesRep.fetchById(987654321l);
+			bull= userDealerRolesRep.getById(987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class UserDealerRoleTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<UserDealerRoles> bullList = userDealerRolesRep.fetchAll(0, 20, cdMap);
+			List<UserDealerRoles> bullList = userDealerRolesRep.getAll(0, 20, cdMap);
 			assertTrue("userDealerRolesFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("userDealerRolesFetchAll didn't return all the elements.", bullList.size() >= 20);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -98,7 +98,7 @@ public class UserDealerRoleTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<UserDealerRoles> bullList = userDealerRolesRep.fetchAll(0, 20, cdMap);
+			List<UserDealerRoles> bullList = userDealerRolesRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
 					fail("userDealerRolesFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -111,7 +111,7 @@ public class UserDealerRoleTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<UserDealerRoles> bullList = userDealerRolesRep.fetchAll(0, 17, cdMap);
+			List<UserDealerRoles> bullList = userDealerRolesRep.getAll(0, 17, cdMap);
 			assertTrue("userDealerRolesFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in userDealerRolesFetchById method. "+e.toString());

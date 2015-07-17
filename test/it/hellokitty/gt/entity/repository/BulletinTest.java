@@ -79,13 +79,13 @@ public class BulletinTest {
 	@Test
 	public void bulletinFetchById(){
 		try {
-			Bulletin bull = bulletinRep.fetchById(99999l);
+			Bulletin bull = bulletinRep.getById(99999l);
 			assertNotNull("No Bulletin returned from fetchById", bull);
 			assertTrue("bulletinFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getContentIt()+" "
 					+ "Expected value: CONTENUTOTEST 0", bull.getContentIt().equals("CONTENUTOTEST 0"));
 			
-			bull= bulletinRep.fetchById(987654321l);
+			bull= bulletinRep.getById(987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,7 +101,7 @@ public class BulletinTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<Bulletin> bullList = bulletinRep.fetchAll(0, 20, cdMap);
+			List<Bulletin> bullList = bulletinRep.getAll(0, 20, cdMap);
 			assertTrue("bulletinFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("bulletinFetchAll didn't return all the elements.", bullList.size() >= 20);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -116,7 +116,7 @@ public class BulletinTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<Bulletin> bullList = bulletinRep.fetchAll(0, 20, cdMap);
+			List<Bulletin> bullList = bulletinRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
 					fail("bulletinFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -129,7 +129,7 @@ public class BulletinTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<Bulletin> bullList = bulletinRep.fetchAll(0, 17, cdMap);
+			List<Bulletin> bullList = bulletinRep.getAll(0, 17, cdMap);
 			assertTrue("bulletinFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in bulletinFetchById method. "+e.toString());

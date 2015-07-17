@@ -60,13 +60,13 @@ public class GeoAreasTest {
 	@Test
 	public void geoAreasFetchById(){
 		try {
-			GeoAreas bull = geoAreasRep.fetchById(""+999990l);
+			GeoAreas bull = geoAreasRep.getById(""+999990l);
 			assertNotNull("No GeoAreas returned from fetchById", bull);
 			assertTrue("geoAreasFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getDescriptionEn()+" "
 					+ "Expected value: testDescription0", bull.getDescriptionEn().equals("testDescription0"));
 			
-			bull= geoAreasRep.fetchById(""+987654321l);
+			bull= geoAreasRep.getById(""+987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			fail("Caught Exception in geoAreasFetchById method. "+e.toString());
@@ -81,7 +81,7 @@ public class GeoAreasTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<GeoAreas> bullList = geoAreasRep.fetchAll(0, 20, cdMap);
+			List<GeoAreas> bullList = geoAreasRep.getAll(0, 20, cdMap);
 			assertTrue("geoAreasFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("geoAreasFetchAll didn't return all the elements.", bullList.size() >= 20);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -96,7 +96,7 @@ public class GeoAreasTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<GeoAreas> bullList = geoAreasRep.fetchAll(0, 20, cdMap);
+			List<GeoAreas> bullList = geoAreasRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId().compareTo(bullList.get(index+1).getId()) < 0){
 					fail("geoAreasFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -109,7 +109,7 @@ public class GeoAreasTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<GeoAreas> bullList = geoAreasRep.fetchAll(0, 17, cdMap);
+			List<GeoAreas> bullList = geoAreasRep.getAll(0, 17, cdMap);
 			assertTrue("geoAreasFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in geoAreasFetchById method. "+e.toString());

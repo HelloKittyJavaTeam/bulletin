@@ -60,13 +60,13 @@ public class DealersTest {
 	@Test
 	public void dealersFetchById(){
 		try {
-			Dealers bull = dealersRep.fetchById(""+999990l);
+			Dealers bull = dealersRep.getById(""+999990l);
 			assertNotNull("No Dealers returned from fetchById", bull);
 			assertTrue("dealersFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getEmail()+" "
 					+ "Expected value: emailTEST0", bull.getEmail().equals("emailTEST0"));
 			
-			bull= dealersRep.fetchById(""+987654321l);
+			bull= dealersRep.getById(""+987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,7 +82,7 @@ public class DealersTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<Dealers> dealersList = dealersRep.fetchAll(0, 20, cdMap);
+			List<Dealers> dealersList = dealersRep.getAll(0, 20, cdMap);
 			assertTrue("dealersFetchAll returned a empty list.", dealersList.size() > 0);
 			assertTrue("dealersFetchAll didn't return all the elements.", dealersList.size() >= 20);
 			for(int index = 0; index < dealersList.size()-1; index++){
@@ -97,7 +97,7 @@ public class DealersTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<Dealers> bullList = dealersRep.fetchAll(0, 20, cdMap);
+			List<Dealers> bullList = dealersRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId().compareTo(bullList.get(index+1).getId())<0){
 					fail("dealersFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -110,7 +110,7 @@ public class DealersTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<Dealers> bullList = dealersRep.fetchAll(0, 17, cdMap);
+			List<Dealers> bullList = dealersRep.getAll(0, 17, cdMap);
 			assertTrue("dealersFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in dealersFetchById method. "+e.toString());

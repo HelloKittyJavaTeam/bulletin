@@ -63,12 +63,12 @@ public class AttachmentTest {
 	@Test
 	public void attachmentFetchById(){
 		try {
-			Attachment bull = attachmentRep.fetchById(99999l);
+			Attachment bull = attachmentRep.getById(99999l);
 			assertNotNull("No Attachment returned from fetchById", bull);
 			assertTrue("attachmentFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getFileName()+" "
 					+ "Expected value: NAMETEST 0", bull.getFileName().equals("NAMETEST 0"));
-			bull= attachmentRep.fetchById(987654321l);
+			bull= attachmentRep.getById(987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,7 +84,7 @@ public class AttachmentTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<Attachment> bullList = attachmentRep.fetchAll(0, 20, cdMap);
+			List<Attachment> bullList = attachmentRep.getAll(0, 20, cdMap);
 			assertTrue("attachmentFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("attachmentFetchAll didn't return all the elements.", bullList.size() >= 20);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -99,7 +99,7 @@ public class AttachmentTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<Attachment> bullList = attachmentRep.fetchAll(0, 20, cdMap);
+			List<Attachment> bullList = attachmentRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
 					fail("attachmentFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -112,7 +112,7 @@ public class AttachmentTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<Attachment> bullList = attachmentRep.fetchAll(0, 17, cdMap);
+			List<Attachment> bullList = attachmentRep.getAll(0, 17, cdMap);
 			assertTrue("attachmentFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in attachmentFetchById method. "+e.toString());

@@ -61,12 +61,12 @@ public class AttachmentHistoryTest {
 	@Test
 	public void attachmentHistoryFetchById(){		
 		try {
-			AttachmentHistory bull = attachmentHistoryRep.fetchById(99999l);
+			AttachmentHistory bull = attachmentHistoryRep.getById(99999l);
 			assertNotNull("No AttachmentHistory returned from fetchById", bull);
 			assertTrue("attachmentHistoryFetchById method failed on retrieve content value. "
 					+ "Actual value: "+bull.getnDownload()+" "
 					+ "Expected value: NAMETEST 0", bull.getnDownload() == 989898);
-			bull= attachmentHistoryRep.fetchById(987654321l);
+			bull= attachmentHistoryRep.getById(987654321l);
 			assertNull(bull);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,7 +82,7 @@ public class AttachmentHistoryTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "asc");
-			List<AttachmentHistory> bullList = attachmentHistoryRep.fetchAll(0, 20, cdMap);
+			List<AttachmentHistory> bullList = attachmentHistoryRep.getAll(0, 20, cdMap);
 			assertTrue("attachmentHistoryFetchAll returned a empty list.", bullList.size() > 0);
 			assertTrue("attachmentHistoryFetchAll didn't return all the elements.", bullList.size() >= 20);
 			for(int index = 0; index < bullList.size()-1; index++){
@@ -97,7 +97,7 @@ public class AttachmentHistoryTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<AttachmentHistory> bullList = attachmentHistoryRep.fetchAll(0, 20, cdMap);
+			List<AttachmentHistory> bullList = attachmentHistoryRep.getAll(0, 20, cdMap);
 			for(int index = 0; index < bullList.size()-1; index++){
 				if(bullList.get(index).getId() < bullList.get(index+1).getId()){
 					fail("attachmentHistoryFetchAll method failed during asc order check. Id at index "+index+":"+bullList.get(index).getId()+" next: "+index+":"+bullList.get(index+1).getId());
@@ -110,7 +110,7 @@ public class AttachmentHistoryTest {
 		try {
 			LinkedHashMap<String, String> cdMap = new LinkedHashMap<String, String>();
 			cdMap.put("id", "desc");
-			List<AttachmentHistory> bullList = attachmentHistoryRep.fetchAll(0, 17, cdMap);
+			List<AttachmentHistory> bullList = attachmentHistoryRep.getAll(0, 17, cdMap);
 			assertTrue("attachmentHistoryFetchAll didn't return all the elements.", bullList.size() == 17);
 		} catch (Exception e) {
 			fail("Caught Exception in attachmentHistoryFetchById method. "+e.toString());

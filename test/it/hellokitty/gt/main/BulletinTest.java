@@ -32,7 +32,7 @@ public class BulletinTest {
 			Method handler  = (Bulletin.class).getMethod("getDescriptionIt", new Class[] {});
 			
 
-			bullList = bullRepo.fetchAll(0,cnt.intValue(), new LinkedHashMap<String, String>());
+			bullList = bullRepo.getAll(0,cnt.intValue(), new LinkedHashMap<String, String>());
 			
 			for(Bulletin b : bullList){
 				String res = (String) handler.invoke(b, new Object[] {});
