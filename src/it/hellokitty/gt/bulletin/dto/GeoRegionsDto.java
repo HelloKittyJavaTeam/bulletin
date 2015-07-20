@@ -178,10 +178,10 @@ public class GeoRegionsDto implements Serializable {
 	}
 	
 	/**
-	 * This method returns a List of GeoAreasDto of the List of geoAreaList input parameter
+	 * This method returns a List of GeoRegionsDto of the List of geoRegionList input parameter
 	 * 
-	 * @param geoAreaList List
-	 * @return GeoAreasDto List
+	 * @param geoRegionList List
+	 * @return GeoRegionsDto List
 	 */
 	public static List<GeoRegionsDto> from( final List<GeoRegions> geoRegionList ) {
 		final List<GeoRegionsDto> geoRegionListDto = new LinkedList<GeoRegionsDto>();

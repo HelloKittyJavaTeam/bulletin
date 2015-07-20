@@ -36,10 +36,10 @@ public class DepartmentDto extends BaseObjectDto implements Serializable{
 	}
 
 	/**
-	 * This method returns an DealerRolesDto of the dealerRoles input parameter
+	 * This method returns an DepartmentDto of the department input parameter
 	 * 
-	 * @param dealerRoles
-	 * @return DealerRolesDto
+	 * @param department
+	 * @return DepartmentDto
 	 */
 	public static DepartmentDto from( final Department department ) {
 		DepartmentDto dto = new DepartmentDto();	
@@ -54,10 +54,10 @@ public class DepartmentDto extends BaseObjectDto implements Serializable{
 	}
 	
 	/**
-	 * This method returns a List of DealerRolesDto of the List of dealerRolesList input parameter
+	 * This method returns a List of DepartmentDto of the List of departmentList input parameter
 	 * 
-	 * @param dealerRolesList List
-	 * @return DealerRolesDto List
+	 * @param departmentList List
+	 * @return DepartmentDto List
 	 */
 	public static List<DepartmentDto> from( final List<Department> departmentList ) {
 		final List<DepartmentDto> departmentListDto = new LinkedList<DepartmentDto>();

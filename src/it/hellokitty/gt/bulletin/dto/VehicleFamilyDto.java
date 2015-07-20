@@ -116,16 +116,16 @@ public class VehicleFamilyDto implements Serializable {
 	}
 	
 	/**
-	 * This method returns a List of VehicleFamilyDto of the List of vehicleFamilyDeptList input parameter
+	 * This method returns a List of VehicleFamilyDto of the List of vehicleFamilyList input parameter
 	 * 
-	 * @param vehicleFamilyDeptList List
+	 * @param vehicleFamilyList List
 	 * @return VehicleFamilyDto List
 	 */
-	public static List<VehicleFamilyDto> from( final List<VehicleFamily> vehicleFamilyDeptList ) {
-		final List<VehicleFamilyDto> vehicleFamilyDeptListDto = new LinkedList<VehicleFamilyDto>();
-		for ( final VehicleFamily techAreaDept : vehicleFamilyDeptList ) {
-			vehicleFamilyDeptListDto.add( from( techAreaDept ) );
+	public static List<VehicleFamilyDto> from( final List<VehicleFamily> vehicleFamilyList ) {
+		final List<VehicleFamilyDto> vehicleFamilyListDto = new LinkedList<VehicleFamilyDto>();
+		for ( final VehicleFamily vehicleFamily : vehicleFamilyList ) {
+			vehicleFamilyListDto.add( from( vehicleFamily ) );
 		}
-		return vehicleFamilyDeptListDto;
+		return vehicleFamilyListDto;
 	}
 }

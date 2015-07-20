@@ -55,15 +55,15 @@ public class MailingListDto extends BaseObjectDto implements Serializable{
 	}
 	
 	/**
-	 * This method returns a List of MailingListDto of the List of mailingListList input parameter
+	 * This method returns a List of MailingListDto of the List of mailingList input parameter
 	 * 
-	 * @param mailingListList List
+	 * @param mailingList List
 	 * @return MailingListDto List
 	 */
-	public static List<MailingListDto> from( final List<MailingList> mailingListList ) {
+	public static List<MailingListDto> from( final List<MailingList> mailingList ) {
 		final List<MailingListDto> mailingListListDto = new LinkedList<MailingListDto>();
-		for ( final MailingList mailingList : mailingListList ) {
-			mailingListListDto.add( from( mailingList ) );
+		for ( final MailingList mailingListElem : mailingList ) {
+			mailingListListDto.add( from( mailingListElem ) );
 		}
 		return mailingListListDto;
 	}

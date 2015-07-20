@@ -76,7 +76,7 @@ public class BulletinUserDto extends BaseObjectDto implements Serializable{
 	}
 	
 	/**
-	 * This method returns a List of AttachmentHistoryDto of the List of attachmentHistories input parameter
+	 * This method returns a List of BulletinUserDto of the List of bulletinUsers input parameter
 	 * 
 	 * @param bulletinUsers List
 	 * @return BulletinUserDto List

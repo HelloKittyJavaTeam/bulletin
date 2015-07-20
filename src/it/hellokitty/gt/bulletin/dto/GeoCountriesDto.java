@@ -200,10 +200,10 @@ public class GeoCountriesDto implements Serializable {
 	}
 	
 	/**
-	 * This method returns a List of GeoAreasDto of the List of geoAreaList input parameter
+	 * This method returns a List of GeoCountriesDto of the List of geoCountryList input parameter
 	 * 
-	 * @param geoAreaList List
-	 * @return GeoAreasDto List
+	 * @param geoCountryList List
+	 * @return GeoCountriesDto List
 	 */
 	public static List<GeoCountriesDto> from( final List<GeoCountries> geoCountryList ) {
 		final List<GeoCountriesDto> geoCountryListDto = new LinkedList<GeoCountriesDto>();
