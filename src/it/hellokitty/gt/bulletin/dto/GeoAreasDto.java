@@ -8,9 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GeoAreasDto implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8579285349592700230L;
 
 	private String id;
