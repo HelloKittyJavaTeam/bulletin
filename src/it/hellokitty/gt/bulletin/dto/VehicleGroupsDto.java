@@ -29,6 +29,8 @@ public class VehicleGroupsDto implements Serializable {
 	private String dcsVehicleclass;
 
 	private String description;
+	
+	private String familyCode;
 
 	private String model;
 
@@ -73,6 +75,14 @@ public class VehicleGroupsDto implements Serializable {
 
 	public void setDateMod(Date dateMod) {
 		this.dateMod = dateMod;
+	}
+	
+	public String getFamilyCode(){
+		return familyCode;
+	}
+	
+	public void setFamilyCode(String familyCode){
+		this.familyCode = familyCode;
 	}
 
 	public BigDecimal getDcsCatalogRelease() {
@@ -173,6 +183,7 @@ public class VehicleGroupsDto implements Serializable {
 		dto.setDcsCatalogRelease(vehicleGroups.getDcsCatalogRelease());
 		dto.setDcsCatalogVersion(vehicleGroups.getDcsCatalogVersion());
 		dto.setDcsVehicleclass(vehicleGroups.getDcsVehicleclass());
+		dto.setFamilyCode(vehicleGroups.getFamilyCode());
 
 		return dto;
 	}
