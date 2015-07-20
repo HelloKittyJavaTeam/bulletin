@@ -1,27 +1,11 @@
 package it.hellokitty.gt.bulletin.dto;
 
+import it.hellokitty.gt.bulletin.entity.AttachmentHistory;
+import it.hellokitty.gt.dto.BaseObjectDto;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
-
-import it.hellokitty.gt.bulletin.entity.Attachment;
-import it.hellokitty.gt.bulletin.entity.AttachmentHistory;
-import it.hellokitty.gt.dto.BaseObjectDto;
-import it.hellokitty.gt.entity.BaseObject;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 public class AttachmentHistoryDto extends BaseObjectDto implements Serializable{
 	
@@ -63,8 +47,10 @@ public class AttachmentHistoryDto extends BaseObjectDto implements Serializable{
 	}
 
 	/**
+	 * This method returns an AttachmentHistoryDto of the attachmentHistory input parameter
+	 * 
 	 * @param attachment
-	 * @return
+	 * @return AttachmentHistoryDto
 	 */
 	public static AttachmentHistoryDto from( final AttachmentHistory attachmentHistory ) {
 		AttachmentHistoryDto dto = new AttachmentHistoryDto();
@@ -73,20 +59,22 @@ public class AttachmentHistoryDto extends BaseObjectDto implements Serializable{
 		dto.setBulletinId(attachmentHistory.getBulletinId());
 		dto.setnDownload(attachmentHistory.getnDownload());
 		dto.setCreateDate(attachmentHistory.getCreateDate());
-		dto.setUpdate(attachmentHistory.getUpdate());
-		dto.setUserCreated(attachmentHistory.getUserCreated());
+		dto.setUpdateDate(attachmentHistory.getUpdateDate());
+		dto.setUserCreate(attachmentHistory.getUserCreate());
 	    dto.setUserUpdate(attachmentHistory.getUserUpdate());	
 		return dto;
 	}
 	
 	/**
+	 * This method returns a List of AttachmentHistoryDto of the List of attachmentHistories input parameter
+	 * 
 	 * @param attachment List
-	 * @return
+	 * @return AttachmentHistoryDto List
 	 */
-	public static List<AttachmentHistoryDto> from( final List<AttachmentHistory> attachments ) {
+	public static List<AttachmentHistoryDto> from( final List<AttachmentHistory> attachmentHistories ) {
 		final List<AttachmentHistoryDto> attachmentsDto = new LinkedList<AttachmentHistoryDto>();
-		for ( final AttachmentHistory attachment : attachments ) {
-			attachmentsDto.add( from( attachment ) );
+		for ( final AttachmentHistory attachmentHistory : attachmentHistories ) {
+			attachmentsDto.add( from( attachmentHistory ) );
 		}
 		return attachmentsDto;
 	}

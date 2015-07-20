@@ -1,26 +1,17 @@
 package it.hellokitty.gt.bulletin.dto;
 
+import it.hellokitty.gt.bulletin.entity.UserDealerRoles;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.eclipse.persistence.annotations.Index;
+import java.util.LinkedList;
+import java.util.List;
 
 public class UserDealerRolesDto implements Serializable {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2552604858417127198L;
 
 	private Long id;
 	
@@ -37,10 +28,6 @@ public class UserDealerRolesDto implements Serializable {
 	private String userMod;
 	
 	private String active;
-	
-	public void setActive(String active) {
-		this.active = active;
-	}
 
 	public UserDealerRolesDto(){}
 
@@ -114,5 +101,39 @@ public class UserDealerRolesDto implements Serializable {
 		} else {
 			this.active ="N";
 		}
+	}
+	
+	/**
+	 * This method returns an UserDealerRolesDto of the userDealerRoles input parameter
+	 * 
+	 * @param userDealerRoles
+	 * @return UserDealerRolesDto
+	 */
+	public static UserDealerRolesDto from( final UserDealerRoles userDealerRoles ) {
+		UserDealerRolesDto dto = new UserDealerRolesDto();	
+		dto.setActive(userDealerRoles.isActive());
+		dto.setDateIns(userDealerRoles.getDateIns());
+		dto.setDateMod(userDealerRoles.getDateMod());
+		dto.setId(userDealerRoles.getId());
+		dto.setLanguage(userDealerRoles.getLanguage());
+		dto.setUserIns(userDealerRoles.getUserIns());
+		dto.setUserMod(userDealerRoles.getUserMod());
+		dto.setUsername(userDealerRoles.getUsername());
+
+		return dto;
+	}
+	
+	/**
+	 * This method returns a List of UserDealerRolesDto of the List of userDealerRolesList input parameter
+	 * 
+	 * @param userDealerRolesList List
+	 * @return UserDealerRolesDto List
+	 */
+	public static List<UserDealerRolesDto> from( final List<UserDealerRoles> userDealerRolesList ) {
+		final List<UserDealerRolesDto> userDealerRolesDto = new LinkedList<UserDealerRolesDto>();
+		for ( final UserDealerRoles userDealerRoles : userDealerRolesList ) {
+			userDealerRolesDto.add( from( userDealerRoles ) );
+		}
+		return userDealerRolesDto;
 	}
 }

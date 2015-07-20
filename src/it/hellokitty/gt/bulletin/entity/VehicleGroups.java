@@ -64,8 +64,8 @@ public class VehicleGroups implements Serializable {
 	@Column(name="DCS_CATALOG_VERSION")
 	private BigDecimal dcsCatalogVersion;
 
-	@Column(name="FAMILY_CODE")
-	private String familyCode;
+//	@Column(name="FAMILY_CODE")
+//	private String familyCode;
 
 	@Column(name="DCS_VEHICLECLASS")
 	private String dcsVehicleclass;
@@ -152,14 +152,6 @@ public class VehicleGroups implements Serializable {
 		this.description = description;
 	}
 
-	public VehicleFamily getFamilyCode() {
-		return this.family;
-	}
-
-	public void setFamily(VehicleFamily family) {
-		this.family = family;
-	}
-
 	public Long getId() {
 		return this.id;
 	}
@@ -219,9 +211,9 @@ public class VehicleGroups implements Serializable {
 	public VehicleFamily getFamily() {
 		return family;
 	}
-
-	public void setFamilyCode(String familyCode) {
-		this.familyCode = familyCode;
+	
+	public void setFamily(VehicleFamily family) {
+		this.family = family;
 	}
 
 	public List<Bulletin> getBulletins() {

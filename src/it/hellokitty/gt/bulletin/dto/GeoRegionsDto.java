@@ -1,12 +1,18 @@
 package it.hellokitty.gt.bulletin.dto;
 
+import it.hellokitty.gt.bulletin.entity.GeoRegions;
+
 import java.io.Serializable;
 import java.util.Date;
-
-
+import java.util.LinkedList;
+import java.util.List;
 
 public class GeoRegionsDto implements Serializable {
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4224899200168029580L;
+
 	private String id;
 	
 	private String descriptionIt;
@@ -145,5 +151,43 @@ public class GeoRegionsDto implements Serializable {
 		} else {
 			this.active = "N";
 		}
+	}
+	
+	/**
+	 * This method returns an GeoRegionsDto of the geoRegion input parameter
+	 * 
+	 * @param geoRegion
+	 * @return GeoRegionsDto
+	 */
+	public static GeoRegionsDto from( final GeoRegions geoRegion ) {
+		GeoRegionsDto dto = new GeoRegionsDto();	
+		dto.setId(geoRegion.getId());
+		dto.setActive(geoRegion.isActive());
+		dto.setDateIns(geoRegion.getDateIns());
+		dto.setDateMod(geoRegion.getDateMod());
+		dto.setDescriptionDe(geoRegion.getDescriptionDe());
+		dto.setDescriptionEn(geoRegion.getDescriptionEn());
+		dto.setDescriptionEs(geoRegion.getDescriptionEs());
+		dto.setDescriptionFr(geoRegion.getDescriptionFr());
+		dto.setDescriptionIt(geoRegion.getDescriptionIt());
+		dto.setDescriptionJp(geoRegion.getDescriptionJp());
+		dto.setDescriptionZh(geoRegion.getDescriptionZh());
+		dto.setUserIns(geoRegion.getUserIns());
+		dto.setUserMod(geoRegion.getUserMod());
+		return dto;
+	}
+	
+	/**
+	 * This method returns a List of GeoAreasDto of the List of geoAreaList input parameter
+	 * 
+	 * @param geoAreaList List
+	 * @return GeoAreasDto List
+	 */
+	public static List<GeoRegionsDto> from( final List<GeoRegions> geoRegionList ) {
+		final List<GeoRegionsDto> geoRegionListDto = new LinkedList<GeoRegionsDto>();
+		for ( final GeoRegions geoRegion : geoRegionList ) {
+			geoRegionListDto.add( from( geoRegion ) );
+		}
+		return geoRegionListDto;
 	}
 }

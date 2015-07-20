@@ -1,11 +1,18 @@
 package it.hellokitty.gt.bulletin.dto;
 
+import it.hellokitty.gt.bulletin.entity.VehicleFamily;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 
 public class VehicleFamilyDto implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7109826231223968886L;
 
 	private String id;
 	
@@ -87,5 +94,38 @@ public class VehicleFamilyDto implements Serializable {
 
 	public void setUserMod(String userMod) {
 		this.userMod = userMod;
+	}
+	
+	/**
+	 * This method returns an VehicleFamilyDto of the vehicleFamilyDept input parameter
+	 * 
+	 * @param vehicleFamilyDept
+	 * @return VehicleFamilyDto
+	 */
+	public static VehicleFamilyDto from( final VehicleFamily vehicleFamilyDept ) {
+		VehicleFamilyDto dto = new VehicleFamilyDto();	
+		dto.setActive(vehicleFamilyDept.isActive());
+		dto.setDateIns(vehicleFamilyDept.getDateIns());
+		dto.setId(vehicleFamilyDept.getId());
+		dto.setDateMod(vehicleFamilyDept.getDateMod());
+		dto.setDescription(vehicleFamilyDept.getDescription());
+		dto.setUserIns(vehicleFamilyDept.getUserIns());
+		dto.setUserMod(vehicleFamilyDept.getUserMod());
+
+		return dto;
+	}
+	
+	/**
+	 * This method returns a List of VehicleFamilyDto of the List of vehicleFamilyDeptList input parameter
+	 * 
+	 * @param vehicleFamilyDeptList List
+	 * @return VehicleFamilyDto List
+	 */
+	public static List<VehicleFamilyDto> from( final List<VehicleFamily> vehicleFamilyDeptList ) {
+		final List<VehicleFamilyDto> vehicleFamilyDeptListDto = new LinkedList<VehicleFamilyDto>();
+		for ( final VehicleFamily techAreaDept : vehicleFamilyDeptList ) {
+			vehicleFamilyDeptListDto.add( from( techAreaDept ) );
+		}
+		return vehicleFamilyDeptListDto;
 	}
 }

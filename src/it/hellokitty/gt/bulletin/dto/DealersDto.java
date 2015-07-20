@@ -1,10 +1,18 @@
 package it.hellokitty.gt.bulletin.dto;
 
+import it.hellokitty.gt.bulletin.entity.Dealers;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DealersDto implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5988321712603781219L;
 
 	private String id;
 	
@@ -467,6 +475,75 @@ public class DealersDto implements Serializable {
 		this.zipcode = zipcode;
 	}
 
+	/**
+	 * This method returns an DealersDto of the dealers input parameter
+	 * 
+	 * @param dealers
+	 * @return DealersDto
+	 */
+	public static DealersDto from( final Dealers dealers ) {
+		DealersDto dto = new DealersDto();	
+		dto.setId(dealers.getId());
+		dto.setAddress(dealers.getAddress());
+		dto.setActive(dealers.isActive());
+		dto.setCity(dealers.getCity());
+		dto.setComplement(dealers.getComplement());
+		dto.setDateIns(dealers.getDateIns());
+		dto.setDateMod(dealers.getDateMod());
+		dto.setDealerType(dealers.getDealerType());
+		dto.setEmail(dealers.getEmail());
+		dto.setFax(dealers.getFax());
+		dto.setFlagAftermarket(dealers.getFlagAftermarket());
+		dto.setFlagAlluminium(dealers.getFlagAlluminium());
+		dto.setFlagAssistance(dealers.getFlagAssistance());
+		dto.setFlagBodyshop(dealers.getFlagBodyshop());
+		dto.setFlagDealer(dealers.getFlagDealer());
+		dto.setFlagDealerselection(dealers.getFlagDealerselection());
+		dto.setFlagEuropeass(dealers.getFlagEuropeass());
+		dto.setFlagFlagship(dealers.getFlagFlagship());
+		dto.setFlagHvr(dealers.getFlagHvr());
+		dto.setFlagImporter(dealers.getFlagImporter());
+		dto.setFlagPdicenter(dealers.getFlagPdicenter());
+		dto.setFlagPos(dealers.getFlagPos());
+		dto.setFlagRegionaloffice(dealers.getFlagRegionaloffice());
+		dto.setFlagRegionalofficeSubsidiary(dealers.getFlagRegionalofficeSubsidiary());
+		dto.setFlagShowroom(dealers.getFlagShowroom());
+		dto.setFlagSubdealer(dealers.getFlagSubdealer());
+		dto.setFlagSubsidiary(dealers.getFlagSubsidiary());
+		dto.setGlLatitude(dealers.getGlLatitude());
+		dto.setGlLongitude(dealers.getGlLongitude());
+		dto.setHouseNumber(dealers.getHouseNumber());
+		dto.setName(dealers.getName());
+		dto.setPhone(dealers.getPhone());
+		dto.setProvince(dealers.getProvince());
+		dto.setProvinceCode(dealers.getProvinceCode());
+		dto.setSwEnabled(dealers.getSwEnabled());
+		dto.setSwHeading(dealers.getSwHeading());
+		dto.setSwLatitude(dealers.getSwLatitude());
+		dto.setSwLongitude(dealers.getSwLongitude());
+		dto.setSwPitch(dealers.getSwPitch());
+		dto.setSwZoom(dealers.getSwZoom());
+		dto.setUserIns(dealers.getUserIns());
+		dto.setUserMod(dealers.getUserMod());
+		dto.setVillage(dealers.getVillage());
+		dto.setWebsite(dealers.getWebsite());
+		dto.setZipcode(dealers.getZipcode());
+
+		return dto;
+	}
 	
+	/**
+	 * This method returns a List of DealersDto of the List of dealerList input parameter
+	 * 
+	 * @param dealerList List
+	 * @return DealersDto List
+	 */
+	public static List<DealersDto> from( final List<Dealers> dealerList ) {
+		final List<DealersDto> dealersListDto = new LinkedList<DealersDto>();
+		for ( final Dealers dealer : dealerList ) {
+			dealersListDto.add( from( dealer ) );
+		}
+		return dealersListDto;
+	}
 
 }

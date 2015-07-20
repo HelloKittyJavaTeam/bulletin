@@ -1,15 +1,18 @@
 package it.hellokitty.gt.bulletin.dto;
 
+import it.hellokitty.gt.bulletin.entity.Department;
 import it.hellokitty.gt.dto.BaseObjectDto;
-import it.hellokitty.gt.entity.BaseObject;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
-
-
 public class DepartmentDto extends BaseObjectDto implements Serializable{
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 334959886208801656L;
+
 	private Long id;
 		
 	private String name;
@@ -32,5 +35,35 @@ public class DepartmentDto extends BaseObjectDto implements Serializable{
 		this.name = name;
 	}
 
+	/**
+	 * This method returns an DealerRolesDto of the dealerRoles input parameter
+	 * 
+	 * @param dealerRoles
+	 * @return DealerRolesDto
+	 */
+	public static DepartmentDto from( final Department department ) {
+		DepartmentDto dto = new DepartmentDto();	
+		dto.setId(department.getId());
+		dto.setActive(department.isActive());
+		dto.setCreateDate(department.getCreateDate());
+		dto.setName(department.getName());
+		dto.setUpdateDate(department.getUpdateDate());
+		dto.setUserCreate(department.getUserCreate());
+		dto.setUserUpdate(department.getUserUpdate());
+		return dto;
+	}
 	
+	/**
+	 * This method returns a List of DealerRolesDto of the List of dealerRolesList input parameter
+	 * 
+	 * @param dealerRolesList List
+	 * @return DealerRolesDto List
+	 */
+	public static List<DepartmentDto> from( final List<Department> departmentList ) {
+		final List<DepartmentDto> departmentListDto = new LinkedList<DepartmentDto>();
+		for ( final Department dealerRoles : departmentList ) {
+			departmentListDto.add( from( dealerRoles ) );
+		}
+		return departmentListDto;
+	}
 }

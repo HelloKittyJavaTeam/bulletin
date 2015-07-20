@@ -1,26 +1,18 @@
 package it.hellokitty.gt.bulletin.dto;
 
+import it.hellokitty.gt.bulletin.entity.GeoCountries;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 public class GeoCountriesDto implements Serializable {
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7738593434904257779L;
+
 	private String id;
 		
 	private String descriptionIt;
@@ -60,8 +52,6 @@ public class GeoCountriesDto implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	
 
 	public String getDescriptionIt() {
 		return descriptionIt;
@@ -181,5 +171,45 @@ public class GeoCountriesDto implements Serializable {
 
 	public void setIdIso31663(String idIso31663) {
 		this.idIso31663 = idIso31663;
+	}
+	
+	/**
+	 * This method returns an GeoCountriesDto of the geoCountry input parameter
+	 * 
+	 * @param geoCountry
+	 * @return GeoCountriesDto
+	 */
+	public static GeoCountriesDto from( final GeoCountries geoCountry ) {
+		GeoCountriesDto dto = new GeoCountriesDto();	
+		dto.setId(geoCountry.getId());
+		dto.setActive(geoCountry.isActive());
+		dto.setDateIns(geoCountry.getDateIns());
+		dto.setDateMod(geoCountry.getDateMod());
+		dto.setDescriptionDe(geoCountry.getDescriptionDe());
+		dto.setDescriptionEn(geoCountry.getDescriptionEn());
+		dto.setDescriptionEs(geoCountry.getDescriptionEs());
+		dto.setDescriptionFr(geoCountry.getDescriptionFr());
+		dto.setDescriptionIt(geoCountry.getDescriptionIt());
+		dto.setDescriptionJp(geoCountry.getDescriptionJp());
+		dto.setDescriptionZh(geoCountry.getDescriptionZh());
+		dto.setIdIso3166(geoCountry.getIdIso3166());
+		dto.setIdIso31663(geoCountry.getIdIso31663());
+		dto.setUserIns(geoCountry.getUserIns());
+		dto.setUserMod(geoCountry.getUserMod());
+		return dto;
+	}
+	
+	/**
+	 * This method returns a List of GeoAreasDto of the List of geoAreaList input parameter
+	 * 
+	 * @param geoAreaList List
+	 * @return GeoAreasDto List
+	 */
+	public static List<GeoCountriesDto> from( final List<GeoCountries> geoCountryList ) {
+		final List<GeoCountriesDto> geoCountryListDto = new LinkedList<GeoCountriesDto>();
+		for ( final GeoCountries geoCountry : geoCountryList ) {
+			geoCountryListDto.add( from( geoCountry ) );
+		}
+		return geoCountryListDto;
 	}
 }

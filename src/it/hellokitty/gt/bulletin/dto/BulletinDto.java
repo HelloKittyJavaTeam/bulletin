@@ -1,10 +1,7 @@
 package it.hellokitty.gt.bulletin.dto;
 
-import it.hellokitty.gt.bulletin.entity.AttachmentHistory;
 import it.hellokitty.gt.bulletin.entity.Bulletin;
 import it.hellokitty.gt.bulletin.utils.Utils;
-
-
 import it.hellokitty.gt.dto.BaseObjectDto;
 
 import java.io.Serializable;
@@ -14,8 +11,6 @@ import java.util.List;
 
 
 public class BulletinDto extends BaseObjectDto implements Serializable{
-	
-	
 	/**
 	 * 
 	 */
@@ -303,8 +298,10 @@ public class BulletinDto extends BaseObjectDto implements Serializable{
 	}
 	
 	/**
-	 * @param attachment
-	 * @return
+	 * This method returns an BulletinDto of the bulletin input parameter
+	 * 
+	 * @param bulletin
+	 * @return BulletinDto
 	 */
 	public static BulletinDto from( final Bulletin bulletin ) {
 		BulletinDto dto = new BulletinDto();
@@ -334,15 +331,17 @@ public class BulletinDto extends BaseObjectDto implements Serializable{
 		dto.setTitleJp(bulletin.getTitleJp());
 		dto.setTitleZh(bulletin.getTitleZh());
 		dto.setCreateDate(bulletin.getCreateDate());
-		dto.setUpdate(bulletin.getUpdate());
-		dto.setUserCreated(bulletin.getUserCreated());
+		dto.setUpdateDate(bulletin.getUpdateDate());
+		dto.setUserCreate(bulletin.getUserCreate());
 	    dto.setUserUpdate(bulletin.getUserUpdate());	
 		return dto;
 	}
 	
 	/**
-	 * @param attachment List
-	 * @return
+	 * This method returns a List of AttachmentHistoryDto of the List of attachmentHistories input parameter
+	 * 
+	 * @param bullettins List
+	 * @return BulletinDto List
 	 */
 	public static List<BulletinDto> from( final List<Bulletin> bullettins ) {
 		final List<BulletinDto> bullettinsDto = new LinkedList<BulletinDto>();

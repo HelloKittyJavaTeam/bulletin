@@ -1,10 +1,17 @@
 package it.hellokitty.gt.bulletin.dto;
 
+import it.hellokitty.gt.bulletin.entity.GeoAreas;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class GeoAreasDto implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8579285349592700230L;
 
 	private String id;
 	
@@ -144,5 +151,43 @@ public class GeoAreasDto implements Serializable {
 
 	public void setDateMod(Date dateMod) {
 		this.dateMod = dateMod;
+	}
+	
+	/**
+	 * This method returns an GeoAreasDto of the geoArea input parameter
+	 * 
+	 * @param geoArea
+	 * @return GeoAreasDto
+	 */
+	public static GeoAreasDto from( final GeoAreas geoArea ) {
+		GeoAreasDto dto = new GeoAreasDto();	
+		dto.setId(geoArea.getId());
+		dto.setActive(geoArea.isActive());
+		dto.setDateIns(geoArea.getDateIns());
+		dto.setDateMod(geoArea.getDateMod());
+		dto.setDescriptionDe(geoArea.getDescriptionDe());
+		dto.setDescriptionEn(geoArea.getDescriptionEn());
+		dto.setDescriptionEs(geoArea.getDescriptionEs());
+		dto.setDescriptionFr(geoArea.getDescriptionFr());
+		dto.setDescriptionIt(geoArea.getDescriptionIt());
+		dto.setDescriptionJp(geoArea.getDescriptionJp());
+		dto.setDescriptionZh(geoArea.getDescriptionZh());
+		dto.setUserIns(geoArea.getUserIns());
+		dto.setUserMod(geoArea.getUserMod());
+		return dto;
+	}
+	
+	/**
+	 * This method returns a List of GeoAreasDto of the List of geoAreaList input parameter
+	 * 
+	 * @param geoAreaList List
+	 * @return GeoAreasDto List
+	 */
+	public static List<GeoAreasDto> from( final List<GeoAreas> geoAreaList ) {
+		final List<GeoAreasDto> geoAreaListDto = new LinkedList<GeoAreasDto>();
+		for ( final GeoAreas geoArea : geoAreaList ) {
+			geoAreaListDto.add( from( geoArea ) );
+		}
+		return geoAreaListDto;
 	}
 }

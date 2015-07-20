@@ -1,11 +1,17 @@
 package it.hellokitty.gt.bulletin.dto;
 
+import it.hellokitty.gt.bulletin.entity.MailingList;
 import it.hellokitty.gt.dto.BaseObjectDto;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MailingListDto extends BaseObjectDto implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3657542882396675329L;
 
 	private Long id;
 	
@@ -29,6 +35,36 @@ public class MailingListDto extends BaseObjectDto implements Serializable{
 		this.name = name;
 	}
 	
-	
+	/**
+	 * This method returns an MailingListDto of the mailingList input parameter
+	 * 
+	 * @param mailingList
+	 * @return MailingListDto
+	 */
+	public static MailingListDto from( final MailingList mailingList ) {
+		MailingListDto dto = new MailingListDto();	
+		dto.setId(mailingList.getId());
+		dto.setActive(mailingList.isActive());
+		dto.setCreateDate(mailingList.getCreateDate());
+		dto.setName(mailingList.getName());
+		dto.setUpdateDate(mailingList.getUpdateDate());
+		dto.setUserCreate(mailingList.getUserCreate());
+		dto.setUserUpdate(mailingList.getUserUpdate());
 
+		return dto;
+	}
+	
+	/**
+	 * This method returns a List of MailingListDto of the List of mailingListList input parameter
+	 * 
+	 * @param mailingListList List
+	 * @return MailingListDto List
+	 */
+	public static List<MailingListDto> from( final List<MailingList> mailingListList ) {
+		final List<MailingListDto> mailingListListDto = new LinkedList<MailingListDto>();
+		for ( final MailingList mailingList : mailingListList ) {
+			mailingListListDto.add( from( mailingList ) );
+		}
+		return mailingListListDto;
+	}
 }

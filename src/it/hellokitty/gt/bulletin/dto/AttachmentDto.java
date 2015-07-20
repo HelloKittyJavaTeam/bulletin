@@ -1,29 +1,11 @@
 package it.hellokitty.gt.bulletin.dto;
 
+import it.hellokitty.gt.bulletin.entity.Attachment;
+import it.hellokitty.gt.dto.BaseObjectDto;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
-
-import it.hellokitty.gt.bulletin.entity.AdUsers;
-import it.hellokitty.gt.bulletin.entity.Attachment;
-import it.hellokitty.gt.dto.BaseObjectDto;
-import it.hellokitty.gt.entity.BaseObject;
-
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 public class AttachmentDto extends BaseObjectDto implements Serializable{
 	
@@ -62,8 +44,10 @@ public class AttachmentDto extends BaseObjectDto implements Serializable{
 	}
 
 	/**
+	 * This method returns an AttachmentDTO of the attachment input parameter
+	 * 
 	 * @param attachment
-	 * @return
+	 * @return AttachmentDto
 	 */
 	public static AttachmentDto from( final Attachment attachment ) {
 		AttachmentDto dto = new AttachmentDto();
@@ -72,15 +56,17 @@ public class AttachmentDto extends BaseObjectDto implements Serializable{
 		dto.setCreateDate(attachment.getCreateDate());
 		dto.setFileName(attachment.getFileName());
 		dto.setId(attachment.getId());
-		dto.setUpdate(attachment.getUpdate());
-		dto.setUserCreated(attachment.getUserCreated());
+		dto.setUpdateDate(attachment.getUpdateDate());
+		dto.setUserCreate(attachment.getUserCreate());
 	    dto.setUserUpdate(attachment.getUserUpdate());	
 		return dto;
 	}
 	
 	/**
+	 * This method returns a List of AttachmentDTO of the List of attachment input parameter
+	 * 
 	 * @param attachment List
-	 * @return
+	 * @return AttachmentDto List
 	 */
 	public static List<AttachmentDto> from( final List<Attachment> attachments ) {
 		final List<AttachmentDto> attachmentsDto = new LinkedList<AttachmentDto>();

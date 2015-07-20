@@ -3,8 +3,6 @@ package it.hellokitty.gt.bulletin.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import it.hellokitty.gt.entity.BaseObject;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +21,7 @@ import org.eclipse.persistence.annotations.Index;
 
 @Entity
 @Table(name="TECH_AREA_DEPT")
-public class TechAreaDept extends BaseObject implements Serializable{
+public class TechAreaDept implements Serializable{
 	private static final long serialVersionUID = 4347432721688931991L;
 
 	@Id 

@@ -239,8 +239,10 @@ public class AdUsersDto implements Serializable {
 	}
 	
 	/**
+	 * This method returns an AdUsersDTO of the adUsers input parameter
+	 * 
 	 * @param adUsers
-	 * @return
+	 * @return AdUsersDto
 	 */
 	public static AdUsersDto from( final AdUsers adUsers ) {
 		AdUsersDto dto = new AdUsersDto();
@@ -269,8 +271,10 @@ public class AdUsersDto implements Serializable {
 	}
 	
 	/**
-	 * @param adUsers List
-	 * @return
+	 * This method returns a List of AdUsersDto of the List of adUsersList input parameter
+	 * 
+	 * @param adUsersList List
+	 * @return List of AdUsers
 	 */
 	public static List<AdUsersDto> from( final List<AdUsers> adUsersList ) {
 		final List<AdUsersDto> adUsersDto = new LinkedList<AdUsersDto>();
