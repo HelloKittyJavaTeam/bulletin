@@ -1,6 +1,6 @@
 package it.hellokitty.gt.bulletin.repository.impl;
 
-import it.hellokitty.gt.repository.utils.RepositoryUtils;
+import it.ferrari.gt.repository.utils.RepositoryUtils;
 import it.hellokitty.gt.bulletin.entity.MailingList;
 import it.hellokitty.gt.bulletin.repository.MailingListRepository;
 

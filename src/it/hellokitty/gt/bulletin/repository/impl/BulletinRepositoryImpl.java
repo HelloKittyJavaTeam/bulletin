@@ -1,9 +1,9 @@
 package it.hellokitty.gt.bulletin.repository.impl;
 
+import it.ferrari.gt.repository.utils.RepositoryUtils;
 import it.hellokitty.gt.bulletin.entity.Bulletin;
 import it.hellokitty.gt.bulletin.entity.Tag;
 import it.hellokitty.gt.bulletin.repository.BulletinRepository;
-import it.hellokitty.gt.repository.utils.RepositoryUtils;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

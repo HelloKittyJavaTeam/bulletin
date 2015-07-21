@@ -1,8 +1,8 @@
 package it.hellokitty.gt.bulletin.dto;
 
+import it.ferrari.gt.dto.BaseObjectDto;
 import it.hellokitty.gt.bulletin.entity.Bulletin;
 import it.hellokitty.gt.bulletin.utils.Utils;
-import it.hellokitty.gt.dto.BaseObjectDto;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;

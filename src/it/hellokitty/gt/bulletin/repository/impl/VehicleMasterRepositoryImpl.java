@@ -1,6 +1,6 @@
 package it.hellokitty.gt.bulletin.repository.impl;
 
-import it.hellokitty.gt.repository.utils.RepositoryUtilsExt;
+import it.ferrari.gt.repository.utils.RepositoryUtilsExt;
 import it.hellokitty.gt.bulletin.entity.VehicleMaster;
 import it.hellokitty.gt.bulletin.repository.VehicleMasterRepository;
 

@@ -1,6 +1,6 @@
 package it.hellokitty.gt.bulletin.entity;
 
-import it.hellokitty.gt.entity.BaseObject;
+import it.ferrari.gt.entity.BaseObject;
 
 import java.io.Serializable;
 import java.util.List;

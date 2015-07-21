@@ -1,7 +1,7 @@
 package it.hellokitty.gt.bulletin.dto;
 
+import it.ferrari.gt.dto.BaseObjectDto;
 import it.hellokitty.gt.bulletin.entity.RolesAction;
-import it.hellokitty.gt.dto.BaseObjectDto;
 
 import java.io.Serializable;
 import java.util.LinkedList;
